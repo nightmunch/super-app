@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { SidebarLink } from "./SidebarLink";
 import { FaHome, FaHeart, FaCog, FaBars, FaGrinSquint } from "react-icons/fa";
+import { TbBrandNextjs } from "react-icons/tb";
 const MainLayout: React.FunctionComponent = ({ children }) => {
 	return (
 		<div className="drawer" data-Barseme="mytheme">
@@ -18,8 +19,22 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
 						</h1>
 					</div>
 				</div>
-				<div className="flex flex-col h-screen my-auto items-center pt-5">
+				<div className="flex flex-col h-screen my-auto items-center pt-5 gap-5">
 					<div className="w-11/12 space-y-5">{children}</div>
+					<div className="bg-base-100 pb-5 text-center mt-auto">
+						<h1 className="text-sm font-thin">
+							Created by one and only,{" "}
+							<span className="text-blue-400 underline decoration-wavy">
+								nightmunch
+							</span>
+						</h1>
+						<h1 className="pt-3">
+							Made With{" "}
+							<a href="https://nextjs.org/">
+								<TbBrandNextjs className="text-white text-2xl inline" />
+							</a>
+						</h1>
+					</div>
 				</div>
 			</div>
 			<div className="drawer-side">
