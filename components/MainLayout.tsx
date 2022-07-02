@@ -1,8 +1,17 @@
 import Image from "next/image";
+import { useState } from "react";
 import { SidebarLink } from "./SidebarLink";
 import { FaHome, FaHeart, FaCog, FaBars, FaGrinSquint } from "react-icons/fa";
 import { TbBrandNextjs } from "react-icons/tb";
-const MainLayout: React.FunctionComponent = ({ children }) => {
+export const MainLayout: React.FunctionComponent = ({ children }) => {
+	type User = {
+		name: string;
+		img_dir: string;
+	};
+	const [user, setUser] = useState<User>({
+		name: "Shahrin Amin",
+		img_dir: "/me.jpg",
+	});
 	return (
 		<div className="drawer" data-Barseme="mytheme">
 			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -60,18 +69,24 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
 							</SidebarLink>
 						</nav>
 						<div className="flex items-center px-4 -mx-2">
-							<div className="h-9 w-9">
-								<Image
-									src="/me.jpg"
-									alt="Avatar"
-									width={1000}
-									height={1000}
-									className="object-cover mx-2 rounded-full"
-								/>
-							</div>
-							<h4 className="ml-4 font-medium text-base-content hover:underline">
-								Shahrin Amin
-							</h4>
+							{user !== null ? (
+								<>
+									<div className="h-9 w-9">
+										<Image
+											src={user.img_dir}
+											alt="Avatar"
+											width={1000}
+											height={1000}
+											className="object-cover mx-2 rounded-full"
+										/>
+									</div>
+									<h4 className="ml-4 font-medium text-base-content hover:underline">
+										{user.name}
+									</h4>
+								</>
+							) : (
+								""
+							)}
 						</div>
 					</div>
 				</ul>
@@ -79,5 +94,3 @@ const MainLayout: React.FunctionComponent = ({ children }) => {
 		</div>
 	);
 };
-
-export default MainLayout;
