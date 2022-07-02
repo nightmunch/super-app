@@ -1,20 +1,18 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { SidebarLink } from "./SidebarLink";
 import { FaHome, FaHeart, FaCog, FaBars, FaGrinSquint } from "react-icons/fa";
 const MainLayout: React.FunctionComponent = ({ children }) => {
-	const router = useRouter();
 	return (
 		<div className="drawer" data-Barseme="mytheme">
 			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content">
-				<div className="navbar bg-base-300">
+				<div className="navbar bg-base-300 gap-2 sticky top-0 z-50">
 					<div className="flex-none">
 						<label htmlFor="my-drawer" className="btn btn-square btn-ghost">
 							<FaBars />
 						</label>
 					</div>
-					<div className="flex-1 ml-2">
+					<div className="flex-1">
 						<h1 className="normal-case text-xl text-primary font-semibold">
 							Super<span className="text-base-content">App</span>
 						</h1>

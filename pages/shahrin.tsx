@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaLinkedin, FaInstagram, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaGithub, FaEnvelope } from "react-icons/fa";
 export default function Shahrin() {
 	return (
 		<>
@@ -36,13 +36,16 @@ export default function Shahrin() {
 					</h1>
 					<div className="flex flex-row m-auto gap-3 mt-3">
 						<a href="https://www.instagram.com/nightmunch/?theme=dark">
-							<FaInstagram className="hover:text-pink-500 text-3xl" />
+							<FaInstagram className="hover:text-primary text-3xl" />
 						</a>
 						<a href="https://www.linkedin.com/in/shahrinamin-2703/">
-							<FaLinkedin className="hover:text-[#478ACF] text-3xl" />
+							<FaLinkedin className="hover:text-primary text-3xl" />
 						</a>
 						<a href="https://github.com/nightmunch">
-							<FaGithub className="hover:text-[#f3c45f] text-3xl" />
+							<FaGithub className="hover:text-primary text-3xl" />
+						</a>
+						<a href="mailto:shahrinamin.my@gmail.com">
+							<FaEnvelope className="hover:text-primary text-3xl" />
 						</a>
 					</div>
 				</div>
@@ -56,7 +59,7 @@ export default function Shahrin() {
 						Have been passionate on developing and collabrate with talented
 						people to create awesome project. Well rounded developer, fast-paced
 						learner, and always been holding on to this one quote{" "}
-						<span className="text-primary font-semibold">
+						<span className="text-primary font-semibold md:block md:text-center md:mt-2">
 							"Jack of all trades, master of some".
 						</span>
 					</p>

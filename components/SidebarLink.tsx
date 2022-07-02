@@ -19,7 +19,7 @@ export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 	const router = useRouter();
 
 	return (
-		<li>
+		<li className="py-1">
 			<Link href={href}>
 				<a
 					onClick={closeDrawer}
