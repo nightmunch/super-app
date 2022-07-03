@@ -5,7 +5,7 @@ import { TbBrandNextjs } from "react-icons/tb";
 import { SidebarProfile } from "./SidebarProfile";
 export const MainLayout: React.FunctionComponent = ({ children }) => {
 	return (
-		<div className="drawer" data-Barseme="mytheme">
+		<div className="drawer" data-barseme="mytheme">
 			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content">
 				<div className="navbar bg-base-300 gap-2 sticky top-0 z-50">
