@@ -21,6 +21,12 @@ export const LoanCalculator: React.FunctionComponent = () => {
 		setTotalInterest(Number(totalInterest.toFixed(2)));
 	};
 
+	const separator = (numb: number) => {
+		var str = numb.toString().split(".");
+		str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return str.join(".");
+	};
+
 	useEffect(() => {
 		if (loanAmount != "" && interest != "" && (years != "" || months != "")) {
 			handleCalculation(loanAmount, years, months, interest);
@@ -107,19 +113,25 @@ export const LoanCalculator: React.FunctionComponent = () => {
 						<div className="stats shadow">
 							<div className="stat">
 								<div className="stat-title">Monthly Payment</div>
-								<div className="stat-value text-xl">RM{repayment}</div>
+								<div className="stat-value text-xl text-primary">
+									RM{separator(repayment)}
+								</div>
 							</div>
 						</div>
 						<div className="stats shadow">
 							<div className="stat">
 								<div className="stat-title">Total Payment</div>
-								<div className="stat-value text-xl">RM{totalPayment}</div>
+								<div className="stat-value text-xl text-primary">
+									RM{separator(totalPayment)}
+								</div>
 							</div>
 						</div>
 						<div className="stats shadow">
 							<div className="stat">
 								<div className="stat-title">Total Interest</div>
-								<div className="stat-value text-xl">RM{totalInterest}</div>
+								<div className="stat-value text-xl text-primary">
+									RM{separator(totalInterest)}
+								</div>
 							</div>
 						</div>
 					</div>
