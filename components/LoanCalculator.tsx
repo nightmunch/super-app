@@ -14,8 +14,8 @@ export const LoanCalculator: React.FunctionComponent = () => {
 		let n: number = Number(y) * 12 + Number(m);
 		i = Number(i) / 100 / 12;
 		let monthlyPayment: number = (i * a) / (1 - (1 + i) ** -n);
-		let totalPayment = monthlyPayment * 12;
-		let totalInterest = a - totalPayment;
+		let totalPayment = monthlyPayment * n;
+		let totalInterest = totalPayment - a;
 		setRepayment(Number(monthlyPayment.toFixed(2)));
 		setTotalPayment(Number(totalPayment.toFixed(2)));
 		setTotalInterest(Number(totalInterest.toFixed(2)));
@@ -30,6 +30,8 @@ export const LoanCalculator: React.FunctionComponent = () => {
 	useEffect(() => {
 		if (loanAmount != "" && interest != "" && (years != "" || months != "")) {
 			handleCalculation(loanAmount, years, months, interest);
+		} else {
+			setRepayment(0);
 		}
 	}, [loanAmount, interest, years, months]);
 
