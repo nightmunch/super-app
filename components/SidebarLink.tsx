@@ -19,12 +19,13 @@ export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 	const router = useRouter();
 
 	return (
-		<li className="py-1">
+		<li
+			className={`py-1 ${
+				router.pathname == href ? "bordered text-primary" : ""
+			}`}
+		>
 			<Link href={href}>
-				<a
-					onClick={closeDrawer}
-					className={router.pathname == href ? "bg-primary text-neutral" : ""}
-				>
+				<a onClick={closeDrawer} className={""}>
 					{children}
 					<span className="mx-4 font-medium">{name}</span>
 				</a>
