@@ -18,7 +18,6 @@ const AppCard: React.FunctionComponent<AppCardType> = ({
 };
 
 export default function Home() {
-	const { data, error, isLoading } = trpc.useQuery(["hello"]);
 	return (
 		<>
 			<div className="card bg-neutral shadow-xl text-neutral-content">
@@ -47,17 +46,6 @@ export default function Home() {
 						<AppCard />
 						<AppCard />
 					</div>
-				</div>
-			</div>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
-				<div className="card-body">
-					{isLoading ? (
-						<div>Loading...</div>
-					) : (
-						<div>{JSON.stringify(data)}</div>
-					)}
-
-					{error ? <div>{JSON.stringify(error)}</div> : ""}
 				</div>
 			</div>
 		</>
