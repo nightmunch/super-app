@@ -1,9 +1,16 @@
+import Link from "next/link";
+
 type AppCardType = {
 	app_name: string;
+	url: string;
 };
 
-const AppCard: React.FunctionComponent<AppCardType> = ({ app_name }) => {
-	return <div className="btn btn-primary h-20">{app_name}</div>;
+const AppCard: React.FunctionComponent<AppCardType> = ({ app_name, url }) => {
+	return (
+		<Link href={url}>
+			<div className="btn btn-primary h-20">{app_name}</div>
+		</Link>
+	);
 };
 
 export default function Home() {
@@ -30,10 +37,10 @@ export default function Home() {
 				<div className="card-body gap-4">
 					<h1 className="text-lg font-semibold text-center">List of App</h1>
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-						<AppCard app_name="Find Me Home" />
-						<AppCard app_name="Find Me Home" />
-						<AppCard app_name="Find Me Home" />
-						<AppCard app_name="Find Me Home" />
+						<AppCard app_name="Find Me Home" url="/findmehome" />
+						<AppCard app_name="Find Me Home" url="/" />
+						<AppCard app_name="Find Me Home" url="/" />
+						<AppCard app_name="Find Me Home" url="/" />
 					</div>
 				</div>
 			</div>
