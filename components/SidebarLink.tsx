@@ -1,15 +1,18 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { createElement } from "react";
+import { IconType } from "react-icons/lib";
 
 type SidebarLinkProps = {
 	href: string;
 	name: string;
+	icon: IconType;
 };
 
 export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 	href,
 	name,
-	children,
+	icon,
 }) => {
 	// If the link is clicked, close the drawer
 	function closeDrawer() {
@@ -26,7 +29,7 @@ export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 		>
 			<Link href={href}>
 				<a onClick={closeDrawer} className={""}>
-					{children}
+					{createElement(icon)}
 					<span className="mx-4 font-medium">{name}</span>
 				</a>
 			</Link>

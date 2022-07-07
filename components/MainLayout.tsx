@@ -1,9 +1,18 @@
-import Image from "next/image";
 import { SidebarLink } from "./SidebarLink";
-import { FaHome, FaHeart, FaCog, FaBars, FaGrinSquint } from "react-icons/fa";
 import { TbBrandNextjs } from "react-icons/tb";
 import { SidebarProfile } from "./SidebarProfile";
+import { useState } from "react";
+import {
+	FaHome,
+	FaCog,
+	FaBars,
+	FaGrinSquint,
+	FaSignInAlt,
+	FaSignOutAlt,
+} from "react-icons/fa";
+
 export const MainLayout: React.FunctionComponent = ({ children }) => {
+	const [isSignIn, setIsSignIn] = useState(true);
 	return (
 		<div className="drawer" data-barseme="mytheme">
 			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -18,6 +27,19 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 						<h1 className="normal-case text-xl text-primary font-semibold">
 							Super<span className="text-base-content">App</span>
 						</h1>
+					</div>
+					<div className="pr-2">
+						{isSignIn ? (
+							<>
+								<FaSignInAlt />
+								<h1 className="ml-2 font-semibold">Logout</h1>
+							</>
+						) : (
+							<>
+								<FaSignOutAlt />
+								<h1 className="ml-2 font-semibold">Login</h1>
+							</>
+						)}
 					</div>
 				</div>
 				<div className="flex flex-col h-screen my-auto items-center pt-5 gap-5">
@@ -46,20 +68,21 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 					</h1>
 					<div className="flex flex-col justify-between flex-1">
 						<nav className="pt-5">
-							<SidebarLink href="/" name="Home">
-								<FaHome />
-							</SidebarLink>
-							<SidebarLink href="/shahrin" name="About Me">
-								<FaGrinSquint />
-							</SidebarLink>
-							{/* <SidebarLink href="/aimi" name="Aimi">
-								<FaHeart />
-							</SidebarLink> */}
-							<hr className="m-3 border-base-content" />
-							<SidebarLink href="/settings" name="Settings">
-								<FaCog />
-							</SidebarLink>
+							<SidebarLink href="/" name="Home" icon={FaHome} />
+							<SidebarLink
+								href="/shahrin"
+								name="About Me"
+								icon={FaGrinSquint}
+							/>
+							<div className="divider"></div>
+							<SidebarLink href="/settings" name="Settings" icon={FaCog} />
 						</nav>
+						{/* todo: Authentication
+                            1. Login using gmail
+                            2. Still able to see certain tab/link 
+                            3. If didnt login, guest else, as the user
+                            4. 
+                        */}
 						<div className="flex items-center px-4 -mx-2">
 							<SidebarProfile name="Shahrin Amin" img_dir="/me.jpg" />
 						</div>

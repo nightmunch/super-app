@@ -12,7 +12,7 @@ export default function FindMeHome() {
 								<h2 className="text-3xl font-semibold text-primary">
 									Find Me Home
 								</h2>
-								<h2 className="text-lg">
+								<h2 className="text-lg pt-1">
 									Auto property suggestion{" "}
 									<span className="line-through">for lazy people</span>.
 								</h2>
