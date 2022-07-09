@@ -31,7 +31,10 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 					</div>
 					<div className="pr-2">
 						<div>
-							<button onClick={sessionData ? () => signOut() : () => signIn()}>
+							<button
+								className="btn btn-ghost"
+								onClick={sessionData ? () => signOut() : () => signIn()}
+							>
 								{sessionData ? (
 									<>
 										<FaSignOutAlt className="inline mr-2" />
@@ -82,12 +85,6 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 							<div className="divider"></div>
 							<SidebarLink href="/settings" name="Settings" icon={FaCog} />
 						</nav>
-						{/* todo: Authentication
-                            1. Login using gmail
-                            2. Still able to see certain tab/link 
-                            3. If didnt login, guest else, as the user
-                            4. 
-                        */}
 						<div className="flex items-center px-4 -mx-2">
 							<SidebarProfile
 								name={sessionData?.user?.name!}

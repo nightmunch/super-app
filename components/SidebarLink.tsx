@@ -22,17 +22,20 @@ export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 	const router = useRouter();
 
 	return (
-		<li
-			className={`py-1 ${
-				router.pathname == href ? "bordered text-primary" : ""
-			}`}
-		>
-			<Link href={href}>
-				<a onClick={closeDrawer} className={""}>
-					{createElement(icon)}
-					<span className="mx-4 font-medium">{name}</span>
-				</a>
-			</Link>
-		</li>
+		<div>
+			<li className={`py-1`}>
+				<Link href={href}>
+					<a
+						onClick={closeDrawer}
+						className={` ${
+							router.pathname == href ? "bg-[#2B2C33] text-primary" : ""
+						}`}
+					>
+						{createElement(icon)}
+						<span className="mx-4 font-medium">{name}</span>
+					</a>
+				</Link>
+			</li>
+		</div>
 	);
 };
