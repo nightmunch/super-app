@@ -11,7 +11,8 @@ export const authOptions: NextAuthOptions = {
 		Auth0Provider({
 			clientId: process.env.AUTH0_ID!,
 			clientSecret: process.env.AUTH0_SECRET!,
-            issuer: process.env.AUTH0_ISSUER!
+            issuer: process.env.AUTH0_ISSUER!,
+            authorization: `${process.env.AUTH0_ISSUER}/authorize?response_type=code&prompt=login`
 		}),
 	],
     secret: 'Iloveyouaimi',
