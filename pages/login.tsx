@@ -28,7 +28,7 @@ export default function LoginPage() {
 					placeholder="jane.doe@example.com"
 					{...register("email")}
 				/>
-				<button type="submit">Register</button>
+				<button type="submit">Login</button>
 			</form>
 			<Link href="/register">Register</Link>
 		</>

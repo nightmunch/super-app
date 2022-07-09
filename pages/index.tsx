@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { trpc } from "../utils/trpc";
 
 type AppCardType = {
 	app_name?: string;

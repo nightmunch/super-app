@@ -8,15 +8,19 @@ import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import superjson from "superjson";
 import { AppRouter } from "../server/route/app.router";
 
+import { SessionProvider } from "next-auth/react";
+
 function App({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head>
 				<title>SuperApp by nightmunch</title>
 			</Head>
-			<MainLayout>
-				<Component {...pageProps} />
-			</MainLayout>
+			<SessionProvider session={pageProps.session}>
+				<MainLayout>
+					<Component {...pageProps} />
+				</MainLayout>
+			</SessionProvider>
 		</>
 	);
 }

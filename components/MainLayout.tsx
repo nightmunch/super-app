@@ -10,9 +10,10 @@ import {
 	FaSignInAlt,
 	FaSignOutAlt,
 } from "react-icons/fa";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export const MainLayout: React.FunctionComponent = ({ children }) => {
-	const [isSignIn, setIsSignIn] = useState(true);
+	const { data: sessionData } = useSession();
 	return (
 		<div className="drawer" data-barseme="mytheme">
 			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -29,17 +30,21 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 						</h1>
 					</div>
 					<div className="pr-2">
-						{isSignIn ? (
-							<>
-								<FaSignInAlt />
-								<h1 className="ml-2 font-semibold">Logout</h1>
-							</>
-						) : (
-							<>
-								<FaSignOutAlt />
-								<h1 className="ml-2 font-semibold">Login</h1>
-							</>
-						)}
+						<div>
+							<button onClick={sessionData ? () => signOut() : () => signIn()}>
+								{sessionData ? (
+									<>
+										<FaSignOutAlt className="inline mr-2" />
+										<span>Sign Out</span>
+									</>
+								) : (
+									<>
+										<FaSignInAlt className="inline mr-2" />
+										<span>Sign In</span>
+									</>
+								)}
+							</button>
+						</div>
 					</div>
 				</div>
 				<div className="flex flex-col h-screen my-auto items-center pt-5 gap-5">
@@ -84,7 +89,10 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
                             4. 
                         */}
 						<div className="flex items-center px-4 -mx-2">
-							<SidebarProfile name="Shahrin Amin" img_dir="/me.jpg" />
+							<SidebarProfile
+								name={sessionData?.user?.name!}
+								img_dir={sessionData?.user?.image!}
+							/>
 						</div>
 					</div>
 				</ul>
