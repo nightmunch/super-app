@@ -1,20 +1,4 @@
-import Link from "next/link";
-
-type AppCardType = {
-	app_name?: string;
-	url?: string;
-};
-
-const AppCard: React.FunctionComponent<AppCardType> = ({
-	app_name = "App",
-	url = "/",
-}) => {
-	return (
-		<Link href={url}>
-			<div className="btn btn-primary h-20">{app_name}</div>
-		</Link>
-	);
-};
+import { AppList } from "../components/AppList";
 
 export default function Home() {
 	return (
@@ -36,17 +20,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
-				<div className="card-body gap-4">
-					<h1 className="text-lg font-semibold text-center">List of App</h1>
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-						<AppCard app_name="Find Me Home" url="/findmehome" />
-						<AppCard />
-						<AppCard />
-						<AppCard />
-					</div>
-				</div>
-			</div>
+			<AppList />
 		</>
 	);
 }

@@ -1,7 +1,6 @@
 import { SidebarLink } from "./SidebarLink";
 import { TbBrandNextjs } from "react-icons/tb";
 import { SidebarProfile } from "./SidebarProfile";
-import { useState } from "react";
 import {
 	FaHome,
 	FaCog,
