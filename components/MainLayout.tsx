@@ -88,8 +88,14 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 								name="Find Me Home"
 								icon={FaHouseUser}
 							/>
-							<div className="divider"></div>
-							<SidebarLink href="/settings" name="Settings" icon={FaCog} />
+							{sessionData?.user?.role == "Admin" ? (
+								<>
+									<div className="divider"></div>
+									<SidebarLink href="/settings" name="Settings" icon={FaCog} />
+								</>
+							) : (
+								<></>
+							)}
 						</nav>
 						<div className="flex items-center px-4 -mx-2">
 							<SidebarProfile
