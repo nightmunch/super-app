@@ -20,7 +20,7 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			<AppList />
+			{/* <AppList /> */}
 		</>
 	);
 }

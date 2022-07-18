@@ -8,6 +8,7 @@ import {
 	FaGrinSquint,
 	FaSignInAlt,
 	FaSignOutAlt,
+	FaHouseUser,
 } from "react-icons/fa";
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -80,6 +81,12 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 								href="/shahrin"
 								name="About Me"
 								icon={FaGrinSquint}
+							/>
+							<div className="divider"></div>
+							<SidebarLink
+								href="/findmehome"
+								name="Find Me Home"
+								icon={FaHouseUser}
 							/>
 							<div className="divider"></div>
 							<SidebarLink href="/settings" name="Settings" icon={FaCog} />
