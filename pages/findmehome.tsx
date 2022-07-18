@@ -8,7 +8,7 @@ export default function FindMeHome() {
 					<div className="flex flex-col xl:w-1/2 md:m-auto sm:flex-row sm:gap-10 justify-center">
 						<div className="flex">
 							<div className="my-auto">
-								<h1 className="text-lg">Welcome to!</h1>
+								<h1 className="text-lg">Welcome to</h1>
 								<h2 className="text-3xl font-semibold text-primary">
 									Find Me Home
 								</h2>
