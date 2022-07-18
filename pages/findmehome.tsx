@@ -21,8 +21,8 @@ export default function FindMeHome() {
 					</div>
 				</div>
 			</div>
-			<div className="card bg-neutral shadow-xl text-neutral-content sm:mx-auto sm:w-[42rem]">
-				<div className="card-body">
+			<div className="card bg-neutral shadow-xl text-neutral-content ">
+				<div className="card-body sm:mx-auto sm:w-[42rem]">
 					<LoanCalculator />
 				</div>
 			</div>
