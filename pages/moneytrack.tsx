@@ -11,7 +11,7 @@ export default function MoneyTrack() {
 	const getUser = trpc.useQuery([
 		"user.byEmail",
 		{
-			email: sessionData?.user ? sessionData?.user?.email : "ssharpx@gmail.com",
+			email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
 		},
 	]);
 
@@ -21,6 +21,13 @@ export default function MoneyTrack() {
 	]);
 
 	const createClaim = trpc.useMutation("claim.create", {
+		async onSuccess() {
+			// refetches posts after a post is added
+			await utils.invalidateQueries(["claim.all"]);
+		},
+	});
+
+	const deleteClaim = trpc.useMutation("claim.delete", {
 		async onSuccess() {
 			// refetches posts after a post is added
 			await utils.invalidateQueries(["claim.all"]);
@@ -49,6 +56,15 @@ export default function MoneyTrack() {
 		} else {
 			console.log("No user data");
 		}
+	};
+
+	const removeClaim = async (id: string) => {
+		const input = {
+			id: id,
+		};
+		try {
+			await deleteClaim.mutateAsync(input);
+		} catch {}
 	};
 
 	const padTo2Digits = (num: number) => {
@@ -84,10 +100,10 @@ export default function MoneyTrack() {
 			</div>
 			<div className="card bg-neutral shadow-xl text-neutral-content">
 				<div className="card-body">
-					<div className="tabs pb-3">
-						<a className="tab tab-bordered">Daily</a>
-						<a className="tab tab-bordered">Monthly</a>
-						<a className="tab tab-bordered tab-active">Claim</a>
+					<div className="tabs tabs-boxed pb-3">
+						<a className="tab">Daily</a>
+						<a className="tab">Monthly</a>
+						<a className="tab tab-active">Claim</a>
 					</div>
 					<div className="flex flex-col gap-2">
 						<div className="flex flex-row justify-between items-center">
@@ -106,7 +122,7 @@ export default function MoneyTrack() {
 										<th>Item</th>
 										<th>Amount</th>
 										<th>Date</th>
-										<th></th>
+										<th className="text-center">Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -125,7 +141,12 @@ export default function MoneyTrack() {
 												<td>{formatDate(item.date)}</td>
 												<td className="text-center">
 													<div className="tooltip" data-tip="Remove Claim">
-														<button className="btn btn-ghost">
+														<button
+															className="btn btn-ghost"
+															onClick={(e) => {
+																removeClaim(item.id);
+															}}
+														>
 															<FaTrash />
 														</button>
 													</div>
@@ -186,14 +207,15 @@ export default function MoneyTrack() {
 								}}
 							/>
 						</div>
-						<button
+						<label
+							htmlFor="my-modal"
 							className="btn btn-primary"
 							onClick={(e) => {
 								addClaim();
 							}}
 						>
 							Add
-						</button>
+						</label>
 					</div>
 				</label>
 			</label>

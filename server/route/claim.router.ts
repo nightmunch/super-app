@@ -50,3 +50,16 @@ export const claimRouter = createRouter()
             });
         },
     })
+    // delete
+    .mutation('delete', {
+        input: z.object({
+            id: z.string(),
+        }),
+        async resolve({ ctx, input }) {
+            const { id } = input;
+            await ctx.prisma.claim.delete({ where: { id } });
+            return {
+                id,
+            };
+        },
+    });
