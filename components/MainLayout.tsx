@@ -9,6 +9,7 @@ import {
 	FaSignInAlt,
 	FaSignOutAlt,
 	FaHouseUser,
+	FaPiggyBank,
 } from "react-icons/fa";
 import { MdInventory } from "react-icons/md";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -84,6 +85,11 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 								icon={FaGrinSquint}
 							/>
 							<div className="divider"></div>
+							<SidebarLink
+								href="/moneytrack"
+								name="Money Track"
+								icon={FaPiggyBank}
+							/>
 							<SidebarLink href="/storeit" name="Store It" icon={MdInventory} />
 							<SidebarLink
 								href="/findmehome"

@@ -45,4 +45,16 @@ model User {
     role          String    @default("User")
     accounts      Account[]
     sessions      Session[]
+    claim         Claim[]
+}
+
+// Money Track - Claim
+
+model Claim {
+    id     String   @id @default(cuid()) @map("_id")
+    item   String
+    amount Float
+    date   DateTime
+    userId String
+    user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
