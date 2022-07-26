@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaTrash, FaPlus } from "react-icons/fa";
-import { trpc } from "../utils/trpc";
+import { trpc } from "../../utils/trpc";
 import { useSession } from "next-auth/react";
 
-export default function MoneyTrack() {
+export default function Claim() {
 	const { data: sessionData } = useSession();
 
 	const utils = trpc.useContext();
@@ -134,7 +134,7 @@ export default function MoneyTrack() {
 										</tr>
 									) : (
 										claimsQuery.data?.map((item, index) => (
-											<tr>
+											<tr key={item.id}>
 												<th>{index + 1}</th>
 												<td>{item.item}</td>
 												<td>RM{item.amount.toFixed(2)}</td>
