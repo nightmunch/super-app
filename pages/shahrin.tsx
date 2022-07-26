@@ -10,7 +10,7 @@ export default function Shahrin() {
 							<div className="my-auto">
 								<h1 className="text-lg">Hello!</h1>
 								<h2 className="text-3xl font-semibold text-primary">
-									I'm Shahrin
+									I&apos;m Shahrin
 								</h2>
 								<h2 className="text-lg">
 									Web Developer & Deep Learning Enthusiast
@@ -60,7 +60,7 @@ export default function Shahrin() {
 						people to create awesome project. Well rounded developer, fast-paced
 						learner, and always been holding on to this one quote{" "}
 						<span className="text-primary font-semibold md:block md:text-center md:mt-2">
-							"Jack of all trades, master of some".
+							&quot;Jack of all trades, master of some&quot;.
 						</span>
 					</p>
 				</div>
