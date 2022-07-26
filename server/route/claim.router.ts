@@ -62,4 +62,24 @@ export const claimRouter = createRouter()
                 id,
             };
         },
-    });
+    })
+    //
+    .query('sum', {
+        input: z.object({
+            userId: z.string().cuid(),
+        }),
+        async resolve({ctx, input}) {
+            const { userId } = input;
+            /**
+             * For pagination you can have a look at this docs site
+             * @link https://trpc.io/docs/useInfiniteQuery
+             */
+
+            return ctx.prisma.claim.aggregate({
+                _sum: {
+                  amount: true,
+                },
+                where: {userId},
+              })
+        },
+    })

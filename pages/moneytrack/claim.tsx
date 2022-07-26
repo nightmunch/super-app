@@ -24,10 +24,16 @@ export default function Claim() {
 		{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
 	]);
 
+	const sumQuery = trpc.useQuery([
+		"claim.sum",
+		{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
+	]);
+
 	const createClaim = trpc.useMutation("claim.create", {
 		async onSuccess() {
 			// refetches posts after a post is added
 			await utils.invalidateQueries(["claim.all"]);
+			await utils.invalidateQueries(["claim.sum"]);
 		},
 	});
 
@@ -35,6 +41,7 @@ export default function Claim() {
 		async onSuccess() {
 			// refetches posts after a post is added
 			await utils.invalidateQueries(["claim.all"]);
+			await utils.invalidateQueries(["claim.sum"]);
 		},
 	});
 
@@ -178,6 +185,15 @@ export default function Claim() {
 											</tr>
 										))
 									)}
+									<tr>
+										<th></th>
+										<th className="text-primary">Total</th>
+										<th className="text-primary">
+											RM{sumQuery.data?._sum.amount}
+										</th>
+										<th></th>
+										<th></th>
+									</tr>
 								</tbody>
 							</table>
 						</div>
