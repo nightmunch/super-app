@@ -46,7 +46,10 @@ export const claimRouter = createRouter()
              */
 
             return ctx.prisma.claim.findMany({
-                where: {userId}
+                where: {userId},
+                orderBy: {
+                    date: 'asc',
+                },
             });
         },
     })
