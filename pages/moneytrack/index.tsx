@@ -1,7 +1,20 @@
 import Link from "next/link";
+import { useState } from "react";
+import { Alert } from "../../components/Alert";
+
 export default function MoneyTrack() {
+	const [isAlert, setIsAlert] = useState(false);
+	const [message, setMessage] = useState("");
+	const [type, setType] = useState("");
+
 	return (
 		<>
+			<Alert
+				message={message}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
+				type={type}
+			/>
 			<div className="card bg-neutral shadow-xl text-neutral-content">
 				<div className="card-body">
 					<div className="flex flex-col xl:w-1/2 md:m-auto sm:flex-row sm:gap-10 justify-center">

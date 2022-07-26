@@ -102,6 +102,12 @@ export default function Claim() {
 		].join("/");
 	};
 
+	const separator = (numb: any) => {
+		var str = numb.toString().split(".");
+		str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		return str.join(".");
+	};
+
 	return (
 		<>
 			<Alert
@@ -166,7 +172,7 @@ export default function Claim() {
 											<tr key={item.id}>
 												<th>{index + 1}</th>
 												<td>{item.item}</td>
-												<td>RM{item.amount.toFixed(2)}</td>
+												<td>RM{separator(item.amount.toFixed(2))}</td>
 												<td>{formatDate(item.date)}</td>
 												<td className="text-center">
 													<div className="tooltip" data-tip="Remove Claim">
@@ -185,15 +191,19 @@ export default function Claim() {
 											</tr>
 										))
 									)}
-									<tr>
-										<th></th>
-										<th className="text-primary">Total</th>
-										<th className="text-primary">
-											RM{sumQuery.data?._sum.amount}
-										</th>
-										<th></th>
-										<th></th>
-									</tr>
+									{sumQuery.data?._sum.amount ? (
+										<tr>
+											<th></th>
+											<th className="text-primary">Total</th>
+											<th className="text-primary">
+												RM{separator(sumQuery.data._sum.amount.toFixed(2))}
+											</th>
+											<th></th>
+											<th></th>
+										</tr>
+									) : (
+										<></>
+									)}
 								</tbody>
 							</table>
 						</div>
@@ -263,7 +273,7 @@ export default function Claim() {
 				</label>
 			</label>
 			<input type="checkbox" id="my-modal2" className="modal-toggle" />
-			<div className="modal">
+			<label htmlFor="my-modal2" className="modal cursor-pointer">
 				<div className="modal-box">
 					<div className="modal-action m-5 flex-col items-center gap-5">
 						<BiErrorCircle size={100} className="text-error" />
@@ -280,7 +290,7 @@ export default function Claim() {
 						</label>
 					</div>
 				</div>
-			</div>
+			</label>
 		</>
 	);
 }
