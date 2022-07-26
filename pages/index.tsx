@@ -1,5 +1,3 @@
-import { AppList } from "../components/AppList";
-
 export default function Home() {
 	return (
 		<>
@@ -20,7 +18,6 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-			{/* <AppList /> */}
 		</>
 	);
 }
