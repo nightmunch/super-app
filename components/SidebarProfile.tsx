@@ -6,7 +6,7 @@ type User = {
 
 export const SidebarProfile: React.FunctionComponent<User> = ({
 	name = "Guest",
-	img_dir = "/me.jpg",
+	img_dir = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxhavFn14--r7P7soum6byggoRsRYBHFPImg&usqp=CAU",
 }) => {
 	return (
 		<>
