@@ -32,7 +32,7 @@ export default withTRPC<AppRouter>({
 		 * 1. Handle change of ip, local and production (Vercel)
 		 */
 		const url =
-			process.env.VERCEL === "1"
+			process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
 				? `https://www.nightmunch.com/api/trpc`
 				: "http://localhost:3000/api/trpc";
 
