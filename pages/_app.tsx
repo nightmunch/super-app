@@ -31,9 +31,10 @@ export default withTRPC<AppRouter>({
 		 * TODO:
 		 * 1. Handle change of ip, local and production (Vercel)
 		 */
-		const url = process.env.PROD_URL
-			? `https://${process.env.PROD_URL}/api/trpc`
-			: "http://localhost:3000/api/trpc";
+
+		const baseurl =
+			process.env.VERCEL == "1" ? "www.nightmunch.com" : "localhost:3000";
+		const url = `https://${baseurl}/api/trpc`;
 
 		const links = [
 			loggerLink(),
