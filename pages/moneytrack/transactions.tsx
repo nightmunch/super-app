@@ -226,7 +226,13 @@ export default function Transactions() {
 									{transactionsQuery.data?.length === 0 ? (
 										<tr>
 											<td colSpan={5} className="text-center">
-												<small>No Transaction Founds</small>
+												<small>
+													Press{" "}
+													<kbd className="kbd">
+														<FaPlus />
+													</kbd>{" "}
+													to add one.
+												</small>
 											</td>
 										</tr>
 									) : (

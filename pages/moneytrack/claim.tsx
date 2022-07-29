@@ -177,7 +177,13 @@ export default function Claim() {
 										{claimsQuery.data?.length === 0 ? (
 											<tr>
 												<td colSpan={5} className="text-center">
-													<small>No Claim Founds</small>
+													<small>
+														Press{" "}
+														<kbd className="kbd">
+															<FaPlus />
+														</kbd>{" "}
+														to add one.
+													</small>
 												</td>
 											</tr>
 										) : (
