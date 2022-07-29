@@ -194,7 +194,7 @@ export default function Transactions() {
 								<tbody>
 									{transactionsQuery.isLoading ? (
 										<tr>
-											<td colSpan={6} className="text-center">
+											<td colSpan={5} className="text-center">
 												<div className="inline-flex items-center">
 													<svg
 														className="animate-spin mr-3 h-5 w-5 text-white"
@@ -225,7 +225,7 @@ export default function Transactions() {
 									)}
 									{transactionsQuery.data?.length === 0 ? (
 										<tr>
-											<td colSpan={6} className="text-center">
+											<td colSpan={5} className="text-center">
 												<small>No Transaction Founds</small>
 											</td>
 										</tr>
