@@ -37,15 +37,16 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid()) @map("_id")
+    id            String         @id @default(cuid()) @map("_id")
     name          String?
-    email         String?   @unique
+    email         String?        @unique
     emailVerified DateTime?
     image         String?
-    role          String    @default("User")
+    role          String         @default("User")
     accounts      Account[]
     sessions      Session[]
     claim         Claim[]
+    Transactions  Transactions[]
 }
 
 // Money Track - Claim
@@ -57,4 +58,17 @@ model Claim {
     date   DateTime
     userId String
     user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Money Track - Transactions
+
+model Transactions {
+    id       String   @id @default(cuid()) @map("_id")
+    item     String
+    amount   Float
+    category String
+    remarks  String?
+    date     DateTime
+    userId   String
+    user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
