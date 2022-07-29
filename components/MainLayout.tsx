@@ -94,7 +94,7 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 								name="Money Track"
 								icon={FaPiggyBank}
 							/>
-							<SidebarLink href="/storeit" name="Store It" icon={MdInventory} />
+							{/* <SidebarLink href="/storeit" name="Store It" icon={MdInventory} /> */}
 							<SidebarLink
 								href="/findmehome"
 								name="Find Me Home"

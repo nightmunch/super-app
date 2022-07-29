@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Alert } from "../../components/Alert";
 
 import React from "react";
+import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 
 export default function Claim() {
 	const { data: sessionData } = useSession();
@@ -110,218 +111,200 @@ export default function Claim() {
 
 	return (
 		<>
-			<Alert
-				message={message}
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
-				type={type}
-			/>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
-				<div className="card-body">
-					<div className="flex flex-col xl:w-1/2 md:m-auto sm:flex-row sm:gap-10 justify-center">
-						<div className="flex">
-							<div className="my-auto">
-								<h1 className="text-lg">Welcome to</h1>
-								<h2 className="text-3xl font-semibold text-primary">
-									Money Track!
-								</h2>
-								<h2 className="text-lg pt-1">
-									Track your expenses and saving daily with this app
-								</h2>
+			<MoneyTrackLayout>
+				<Alert
+					message={message}
+					isAlert={isAlert}
+					setIsAlert={setIsAlert}
+					type={type}
+				/>
+				<div className="card bg-neutral shadow-xl text-neutral-content">
+					<div className="card-body">
+						<div className="flex flex-col gap-2">
+							<div className="flex flex-row justify-between items-center px-3">
+								<h1 className="text-xl font-semibold text-primary">
+									Claim List
+								</h1>
+								<div className="tooltip" data-tip="Add Claim">
+									<label htmlFor="my-modal" className="btn btn-ghost">
+										<FaPlus />
+									</label>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
-				<div className="card-body">
-					<div className="tabs tabs-boxed pb-3">
-						<a className="tab">Daily</a>
-						<a className="tab">Monthly</a>
-						<a className="tab tab-active">Claim</a>
-					</div>
-					<div className="flex flex-col gap-2">
-						<div className="flex flex-row justify-between items-center px-3">
-							<h1 className="text-xl font-semibold text-primary">Claim List</h1>
-							<div className="tooltip" data-tip="Add Claim">
-								<label htmlFor="my-modal" className="btn btn-ghost">
-									<FaPlus />
-								</label>
-							</div>
-						</div>
-						<div className="overflow-x-auto pt-2 ">
-							<table className="table table-auto table-zebra w-full">
-								<thead>
-									<tr>
-										<th></th>
-										<th>Item</th>
-										<th>Amount</th>
-										<th>Date</th>
-										<th className="text-center">Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									{claimsQuery.isLoading ? (
+							<div className="overflow-x-auto pt-2 ">
+								<table className="table table-auto table-zebra w-full">
+									<thead>
 										<tr>
-											<td colSpan={5} className="text-center">
-												<div className="inline-flex items-center">
-													<svg
-														className="animate-spin mr-3 h-5 w-5 text-white"
-														xmlns="http://www.w3.org/2000/svg"
-														fill="none"
-														viewBox="0 0 24 24"
-													>
-														<circle
-															className="opacity-25"
-															cx="12"
-															cy="12"
-															r="10"
-															stroke="currentColor"
-															strokeWidth="4"
-														></circle>
-														<path
-															className="opacity-75"
-															fill="currentColor"
-															d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-														></path>
-													</svg>
-													Loading...
-												</div>
-											</td>
+											<th></th>
+											<th>Item</th>
+											<th>Amount</th>
+											<th>Date</th>
+											<th className="text-center">Action</th>
 										</tr>
-									) : (
-										""
-									)}
-									{claimsQuery.data?.length === 0 ? (
-										<tr>
-											<td colSpan={5} className="text-center">
-												<small>No Claim Founds</small>
-											</td>
-										</tr>
-									) : (
-										claimsQuery.data?.map((item, index) => (
-											<tr key={item.id}>
-												<th>{index + 1}</th>
-												<td>{item.item}</td>
-												<td>RM{separator(item.amount.toFixed(2))}</td>
-												<td>{formatDate(item.date)}</td>
-												<td className="text-center">
-													<div className="tooltip" data-tip="Remove Claim">
-														<label
-															htmlFor="my-modal2"
-															className="btn btn-ghost"
-															onClick={(e) => {
-																// removeClaim(item.id);
-																setRemove(item.id);
-															}}
+									</thead>
+									<tbody>
+										{claimsQuery.isLoading ? (
+											<tr>
+												<td colSpan={5} className="text-center">
+													<div className="inline-flex items-center">
+														<svg
+															className="animate-spin mr-3 h-5 w-5 text-white"
+															xmlns="http://www.w3.org/2000/svg"
+															fill="none"
+															viewBox="0 0 24 24"
 														>
-															<FaTrash />
-														</label>
+															<circle
+																className="opacity-25"
+																cx="12"
+																cy="12"
+																r="10"
+																stroke="currentColor"
+																strokeWidth="4"
+															></circle>
+															<path
+																className="opacity-75"
+																fill="currentColor"
+																d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+															></path>
+														</svg>
+														Loading...
 													</div>
 												</td>
 											</tr>
-										))
-									)}
-									{sumQuery.data?._sum.amount ? (
-										<tr>
-											<th></th>
-											<th className="text-primary">Total</th>
-											<th className="text-primary">
-												RM{separator(sumQuery.data._sum.amount.toFixed(2))}
-											</th>
-											<th></th>
-											<th></th>
-										</tr>
-									) : (
-										<></>
-									)}
-								</tbody>
-							</table>
+										) : (
+											""
+										)}
+										{claimsQuery.data?.length === 0 ? (
+											<tr>
+												<td colSpan={5} className="text-center">
+													<small>No Claim Founds</small>
+												</td>
+											</tr>
+										) : (
+											claimsQuery.data?.map((item, index) => (
+												<tr key={item.id}>
+													<th>{index + 1}</th>
+													<td>{item.item}</td>
+													<td>RM {separator(item.amount.toFixed(2))}</td>
+													<td>{formatDate(item.date)}</td>
+													<td className="text-center">
+														<div className="tooltip" data-tip="Remove Claim">
+															<label
+																htmlFor="my-modal2"
+																className="btn btn-ghost"
+																onClick={(e) => {
+																	// removeClaim(item.id);
+																	setRemove(item.id);
+																}}
+															>
+																<FaTrash />
+															</label>
+														</div>
+													</td>
+												</tr>
+											))
+										)}
+										{sumQuery.data?._sum.amount ? (
+											<tr>
+												<th></th>
+												<th className="text-primary">Total</th>
+												<th className="text-primary">
+													RM{separator(sumQuery.data._sum.amount.toFixed(2))}
+												</th>
+												<th></th>
+												<th></th>
+											</tr>
+										) : (
+											<></>
+										)}
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<input type="checkbox" id="my-modal" className="modal-toggle" />
-			<label htmlFor="my-modal" className="modal cursor-pointer">
-				<label className="modal-box relative" htmlFor="">
-					<h1 className="text-xl font-semibold text-primary">Add Claim</h1>
-					<div className="divider"></div>
-					<div className="flex flex-col gap-5">
-						<div className="form-control">
-							<label className="label">
-								<span className="label-text">Item</span>
-							</label>
-							<input
-								type="text"
-								placeholder="Ex: Mekdi"
-								className="input input-bordered w-full"
-								value={item}
-								onChange={(e) => {
-									setItem(e.target.value);
+				<input type="checkbox" id="my-modal" className="modal-toggle" />
+				<label htmlFor="my-modal" className="modal cursor-pointer">
+					<label className="modal-box relative" htmlFor="">
+						<h1 className="text-xl font-semibold text-primary">Add Claim</h1>
+						<div className="divider"></div>
+						<div className="flex flex-col gap-5">
+							<div className="form-control">
+								<label className="label">
+									<span className="label-text">Item</span>
+								</label>
+								<input
+									type="text"
+									placeholder="Ex: Mekdi"
+									className="input input-bordered w-full"
+									value={item}
+									onChange={(e) => {
+										setItem(e.target.value);
+									}}
+								/>
+							</div>
+							<div className="form-control">
+								<label className="label">
+									<span className="label-text">Amount (RM)</span>
+								</label>
+								<input
+									type="text"
+									placeholder="Ex: 100.50"
+									className="input input-bordered w-full"
+									value={amount}
+									onChange={(e) => {
+										const re = /^[\d]*\.?[\d]{0,2}$/;
+										if (re.test(e.target.value)) {
+											setAmount(e.target.value);
+										}
+									}}
+								/>
+							</div>
+							<div className="form-control">
+								<label className="label">
+									<span className="label-text">Date</span>
+								</label>
+								<input
+									type="date"
+									value={date.toISOString().substring(0, 10)}
+									className="input input-bordered w-full"
+									onChange={(e) => {
+										setDate(new Date(e.target.value));
+									}}
+								/>
+							</div>
+							<label
+								htmlFor="my-modal"
+								className="btn btn-primary"
+								onClick={(e) => {
+									addClaim();
 								}}
-							/>
-						</div>
-						<div className="form-control">
-							<label className="label">
-								<span className="label-text">Amount (RM)</span>
+							>
+								Add
 							</label>
-							<input
-								type="text"
-								placeholder="Ex: 100.50"
-								className="input input-bordered w-full"
-								value={amount}
-								onChange={(e) => {
-									const re = /^[\d]*\.?[\d]{0,2}$/;
-									if (re.test(e.target.value)) {
-										setAmount(e.target.value);
-									}
-								}}
-							/>
 						</div>
-						<div className="form-control">
-							<label className="label">
-								<span className="label-text">Date</span>
+					</label>
+				</label>
+				<input type="checkbox" id="my-modal2" className="modal-toggle" />
+				<label htmlFor="my-modal2" className="modal cursor-pointer">
+					<div className="modal-box">
+						<div className="modal-action m-5 flex-col items-center gap-5">
+							<BiErrorCircle size={100} className="text-error" />
+							<h1 className="text-2xl text-error">Delete this claim?</h1>
+							<span>Are you sure you want to delete this claim?</span>
+							<label
+								htmlFor="my-modal2"
+								className="btn btn-error"
+								onClick={(e) => {
+									removeClaim(remove);
+								}}
+							>
+								Delete
 							</label>
-							<input
-								type="date"
-								value={date.toISOString().substring(0, 10)}
-								className="input input-bordered w-full"
-								onChange={(e) => {
-									setDate(new Date(e.target.value));
-								}}
-							/>
 						</div>
-						<label
-							htmlFor="my-modal"
-							className="btn btn-primary"
-							onClick={(e) => {
-								addClaim();
-							}}
-						>
-							Add
-						</label>
 					</div>
 				</label>
-			</label>
-			<input type="checkbox" id="my-modal2" className="modal-toggle" />
-			<label htmlFor="my-modal2" className="modal cursor-pointer">
-				<div className="modal-box">
-					<div className="modal-action m-5 flex-col items-center gap-5">
-						<BiErrorCircle size={100} className="text-error" />
-						<h1 className="text-2xl text-error">Delete this claim?</h1>
-						<span>Are you sure you want to delete this claim?</span>
-						<label
-							htmlFor="my-modal2"
-							className="btn btn-error"
-							onClick={(e) => {
-								removeClaim(remove);
-							}}
-						>
-							Delete
-						</label>
-					</div>
-				</div>
-			</label>
+			</MoneyTrackLayout>
 		</>
 	);
 }
