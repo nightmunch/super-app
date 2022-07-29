@@ -35,7 +35,11 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 						<div>
 							<button
 								className="btn btn-ghost"
-								onClick={sessionData ? () => signOut() : () => signIn("auth0")}
+								onClick={
+									sessionData
+										? () => signOut({ redirect: false })
+										: () => signIn("auth0")
+								}
 							>
 								{sessionData ? (
 									<>
