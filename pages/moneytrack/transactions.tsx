@@ -184,7 +184,7 @@ export default function Transactions() {
 							<table className="table table-auto table-zebra w-full">
 								<thead>
 									<tr>
-										<td></td>
+										<th></th>
 										<td>Item</td>
 										<td>Amount</td>
 										<td>Date</td>
@@ -282,6 +282,12 @@ export default function Transactions() {
 				<input type="checkbox" id="my-modal" className="modal-toggle" />
 				<label htmlFor="my-modal" className="modal cursor-pointer">
 					<label className="modal-box relative" htmlFor="">
+						<label
+							htmlFor="my-modal"
+							className="btn btn-sm btn-circle absolute right-5 top-5"
+						>
+							✕
+						</label>
 						<h1 className="text-xl font-semibold text-primary">
 							Add Transactions
 						</h1>
