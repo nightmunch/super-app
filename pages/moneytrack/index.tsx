@@ -13,7 +13,39 @@ export default function MoneyTrack() {
 		<>
 			<MoneyTrackLayout></MoneyTrackLayout>
 			<div className="card bg-neutral shadow-xl text-neutral-content">
-				<Doughnut title="Transaction Summary July 2022" data={data} />
+				<div className="card-body gap-5 items-stretch">
+					<Doughnut title="Transaction Summary July 2022" data={data} />
+					<div className="overflow-x-auto">
+						<table className="table table-auto table-zebra w-full">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Category</th>
+									<th>Amount</th>
+									<th>%</th>
+								</tr>
+							</thead>
+							<tbody>
+								{data.map((data, index) => (
+									<tr>
+										<td>{index + 1}</td>
+										<td className="flex items-center gap-2">
+											<div
+												className={`badge badge-info badge-sm`}
+												style={{
+													backgroundColor: `${data.color}`,
+												}}
+											></div>{" "}
+											{data.category}
+										</td>
+										<td>-RM {data.amount}</td>
+										<td>2%</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</>
 	);

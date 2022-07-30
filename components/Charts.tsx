@@ -13,38 +13,36 @@ type Input = {
 export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 	return (
 		<>
-			<div className="card-body items-center gap-4">
-				<h1>{title}</h1>
-				<div>
-					<Chart
-						type="doughnut"
-						data={{
-							labels: data.map((data) => data.category),
-							datasets: [
-								{
-									data: data.map((data) => data.amount),
-									backgroundColor: data.map((data) => data.color),
-								},
-							],
-						}}
-						options={{
-							elements: {
-								arc: {
-									borderWidth: 0,
+			<h1 className="text-center">{title}</h1>
+			<div className="sm:w-2/5 mx-auto">
+				<Chart
+					type="doughnut"
+					data={{
+						labels: data.map((data) => data.category),
+						datasets: [
+							{
+								data: data.map((data) => data.amount),
+								backgroundColor: data.map((data) => data.color),
+							},
+						],
+					}}
+					options={{
+						elements: {
+							arc: {
+								borderWidth: 0,
+							},
+						},
+						plugins: {
+							legend: {
+								labels: {
+									color: "rgb(183,205,218)",
 								},
 							},
-							plugins: {
-								legend: {
-									labels: {
-										color: "rgb(183,205,218)",
-									},
-								},
-							},
-							responsive: true,
-							cutout: 80,
-						}}
-					/>
-				</div>
+						},
+						responsive: true,
+						cutout: 80,
+					}}
+				/>
 			</div>
 		</>
 	);
