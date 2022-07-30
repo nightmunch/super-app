@@ -6,7 +6,7 @@ type Input = {
 	data: {
 		category: string;
 		color: string;
-		amount: number;
+		amount: number | null;
 	}[];
 };
 
