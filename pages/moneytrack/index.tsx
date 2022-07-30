@@ -79,8 +79,7 @@ export default function MoneyTrack() {
 
 	/**
 	 * TODO:
-	 * 1. Define categories and their color
-	 * 2. Do we create helper function or, put in database
+	 * 1. Do we create helper function or, put in database
 	 */
 
 	return (
@@ -135,7 +134,9 @@ export default function MoneyTrack() {
 											></div>{" "}
 											{data.category}
 										</td>
-										<td>-RM {separator(data.amount.toFixed(2))}</td>
+										<td className="text-error font-semibold">
+											-RM {separator(data.amount.toFixed(2))}
+										</td>
 										<td>{calculatePercent(data.amount)} %</td>
 									</tr>
 								))}

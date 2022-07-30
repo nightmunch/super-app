@@ -27,10 +27,6 @@ function App({ Component, pageProps }: AppProps) {
 
 export default withTRPC<AppRouter>({
 	config({ ctx }) {
-		/**
-		 * TODO:
-		 * 1. Handle change of ip, local and production (Vercel)
-		 */
 		const url =
 			process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
 				? `https://www.nightmunch.com/api/trpc`

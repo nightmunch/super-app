@@ -28,6 +28,13 @@ export default function Transactions() {
 		{ num: 11, name: "November" },
 		{ num: 12, name: "December" },
 	];
+	let categories = [
+		{ category: "Food & Beverages", color: "#e76f51" },
+		{ category: "Transportation", color: "#f4a261" },
+		{ category: "Shopping", color: "#e9c46a" },
+		{ category: "Dating", color: "#2a9d8f" },
+		{ category: "Test", color: "#264653" },
+	];
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
 	const getUser = trpc.useQuery([
@@ -247,7 +254,16 @@ export default function Transactions() {
 														}}
 													>
 														<div className="block pb-1">{item.item}</div>
-														<div className=" block badge badge-info text-xs">
+														<div
+															className=" block badge badge-info text-xs"
+															style={{
+																backgroundColor: `${
+																	categories.filter((x) => {
+																		return x.category == item.category;
+																	})[0].color
+																}`,
+															}}
+														>
 															{item.category}
 														</div>
 														<div className="block">
@@ -342,10 +358,11 @@ export default function Transactions() {
 									}}
 								>
 									<option value="">Select Category</option>
-									<option value="Food & Beverages">Food & Beverages</option>
-									<option value="Transportation">Transportation</option>
-									<option value="Shopping">Shopping</option>
-									<option value="Dating">Dating</option>
+									{categories.map((category, index) => (
+										<option key={index} value={category.category}>
+											{category.category}
+										</option>
+									))}
 								</select>
 							</div>
 							<div className="form-control">
@@ -423,7 +440,18 @@ export default function Transactions() {
 							✕
 						</label>
 						<h1 className="text-2xl text-primary text-center">{item}</h1>
-						<div className="block badge badge-info text-xs mx-auto mt-3">
+						<div
+							className="block badge badge-info text-xs mx-auto mt-3"
+							style={{
+								backgroundColor: `${
+									category
+										? categories.filter((x) => {
+												return x.category == category;
+										  })[0].color
+										: ""
+								}`,
+							}}
+						>
 							{category}
 						</div>
 						<div className="divider"></div>
