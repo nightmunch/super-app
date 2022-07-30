@@ -124,7 +124,7 @@ export default function MoneyTrack() {
 							</thead>
 							<tbody>
 								{data.map((data, index) => (
-									<tr>
+									<tr key={index}>
 										<td>{index + 1}</td>
 										<td className="flex items-center gap-2">
 											<div
