@@ -110,6 +110,11 @@ export const transactionRouter = createRouter()
                 _sum: {
                     amount: true
                 },
+                orderBy: {
+                    _sum: {
+                        amount: 'desc'
+                    }
+                }
 
             });
         },
