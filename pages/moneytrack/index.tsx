@@ -3,6 +3,7 @@ import { Doughnut } from "../../components/Charts";
 import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
 import { useState } from "react";
+import { RiEmotionSadLine } from "react-icons/ri";
 
 export default function MoneyTrack() {
 	let data: any[] = [];
@@ -110,39 +111,54 @@ export default function MoneyTrack() {
 							))}
 						</select>
 					</div>
-					<Doughnut title={title} data={data} />
-					<div className="overflow-x-auto">
-						<table className="table table-auto table-zebra w-full">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Category</th>
-									<th>Amount</th>
-									<th>Percent</th>
-								</tr>
-							</thead>
-							<tbody>
-								{data.map((data, index) => (
-									<tr key={index}>
-										<td>{index + 1}</td>
-										<td className="flex items-center gap-2">
-											<div
-												className={`badge badge-info badge-sm`}
-												style={{
-													backgroundColor: `${data.color}`,
-												}}
-											></div>{" "}
-											{data.category}
-										</td>
-										<td className="text-error font-semibold">
-											-RM {separator(data.amount.toFixed(2))}
-										</td>
-										<td>{calculatePercent(data.amount)} %</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
+					{data.length !== 0 ? (
+						<>
+							<Doughnut title={title} data={data} />
+							<div className="overflow-x-auto">
+								<table className="table table-auto table-zebra w-full">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Category</th>
+											<th>Amount</th>
+											<th>Percent</th>
+										</tr>
+									</thead>
+									<tbody>
+										{data.map((data, index) => (
+											<tr key={index}>
+												<td>{index + 1}</td>
+												<td className="flex items-center gap-2">
+													<div
+														className={`badge badge-info badge-sm`}
+														style={{
+															backgroundColor: `${data.color}`,
+														}}
+													></div>{" "}
+													{data.category}
+												</td>
+												<td className="text-error font-semibold">
+													-RM {separator(data.amount.toFixed(2))}
+												</td>
+												<td>{calculatePercent(data.amount)} %</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						</>
+					) : (
+						<div className="flex flex-col items-center pt-5 gap-5 text-center">
+							<RiEmotionSadLine size={100} className="text-error" />
+							<h1 className="text-2xl text-error">
+								There is no transaction for this month.
+							</h1>
+							<span>
+								You can add a transaction from the{" "}
+								<kbd className="kbd">Transactions</kbd> tab
+							</span>
+						</div>
+					)}
 				</div>
 			</div>
 		</>
