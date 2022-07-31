@@ -148,6 +148,12 @@ export default function Transactions() {
 		setDate(new Date());
 	};
 
+	const dates = new Date(new Date().getFullYear(), 7 - 1);
+	const first_date = new Date(date.getFullYear(), dates.getMonth(), 1);
+	const last_date = new Date(date.getFullYear(), dates.getMonth() + 1, 1);
+
+	console.log(last_date);
+
 	return (
 		<>
 			<MoneyTrackLayout>

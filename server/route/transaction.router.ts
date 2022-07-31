@@ -46,7 +46,7 @@ export const transactionRouter = createRouter()
 
             const date = new Date(new Date().getFullYear(), month - 1);
             const first_date = new Date(date.getFullYear(), date.getMonth(), 1);
-            const last_date = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            const last_date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
             
             /**
              * For pagination you can have a look at this docs site
@@ -91,7 +91,7 @@ export const transactionRouter = createRouter()
 
             const date = new Date(new Date().getFullYear(), month - 1);
             const first_date = new Date(date.getFullYear(), date.getMonth(), 1);
-            const last_date = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            const last_date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
             
             /**
              * For pagination you can have a look at this docs site
