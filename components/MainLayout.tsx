@@ -11,13 +11,12 @@ import {
 	FaHouseUser,
 	FaPiggyBank,
 } from "react-icons/fa";
-import { MdInventory } from "react-icons/md";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export const MainLayout: React.FunctionComponent = ({ children }) => {
 	const { data: sessionData } = useSession();
 	return (
-		<div className="drawer" data-barseme="mytheme">
+		<div className="drawer">
 			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content">
 				<div className="navbar bg-base-300 gap-2 sticky top-0 z-50">
