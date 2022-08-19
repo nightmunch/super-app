@@ -152,8 +152,6 @@ export default function Transactions() {
 	const first_date = new Date(date.getFullYear(), dates.getMonth(), 1);
 	const last_date = new Date(date.getFullYear(), dates.getMonth() + 1, 1);
 
-	console.log(last_date);
-
 	return (
 		<>
 			<MoneyTrackLayout>
@@ -185,7 +183,7 @@ export default function Transactions() {
 									setCurrentMonth(Number(e.target.value));
 								}}
 							>
-								<option>Select Category</option>
+								<option>Select Month</option>
 								{months.map(({ num, name }) => (
 									<option key={num} value={num}>
 										{name}
@@ -358,15 +356,19 @@ export default function Transactions() {
 								</label>
 								<select
 									className="select select-bordered"
-									defaultValue={category}
+									// defaultValue={category}
 									onChange={(e) => {
 										setCategory(e.target.value);
 									}}
 								>
 									<option value="">Select Category</option>
-									{categories.map((category, index) => (
-										<option key={index} value={category.category}>
-											{category.category}
+									{categories.map((cat, index) => (
+										<option
+											key={index}
+											value={cat.category}
+											selected={cat.category == category ? true : false}
+										>
+											{cat.category}
 										</option>
 									))}
 								</select>
