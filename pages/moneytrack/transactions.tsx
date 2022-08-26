@@ -231,7 +231,7 @@ export default function Transactions() {
 										<td>Item</td>
 										<td>Amount</td>
 										<td>Date</td>
-										<td>Action</td>
+										<td className="text-center">Action</td>
 									</tr>
 								</thead>
 								<tbody>
