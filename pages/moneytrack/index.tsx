@@ -9,11 +9,11 @@ export default function MoneyTrack() {
 	let data: any[] = [];
 
 	let categories = [
-		{ category: "Food & Beverages", color: "#e76f51" },
-		{ category: "Transportation", color: "#f4a261" },
+		{ category: "Food & Beverages", color: "#264653" },
+		{ category: "Transportation", color: "#e76f51" },
 		{ category: "Shopping", color: "#e9c46a" },
 		{ category: "Dating", color: "#2a9d8f" },
-		{ category: "Test", color: "#264653" },
+		{ category: "Test", color: "#f4a261" },
 	];
 	const months: { num: number; name: string }[] = [
 		{ num: 1, name: "January" },

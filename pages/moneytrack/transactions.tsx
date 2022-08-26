@@ -29,11 +29,11 @@ export default function Transactions() {
 		{ num: 12, name: "December" },
 	];
 	let categories = [
-		{ category: "Food & Beverages", color: "#e76f51" },
-		{ category: "Transportation", color: "#f4a261" },
+		{ category: "Food & Beverages", color: "#264653" },
+		{ category: "Transportation", color: "#e76f51" },
 		{ category: "Shopping", color: "#e9c46a" },
 		{ category: "Dating", color: "#2a9d8f" },
-		{ category: "Test", color: "#264653" },
+		{ category: "Test", color: "#f4a261" },
 	];
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
@@ -152,6 +152,38 @@ export default function Transactions() {
 	const first_date = new Date(date.getFullYear(), dates.getMonth(), 1);
 	const last_date = new Date(date.getFullYear(), dates.getMonth() + 1, 1);
 
+	function getRGB(c: string): number {
+		return parseInt(c, 16);
+	}
+
+	function getsRGB(c: string) {
+		return getRGB(c) / 255 <= 0.03928
+			? getRGB(c) / 255 / 12.92
+			: Math.pow((getRGB(c) / 255 + 0.055) / 1.055, 2.4);
+	}
+
+	function getLuminance(hexColor: string) {
+		return (
+			0.2126 * getsRGB(hexColor.substr(1, 2)) +
+			0.7152 * getsRGB(hexColor.substr(3, 2)) +
+			0.0722 * getsRGB(hexColor.substr(-2))
+		);
+	}
+
+	function getContrast(f: string, b: string) {
+		const L1 = getLuminance(f);
+		const L2 = getLuminance(b);
+		console.log({ L1, L2 });
+		return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
+	}
+
+	function getTextColor(bgColor: string) {
+		const whiteContrast = getContrast(bgColor, "#181A20");
+		const blackContrast = getContrast(bgColor, "#C8CDDA");
+
+		return whiteContrast > blackContrast ? "#181A20" : "#C8CDDA";
+	}
+
 	return (
 		<>
 			<MoneyTrackLayout>
@@ -259,13 +291,18 @@ export default function Transactions() {
 													>
 														<div className="block pb-1">{item.item}</div>
 														<div
-															className=" block badge badge-info text-xs"
+															className=" block badge text-xs"
 															style={{
 																backgroundColor: `${
 																	categories.filter((x) => {
 																		return x.category == item.category;
 																	})[0].color
 																}`,
+																color: `${getTextColor(
+																	categories.filter((x) => {
+																		return x.category == item.category;
+																	})[0].color
+																)}`,
 															}}
 														>
 															{item.category}
