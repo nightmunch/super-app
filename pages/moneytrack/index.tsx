@@ -152,7 +152,6 @@ export default function MoneyTrack() {
 													{separator(totalQuery.data._sum.amount.toFixed(2))}
 												</th>
 												<th></th>
-												<th></th>
 											</tr>
 										) : (
 											<></>
