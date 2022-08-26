@@ -118,8 +118,7 @@ export default function MoneyTrack() {
 								<table className="table table-auto table-zebra w-full">
 									<thead>
 										<tr>
-											<th></th>
-											<th>Category</th>
+											<td>Category</td>
 											<th>Amount</th>
 											<th>Percent</th>
 										</tr>
@@ -127,7 +126,6 @@ export default function MoneyTrack() {
 									<tbody>
 										{data.map((data, index) => (
 											<tr key={index}>
-												<td></td>
 												<td className="flex items-center gap-2">
 													<div
 														className={`badge badge-info badge-sm`}
@@ -145,8 +143,7 @@ export default function MoneyTrack() {
 										))}
 										{totalQuery.data?._sum.amount ? (
 											<tr>
-												<th></th>
-												<th className="text-primary">Total</th>
+												<td className="text-primary font-bold">Total</td>
 												<th className="text-primary">
 													-RM
 													{separator(totalQuery.data._sum.amount.toFixed(2))}

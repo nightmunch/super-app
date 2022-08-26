@@ -227,7 +227,7 @@ export default function Transactions() {
 							<table className="table table-auto table-zebra w-full">
 								<thead>
 									<tr>
-										<th></th>
+										<td></td>
 										<td>Item</td>
 										<td>Amount</td>
 										<td>Date</td>
@@ -281,7 +281,7 @@ export default function Transactions() {
 									) : (
 										transactionsQuery.data?.map((item, index) => (
 											<tr key={item.id}>
-												<th>{index + 1}</th>
+												<td>{index + 1}</td>
 												<td>
 													<label
 														htmlFor="display-transaction"
