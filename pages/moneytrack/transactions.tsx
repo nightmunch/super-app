@@ -495,6 +495,15 @@ export default function Transactions() {
 										  })[0].color
 										: ""
 								}`,
+								color: `${
+									category
+										? getTextColor(
+												categories.filter((x) => {
+													return x.category == category;
+												})[0].color
+										  )
+										: ""
+								}`,
 							}}
 						>
 							{category}
