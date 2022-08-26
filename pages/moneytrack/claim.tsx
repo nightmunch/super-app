@@ -7,6 +7,7 @@ import { Alert } from "../../components/Alert";
 
 import React from "react";
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
+import { formatDate, separator } from "../../helpers/helpers";
 
 export default function Claim() {
 	const { data: sessionData } = useSession();
@@ -89,24 +90,6 @@ export default function Claim() {
 			setMessage("Claim is succesfully deleted!");
 			setType("error");
 		} catch {}
-	};
-
-	const padTo2Digits = (num: number) => {
-		return num.toString().padStart(2, "0");
-	};
-
-	const formatDate = (date: Date) => {
-		return [
-			padTo2Digits(date.getDate()),
-			padTo2Digits(date.getMonth() + 1),
-			date.getFullYear(),
-		].join("/");
-	};
-
-	const separator = (numb: any) => {
-		var str = numb.toString().split(".");
-		str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		return str.join(".");
 	};
 
 	return (
