@@ -127,7 +127,7 @@ export default function MoneyTrack() {
 									<tbody>
 										{data.map((data, index) => (
 											<tr key={index}>
-												<td>{index + 1}</td>
+												<td></td>
 												<td className="flex items-center gap-2">
 													<div
 														className={`badge badge-info badge-sm`}
@@ -143,6 +143,20 @@ export default function MoneyTrack() {
 												<td>{calculatePercent(data.amount)} %</td>
 											</tr>
 										))}
+										{totalQuery.data?._sum.amount ? (
+											<tr>
+												<th></th>
+												<th className="text-primary">Total</th>
+												<th className="text-primary">
+													-RM
+													{separator(totalQuery.data._sum.amount.toFixed(2))}
+												</th>
+												<th></th>
+												<th></th>
+											</tr>
+										) : (
+											<></>
+										)}
 									</tbody>
 								</table>
 							</div>
