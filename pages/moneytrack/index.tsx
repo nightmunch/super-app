@@ -4,32 +4,9 @@ import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
 import { useState } from "react";
 import { RiEmotionSadLine } from "react-icons/ri";
+import { months, categories, separator } from "../../helpers/helpers";
 
 export default function MoneyTrack() {
-	let data: any[] = [];
-
-	let categories = [
-		{ category: "Food & Beverages", color: "#264653" },
-		{ category: "Transportation", color: "#e76f51" },
-		{ category: "Shopping", color: "#e9c46a" },
-		{ category: "Dating", color: "#2a9d8f" },
-		{ category: "Test", color: "#f4a261" },
-	];
-	const months: { num: number; name: string }[] = [
-		{ num: 1, name: "January" },
-		{ num: 2, name: "February" },
-		{ num: 3, name: "March" },
-		{ num: 4, name: "April" },
-		{ num: 5, name: "May" },
-		{ num: 6, name: "June" },
-		{ num: 7, name: "July" },
-		{ num: 8, name: "August" },
-		{ num: 9, name: "September" },
-		{ num: 10, name: "October" },
-		{ num: 11, name: "November" },
-		{ num: 12, name: "December" },
-	];
-
 	const { data: sessionData } = useSession();
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 	const getUser = trpc.useQuery([
@@ -52,21 +29,18 @@ export default function MoneyTrack() {
 			month: currentMonth,
 		},
 	]);
-	summariesQuery.data?.map((x) => {
-		data.push({
-			category: x.category,
-			color: categories.filter((color) => {
-				return color.category == x.category;
-			})[0].color,
-			amount: x._sum.amount,
-		});
-	});
 
-	const separator = (numb: any) => {
-		var str = numb.toString().split(".");
-		str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		return str.join(".");
-	};
+	let data = summariesQuery.data
+		? summariesQuery.data?.map((x) => {
+				return {
+					category: x.category,
+					color: categories.filter((color) => {
+						return color.category == x.category;
+					})[0].color,
+					amount: x._sum.amount,
+				};
+		  })
+		: [];
 
 	const calculatePercent = (value: number) => {
 		return totalQuery.data
@@ -76,12 +50,13 @@ export default function MoneyTrack() {
 			: 0;
 	};
 
-	const [title, setTitle] = useState("Transaction Summary July 2022");
-
-	/**
-	 * TODO:
-	 * 1. Do we create helper function or, put in database
-	 */
+	const [title, setTitle] = useState(
+		`Transaction Summary ${
+			months.filter((x) => {
+				return x.num == Number(new Date().getMonth() + 1);
+			})[0].name
+		} ${new Date().getFullYear()}`
+	);
 
 	return (
 		<>
@@ -111,7 +86,7 @@ export default function MoneyTrack() {
 							))}
 						</select>
 					</div>
-					{data.length !== 0 ? (
+					{data?.length !== 0 ? (
 						<>
 							<Doughnut title={title} data={data} />
 							<div className="overflow-x-auto">
@@ -124,7 +99,7 @@ export default function MoneyTrack() {
 										</tr>
 									</thead>
 									<tbody>
-										{data.map((data, index) => (
+										{data?.map((data, index) => (
 											<tr key={index}>
 												<td className="flex items-center gap-2">
 													<div
@@ -136,9 +111,9 @@ export default function MoneyTrack() {
 													{data.category}
 												</td>
 												<td className="text-error font-semibold">
-													-RM {separator(data.amount.toFixed(2))}
+													-RM {separator(data.amount?.toFixed(2))}
 												</td>
-												<td>{calculatePercent(data.amount)} %</td>
+												<td>{calculatePercent(data.amount!)} %</td>
 											</tr>
 										))}
 										{totalQuery.data?._sum.amount ? (
