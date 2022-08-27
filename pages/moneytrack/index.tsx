@@ -34,9 +34,9 @@ export default function MoneyTrack() {
 		? summariesQuery.data?.map((x) => {
 				return {
 					category: x.category,
-					color: categories.filter((color) => {
+					color: categories.find((color) => {
 						return color.category == x.category;
-					})[0].color,
+					})!.color,
 					amount: x._sum.amount,
 				};
 		  })
@@ -52,9 +52,9 @@ export default function MoneyTrack() {
 
 	const [title, setTitle] = useState(
 		`Transaction Summary ${
-			months.filter((x) => {
+			months.find((x) => {
 				return x.num == Number(new Date().getMonth() + 1);
-			})[0].name
+			})!.name
 		} ${new Date().getFullYear()}`
 	);
 
@@ -71,9 +71,9 @@ export default function MoneyTrack() {
 								setCurrentMonth(Number(e.target.value));
 								setTitle(
 									`Transaction Summary ${
-										months.filter((x) => {
+										months.find((x) => {
 											return x.num == Number(e.target.value);
-										})[0].name
+										})!.name
 									} ${new Date().getFullYear()}`
 								);
 							}}

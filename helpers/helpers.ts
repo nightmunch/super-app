@@ -69,7 +69,6 @@ function getLuminance(hexColor: string) {
 function getContrast(f: string, b: string) {
     const L1 = getLuminance(f);
     const L2 = getLuminance(b);
-    console.log({ L1, L2 });
     return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
 }
 

@@ -227,14 +227,14 @@ export default function Transactions() {
 															className=" block badge text-xs"
 															style={{
 																backgroundColor: `${
-																	categories.filter((x) => {
+																	categories.find((x) => {
 																		return x.category == item.category;
-																	})[0].color
+																	})!.color
 																}`,
 																color: `${getTextColor(
-																	categories.filter((x) => {
+																	categories.find((x) => {
 																		return x.category == item.category;
-																	})[0].color,
+																	})!.color,
 																	"#181A20",
 																	"#C8CDDA"
 																)}`,
@@ -425,17 +425,17 @@ export default function Transactions() {
 							style={{
 								backgroundColor: `${
 									category
-										? categories.filter((x) => {
+										? categories.find((x) => {
 												return x.category == category;
-										  })[0].color
+										  })!.color
 										: ""
 								}`,
 								color: `${
 									category
 										? getTextColor(
-												categories.filter((x) => {
+												categories.find((x) => {
 													return x.category == category;
-												})[0].color,
+												})!.color,
 												"#181A20",
 												"#C8CDDA"
 										  )
