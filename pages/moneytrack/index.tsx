@@ -120,7 +120,7 @@ export default function MoneyTrack() {
 											<tr>
 												<td className="text-primary font-bold">Total</td>
 												<th className="text-primary">
-													-RM
+													-RM{" "}
 													{separator(totalQuery.data._sum.amount.toFixed(2))}
 												</th>
 												<th></th>

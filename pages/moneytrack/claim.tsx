@@ -198,7 +198,7 @@ export default function Claim() {
 												<th></th>
 												<th className="text-primary">Total</th>
 												<th className="text-primary">
-													RM{separator(sumQuery.data._sum.amount.toFixed(2))}
+													RM {separator(sumQuery.data._sum.amount.toFixed(2))}
 												</th>
 												<th></th>
 												<th></th>
