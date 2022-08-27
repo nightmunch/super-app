@@ -38,6 +38,11 @@ export const MoneyTrackLayout: React.FunctionComponent = ({ children }) => {
 				<Link href="/moneytrack/claim">
 					<a className={`tab ${tab == "claim" ? "tab-active" : ""}`}>Claim</a>
 				</Link>
+				<Link href="/moneytrack/networth">
+					<a className={`tab ${tab == "networth" ? "tab-active" : ""}`}>
+						Net Worth
+					</a>
+				</Link>
 			</div>
 			{children}
 		</>
