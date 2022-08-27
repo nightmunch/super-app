@@ -47,6 +47,7 @@ model User {
     sessions      Session[]
     claim         Claim[]
     Transactions  Transactions[]
+    networth      NetWorth[]
 }
 
 // Money Track - Claim
@@ -71,4 +72,17 @@ model Transactions {
     date     DateTime
     userId   String
     user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Money Track - Net Worth
+
+model NetWorth {
+    id       String  @id @default(cuid()) @map("_id")
+    item     String
+    category String
+    amount   Float
+    currency String  @default("RM")
+    remarks  String?
+    User     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId   String
 }

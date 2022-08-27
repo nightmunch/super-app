@@ -333,7 +333,9 @@ export default function Transactions() {
 										setCategory(e.target.value);
 									}}
 								>
-									<option value="">Select Category</option>
+									<option disabled selected>
+										Select Category
+									</option>
 									{categories.map((cat, index) => (
 										<option
 											key={index}
