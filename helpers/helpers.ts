@@ -16,11 +16,14 @@ export const months: { num: number; name: string }[] = [
 
 // Categories with Color
 export const categories = [
-    { category: "Food & Beverages", color: "#264653" },
-    { category: "Transportation", color: "#e76f51" },
+    { category: "Food & Beverages", color: "#618df4" },
+    { category: "Transportation", color: "#f46161" },
     { category: "Shopping", color: "#e9c46a" },
-    { category: "Dating", color: "#2a9d8f" },
-    { category: "Test", color: "#f4a261" },
+    { category: "Dating", color: "#de6dcf" },
+    { category: "Bills", color: "#b961f4" },
+    { category: "Healthcare", color: "#2a9d8f" },
+    { category: "Groceries", color: "#8ec94f" },
+    { category: "Others", color: "#f4a261" },
 ];
 
 // Number Comma Separator
