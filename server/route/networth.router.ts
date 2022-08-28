@@ -2,6 +2,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { createRouter } from "../createRouter";
 import * as trpc from '@trpc/server'
 import { z } from 'zod';
+import axios from "axios";
 
 export const netWorthRouter = createRouter()
     .query('all', {
@@ -119,7 +120,22 @@ export const netWorthRouter = createRouter()
                 _sum: {
                   amount: true,
                 },
-                where: {userId},
+                where: {
+                    userId,
+                    currency: 'RM'
+                },
               })
+        },
+    })
+    .query('cryptoprice', {
+        input: z.object({
+            crypto: z.string()
+        }),
+        async resolve({ctx, input}) {
+            const { crypto } = input;
+            const res = await axios(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=myr`);
+            return await {
+                data: res.data.ethereum.myr
+            }
         },
     })

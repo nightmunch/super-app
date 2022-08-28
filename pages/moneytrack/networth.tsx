@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaTrash, FaPlus } from "react-icons/fa";
 import { BiErrorCircle } from "react-icons/bi";
 import { trpc } from "../../utils/trpc";
@@ -7,13 +7,26 @@ import { Alert } from "../../components/Alert";
 
 import React from "react";
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
-import { formatDate, separator } from "../../helpers/helpers";
+import { separator } from "../../helpers/helpers";
 import { NetWorth } from "@prisma/client";
+
+/**
+ * TODO:
+ * [] create api to get the current ETH value
+ *
+ */
 
 export default function Claim() {
 	const { data: sessionData } = useSession();
 
 	const utils = trpc.useContext();
+
+	const getCryptoPrice = trpc.useQuery([
+		"networth.cryptoprice",
+		{
+			crypto: "ethereum",
+		},
+	]);
 
 	const getUser = trpc.useQuery([
 		"user.byEmail",
@@ -31,6 +44,16 @@ export default function Claim() {
 		"networth.sum",
 		{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
 	]);
+
+	const calculateSum = () => {
+		var notRM = 0;
+		netWorthQuery.data?.map((net) => {
+			net.currency != "RM"
+				? (notRM += net.amount * getCryptoPrice.data?.data)
+				: "";
+		});
+		return (sumNetWorth.data?._sum.amount! + notRM).toFixed(2);
+	};
 
 	const createNetWorth = trpc.useMutation("networth.create", {
 		async onSuccess() {
@@ -218,7 +241,15 @@ export default function Claim() {
 															{item.item}
 														</label>
 													</td>
-													<td>RM {separator(item.amount)}</td>
+													<td>
+														{item.currency == "RM"
+															? `RM ${separator(item.amount)}`
+															: `RM ${separator(
+																	(
+																		item.amount * getCryptoPrice.data?.data
+																	).toFixed(2)
+															  )}`}
+													</td>
 													<td>{item.remarks}</td>
 													<td className="text-center">
 														<div
@@ -244,7 +275,7 @@ export default function Claim() {
 												<th></th>
 												<th className="text-primary">Total</th>
 												<th className="text-primary">
-													RM {separator(sumNetWorth.data?._sum.amount)}
+													RM {separator(calculateSum())}
 												</th>
 												<th></th>
 												<th></th>
@@ -290,7 +321,7 @@ export default function Claim() {
 									className="input input-bordered w-full"
 									value={amount}
 									onChange={(e) => {
-										const re = /^[\d]*\.?[\d]{0,2}$/;
+										const re = /^[\d]*\.?[\d]{0,3}$/;
 										if (re.test(e.target.value)) {
 											setAmount(e.target.value);
 										}
@@ -326,7 +357,6 @@ export default function Claim() {
 									className="select select-bordered w-full"
 									onChange={(e) => {
 										setCategory(e.target.value);
-										console.log(category);
 									}}
 								>
 									<option disabled selected>
@@ -432,7 +462,7 @@ export default function Claim() {
 									className="input input-bordered w-full"
 									value={amount}
 									onChange={(e) => {
-										const re = /^[\d]*\.?[\d]{0,2}$/;
+										const re = /^[\d]*\.?[\d]{0,3}$/;
 										if (re.test(e.target.value)) {
 											setAmount(e.target.value);
 										}
