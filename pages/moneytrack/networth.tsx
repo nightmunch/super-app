@@ -52,7 +52,7 @@ export default function Claim() {
 				? (notRM += net.amount * getCryptoPrice.data?.data)
 				: "";
 		});
-		return (sumNetWorth.data?._sum.amount! + notRM).toFixed(2);
+		return sumNetWorth.data?._sum.amount! + notRM;
 	};
 
 	const createNetWorth = trpc.useMutation("networth.create", {
@@ -143,7 +143,7 @@ export default function Claim() {
 				setRemarks("");
 				// alert
 				setIsAlert(true);
-				setMessage("Net Worth is succesfully added!");
+				setMessage("Net Worth is succesfully updated!");
 				setType("success");
 			} catch (e) {
 				console.log(e);
@@ -243,7 +243,7 @@ export default function Claim() {
 													</td>
 													<td>
 														{item.currency == "RM"
-															? `RM ${separator(item.amount)}`
+															? `RM ${separator(item.amount.toFixed(2))}`
 															: `RM ${separator(
 																	(
 																		item.amount * getCryptoPrice.data?.data
@@ -275,7 +275,7 @@ export default function Claim() {
 												<th></th>
 												<th className="text-primary">Total</th>
 												<th className="text-primary">
-													RM {separator(calculateSum())}
+													RM {separator(calculateSum().toFixed(2))}
 												</th>
 												<th></th>
 												<th></th>
