@@ -164,7 +164,7 @@ export default function Claim() {
 												</td>
 											</tr>
 										) : (
-											""
+											<></>
 										)}
 										{claimsQuery.data?.length === 0 ? (
 											<tr>

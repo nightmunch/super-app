@@ -203,7 +203,7 @@ export default function Transactions() {
 											</td>
 										</tr>
 									) : (
-										""
+										<></>
 									)}
 									{transactionsQuery.data?.length === 0 ? (
 										<tr>
