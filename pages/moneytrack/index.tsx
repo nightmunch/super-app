@@ -9,26 +9,35 @@ import { months, categories, separator } from "../../helpers/helpers";
 export default function MoneyTrack() {
 	const { data: sessionData } = useSession();
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
-	const getUser = trpc.useQuery([
-		"user.byEmail",
-		{
-			email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
-		},
-	]);
-	const summariesQuery = trpc.useQuery([
-		"transaction.summary-by-month",
-		{
-			userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
-			month: currentMonth,
-		},
-	]);
-	const totalQuery = trpc.useQuery([
-		"transaction.total-spent",
-		{
-			userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
-			month: currentMonth,
-		},
-	]);
+	const getUser = trpc.useQuery(
+		[
+			"user.byEmail",
+			{
+				email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
+			},
+		],
+		{ staleTime: Infinity }
+	);
+	const summariesQuery = trpc.useQuery(
+		[
+			"transaction.summary-by-month",
+			{
+				userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
+				month: currentMonth,
+			},
+		],
+		{ staleTime: Infinity }
+	);
+	const totalQuery = trpc.useQuery(
+		[
+			"transaction.total-spent",
+			{
+				userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
+				month: currentMonth,
+			},
+		],
+		{ staleTime: Infinity }
+	);
 
 	let data = summariesQuery.data
 		? summariesQuery.data?.map((x) => {

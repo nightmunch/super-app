@@ -8,49 +8,69 @@ import { Alert } from "../../components/Alert";
 import React from "react";
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { separator } from "../../helpers/helpers";
-import { NetWorth } from "@prisma/client";
+import { NetWorth as NW } from "@prisma/client";
+import { copyFileSync } from "fs";
 
 /**
  * TODO:
- * [] create api to get the current ETH value
- *
+ * [x] create api to get the current ETH value
+ * [x] create array of empty price, after useEffect, fill it with currentPrice.
+ * [x] all query fetch once.
  */
 
-export default function Claim() {
+export default function NetWorth() {
 	const { data: sessionData } = useSession();
 
 	const utils = trpc.useContext();
 
-	const getCryptoPrice = trpc.useQuery([
-		"networth.cryptoprice",
-		{
-			crypto: "ethereum",
-		},
-	]);
+	const [price, setPrice] = useState({ eth: 0 });
+	const getCryptoPrice = trpc.useQuery(
+		[
+			"networth.cryptoprice",
+			{
+				crypto: "ethereum",
+			},
+		],
+		{ staleTime: Infinity }
+	);
 
-	const getUser = trpc.useQuery([
-		"user.byEmail",
-		{
-			email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
-		},
-	]);
+	useEffect(() => {
+		setPrice((price) => ({
+			...price,
+			...{ eth: getCryptoPrice.data?.data },
+		}));
+	}, []);
 
-	const netWorthQuery = trpc.useQuery([
-		"networth.all",
-		{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
-	]);
+	const getUser = trpc.useQuery(
+		[
+			"user.byEmail",
+			{
+				email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
+			},
+		],
+		{ staleTime: Infinity }
+	);
 
-	const sumNetWorth = trpc.useQuery([
-		"networth.sum",
-		{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
-	]);
+	const netWorthQuery = trpc.useQuery(
+		[
+			"networth.all",
+			{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
+		],
+		{ staleTime: Infinity }
+	);
+
+	const sumNetWorth = trpc.useQuery(
+		[
+			"networth.sum",
+			{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
+		],
+		{ staleTime: Infinity }
+	);
 
 	const calculateSum = () => {
 		var notRM = 0;
 		netWorthQuery.data?.map((net) => {
-			net.currency != "RM"
-				? (notRM += net.amount * getCryptoPrice.data?.data)
-				: "";
+			net.currency != "RM" ? (notRM += net.amount * price.eth) : "";
 		});
 		return sumNetWorth.data?._sum.amount! + notRM;
 	};
@@ -166,7 +186,7 @@ export default function Claim() {
 		} catch {}
 	};
 
-	const onDisplay = (item: NetWorth) => {
+	const onDisplay = (item: NW) => {
 		setID(item.id);
 		setItem(item.item);
 		setAmount(String(item.amount));
@@ -245,9 +265,7 @@ export default function Claim() {
 														{item.currency == "RM"
 															? `RM ${separator(item.amount.toFixed(2))}`
 															: `RM ${separator(
-																	(
-																		item.amount * getCryptoPrice.data?.data
-																	).toFixed(2)
+																	(item.amount * price.eth).toFixed(2)
 															  )}`}
 													</td>
 													<td>{item.remarks}</td>
@@ -281,7 +299,7 @@ export default function Claim() {
 												<th></th>
 											</tr>
 										) : (
-											""
+											<></>
 										)}
 									</tbody>
 								</table>
@@ -337,16 +355,10 @@ export default function Claim() {
 									onChange={(e) => {
 										setCurrency(e.target.value);
 									}}
+									value={currency}
 								>
-									<option value="RM" selected={currency == "RM" ? true : false}>
-										RM
-									</option>
-									<option
-										value="ETH"
-										selected={currency == "ETH" ? true : false}
-									>
-										ETH
-									</option>
+									<option value="RM">RM</option>
+									<option value="ETH">ETH</option>
 								</select>
 							</div>
 							<div className="form-control">
@@ -358,22 +370,11 @@ export default function Claim() {
 									onChange={(e) => {
 										setCategory(e.target.value);
 									}}
+									value={category}
 								>
-									<option disabled selected>
-										Select Category
-									</option>
-									<option
-										value="Bank"
-										selected={category == "Bank" ? true : false}
-									>
-										Bank
-									</option>
-									<option
-										value="Investment"
-										selected={category == "Investment" ? true : false}
-									>
-										Investment
-									</option>
+									<option disabled>Select Category</option>
+									<option value="Bank">Bank</option>
+									<option value="Investment">Investment</option>
 								</select>
 							</div>
 							<div className="form-control">
@@ -478,16 +479,10 @@ export default function Claim() {
 									onChange={(e) => {
 										setCurrency(e.target.value);
 									}}
+									value={currency}
 								>
-									<option value="RM" selected={currency == "RM" ? true : false}>
-										RM
-									</option>
-									<option
-										value="ETH"
-										selected={currency == "ETH" ? true : false}
-									>
-										ETH
-									</option>
+									<option value="RM">RM</option>
+									<option value="ETH">ETH</option>
 								</select>
 							</div>
 							<div className="form-control">
@@ -499,22 +494,11 @@ export default function Claim() {
 									onChange={(e) => {
 										setCategory(e.target.value);
 									}}
+									value={category}
 								>
-									<option disabled selected>
-										Select Category
-									</option>
-									<option
-										value="Bank"
-										selected={category == "Bank" ? true : false}
-									>
-										Bank
-									</option>
-									<option
-										value="Investment"
-										selected={category == "Investment" ? true : false}
-									>
-										Investment
-									</option>
+									<option disabled>Select Category</option>
+									<option value="Bank">Bank</option>
+									<option value="Investment">Investment</option>
 								</select>
 							</div>
 							<div className="form-control">

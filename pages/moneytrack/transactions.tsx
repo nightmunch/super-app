@@ -24,20 +24,26 @@ export default function Transactions() {
 
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
-	const getUser = trpc.useQuery([
-		"user.byEmail",
-		{
-			email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
-		},
-	]);
+	const getUser = trpc.useQuery(
+		[
+			"user.byEmail",
+			{
+				email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
+			},
+		],
+		{ staleTime: Infinity }
+	);
 
-	const transactionsQuery = trpc.useQuery([
-		"transaction.list-by-month",
-		{
-			userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
-			month: currentMonth,
-		},
-	]);
+	const transactionsQuery = trpc.useQuery(
+		[
+			"transaction.list-by-month",
+			{
+				userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
+				month: currentMonth,
+			},
+		],
+		{ staleTime: Infinity }
+	);
 
 	const createTransaction = trpc.useMutation("transaction.create", {
 		async onSuccess() {

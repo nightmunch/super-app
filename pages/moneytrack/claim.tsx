@@ -14,22 +14,31 @@ export default function Claim() {
 
 	const utils = trpc.useContext();
 
-	const getUser = trpc.useQuery([
-		"user.byEmail",
-		{
-			email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
-		},
-	]);
+	const getUser = trpc.useQuery(
+		[
+			"user.byEmail",
+			{
+				email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
+			},
+		],
+		{ staleTime: Infinity }
+	);
 
-	const claimsQuery = trpc.useQuery([
-		"claim.all",
-		{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
-	]);
+	const claimsQuery = trpc.useQuery(
+		[
+			"claim.all",
+			{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
+		],
+		{ staleTime: Infinity }
+	);
 
-	const sumQuery = trpc.useQuery([
-		"claim.sum",
-		{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
-	]);
+	const sumQuery = trpc.useQuery(
+		[
+			"claim.sum",
+			{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
+		],
+		{ staleTime: Infinity }
+	);
 
 	const createClaim = trpc.useMutation("claim.create", {
 		async onSuccess() {
