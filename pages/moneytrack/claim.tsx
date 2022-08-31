@@ -59,7 +59,7 @@ export default function Claim() {
 	const [item, setItem] = useState("");
 	const [amount, setAmount] = useState("");
 	const [date, setDate] = useState<Date>(new Date());
-	const [isAlert, setIsAlert] = useState(false);
+
 	const [message, setMessage] = useState("");
 	const [type, setType] = useState("");
 	const [remove, setRemove] = useState("");
@@ -78,8 +78,7 @@ export default function Claim() {
 				setItem("");
 				setAmount("");
 				setDate(new Date());
-				// alert
-				setIsAlert(true);
+				// Alert
 				setMessage("Claim is succesfully added!");
 				setType("success");
 			} catch {}
@@ -94,8 +93,7 @@ export default function Claim() {
 		};
 		try {
 			await deleteClaim.mutateAsync(input);
-			// alert
-			setIsAlert(true);
+			// Alert
 			setMessage("Claim is succesfully deleted!");
 			setType("error");
 		} catch {}
@@ -104,12 +102,7 @@ export default function Claim() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert
-					message={message}
-					isAlert={isAlert}
-					setIsAlert={setIsAlert}
-					type={type}
-				/>
+				<Alert message={message} setMessage={setMessage} type={type} />
 				<div className="card bg-neutral shadow-xl text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">

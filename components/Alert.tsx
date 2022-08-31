@@ -2,26 +2,24 @@ import { Dispatch, SetStateAction } from "react";
 
 type AlertType = {
 	message: string;
-	isAlert: boolean;
-	setIsAlert: Dispatch<SetStateAction<boolean>>;
+	setMessage: Dispatch<SetStateAction<string>>;
 	type: string;
 };
 
 export const Alert: React.FunctionComponent<AlertType> = ({
 	message,
-	isAlert,
-	setIsAlert,
+	setMessage,
 	type,
 }) => {
 	if (type == "success") {
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-success shadow-lg transition-opacity ease-linear ${
-					isAlert ? "opacity-1" : "opacity-0"
+					message != "" ? "opacity-1" : "opacity-0"
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						setIsAlert(false);
+						setMessage("");
 					}, 5000);
 				}}
 			>
@@ -47,11 +45,11 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-error shadow-lg transition-opacity ease-linear ${
-					isAlert ? "opacity-1" : "opacity-0"
+					message != "" ? "opacity-1" : "opacity-0"
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						setIsAlert(false);
+						setMessage("");
 					}, 5000);
 				}}
 			>
@@ -77,11 +75,11 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-success shadow-lg transition-opacity ease-linear ${
-					isAlert ? "opacity-1" : "opacity-0"
+					message != "" ? "opacity-1" : "opacity-0"
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						setIsAlert(false);
+						setMessage("");
 					}, 5000);
 				}}
 			>

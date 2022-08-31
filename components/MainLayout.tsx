@@ -108,7 +108,7 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 								<></>
 							)}
 						</nav>
-						<div className="flex items-center px-4 -mx-2">
+						<div className="">
 							<SidebarProfile
 								name={sessionData?.user?.name!}
 								img_dir={sessionData?.user?.image!}

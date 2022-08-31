@@ -24,22 +24,19 @@ export default function NetWorth() {
 	const utils = trpc.useContext();
 
 	const [price, setPrice] = useState({ eth: 0 });
-	const getCryptoPrice = trpc.useQuery(
-		[
-			"networth.cryptoprice",
-			{
-				crypto: "ethereum",
-			},
-		],
-		{ staleTime: Infinity }
-	);
+	const getCryptoPrice = trpc.useQuery([
+		"networth.cryptoprice",
+		{
+			crypto: "ethereum",
+		},
+	]);
 
 	useEffect(() => {
 		setPrice((price) => ({
 			...price,
 			...{ eth: getCryptoPrice.data?.data },
 		}));
-	}, []);
+	}, [setPrice]);
 
 	const getUser = trpc.useQuery(
 		[
@@ -106,7 +103,6 @@ export default function NetWorth() {
 	const [category, setCategory] = useState("");
 	const [remarks, setRemarks] = useState("");
 
-	const [isAlert, setIsAlert] = useState(false);
 	const [message, setMessage] = useState("");
 	const [type, setType] = useState("");
 
@@ -129,8 +125,7 @@ export default function NetWorth() {
 				setAmount("");
 				setCategory("");
 				setRemarks("");
-				// alert
-				setIsAlert(true);
+				// Alert
 				setMessage("Net Worth is succesfully added!");
 				setType("success");
 			} catch (e) {
@@ -161,8 +156,7 @@ export default function NetWorth() {
 				setAmount("");
 				setCategory("");
 				setRemarks("");
-				// alert
-				setIsAlert(true);
+				// Alert
 				setMessage("Net Worth is succesfully updated!");
 				setType("success");
 			} catch (e) {
@@ -179,8 +173,7 @@ export default function NetWorth() {
 		};
 		try {
 			await deleteNetWorth.mutateAsync(input);
-			// alert
-			setIsAlert(true);
+			// Alert
 			setMessage("Net is succesfully deleted!");
 			setType("error");
 		} catch {}
@@ -204,12 +197,7 @@ export default function NetWorth() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert
-					message={message}
-					isAlert={isAlert}
-					setIsAlert={setIsAlert}
-					type={type}
-				/>
+				<Alert message={message} setMessage={setMessage} type={type} />
 				<div className="card bg-neutral shadow-xl text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">

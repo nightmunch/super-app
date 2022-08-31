@@ -50,4 +50,27 @@ export const userRouter = createRouter()
           }
           return user;
         },
-      })
+    })
+    .mutation('changeName', {
+        input:z.object({
+            email:z.string(),
+            name:z.string()
+        }),
+        async resolve({ ctx, input }) {
+            try{
+                await ctx.prisma.user.update({
+                    where: {
+                        email: input.email
+                    },
+                    data: {
+                        name: input.name
+                    }
+                })
+            }catch(e){
+                throw new trpc.TRPCError({
+                    code: 'INTERNAL_SERVER_ERROR',
+                    message: 'Something went wrong'
+                })
+            }
+        },
+    })

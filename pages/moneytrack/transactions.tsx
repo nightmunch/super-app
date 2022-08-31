@@ -18,7 +18,6 @@ export default function Transactions() {
 	const { data: sessionData } = useSession();
 	const utils = trpc.useContext();
 
-	const [isAlert, setIsAlert] = useState(false);
 	const [message, setMessage] = useState("");
 	const [type, setType] = useState("");
 
@@ -84,8 +83,7 @@ export default function Transactions() {
 				setCategory("");
 				setRemarks("");
 				setDate(new Date());
-				// alert
-				setIsAlert(true);
+				// Alert
 				setMessage("Transaction is succesfully added!");
 				setType("success");
 			} catch {}
@@ -101,7 +99,6 @@ export default function Transactions() {
 		try {
 			await deleteTransaction.mutateAsync(input);
 			// alert
-			setIsAlert(true);
 			setMessage("Transaction is succesfully deleted!");
 			setType("error");
 		} catch {}
@@ -126,12 +123,7 @@ export default function Transactions() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert
-					message={message}
-					isAlert={isAlert}
-					setIsAlert={setIsAlert}
-					type={type}
-				/>
+				<Alert message={message} setMessage={setMessage} type={type} />
 				<div className="card bg-neutral shadow-xl text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">
