@@ -24,19 +24,22 @@ export default function NetWorth() {
 	const utils = trpc.useContext();
 
 	const [price, setPrice] = useState({ eth: 0 });
-	const getCryptoPrice = trpc.useQuery([
-		"networth.cryptoprice",
+	const getCryptoPrice = trpc.useQuery(
+		[
+			"networth.cryptoprice",
+			{
+				crypto: "ethereum",
+			},
+		],
 		{
-			crypto: "ethereum",
-		},
-	]);
-
-	useEffect(() => {
-		setPrice((price) => ({
-			...price,
-			...{ eth: getCryptoPrice.data?.data },
-		}));
-	}, [setPrice]);
+			onSuccess: ({ data }) => {
+				setPrice((price) => ({
+					...price,
+					...{ eth: data },
+				}));
+			},
+		}
+	);
 
 	const getUser = trpc.useQuery(
 		[

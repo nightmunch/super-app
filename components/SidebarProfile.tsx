@@ -23,7 +23,7 @@ export const SidebarProfile: React.FunctionComponent<User> = ({
 	return (
 		<>
 			<li>
-				<Link href={`${name != "Guest" ? "/profile" : ""}`}>
+				<Link href={`${name != "Guest" ? "/profile" : "#"}`}>
 					<a
 						onClick={closeDrawer}
 						className={` ${
