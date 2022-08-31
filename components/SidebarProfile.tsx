@@ -17,7 +17,7 @@ export const SidebarProfile: React.FunctionComponent<User> = ({
 	return (
 		<>
 			<li>
-				<Link href="/profile">
+				<Link href={`${name != "Guest" ? "/profile" : ""}`}>
 					<a
 						className={` ${
 							router.pathname == href ? "bg-[#2B2C33] text-primary" : ""

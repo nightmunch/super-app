@@ -330,16 +330,13 @@ export default function Transactions() {
 									onChange={(e) => {
 										setCategory(e.target.value);
 									}}
+									value={category}
 								>
 									<option disabled selected>
 										Select Category
 									</option>
 									{categories.map((cat, index) => (
-										<option
-											key={index}
-											value={cat.category}
-											selected={cat.category == category ? true : false}
-										>
+										<option key={index} value={cat.category}>
 											{cat.category}
 										</option>
 									))}
