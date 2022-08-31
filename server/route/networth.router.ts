@@ -134,7 +134,7 @@ export const netWorthRouter = createRouter()
         async resolve({ctx, input}) {
             const { crypto } = input;
             const res = await axios(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=myr`);
-            return await {
+            return {
                 data: res.data.ethereum.myr
             }
         },
