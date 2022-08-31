@@ -12,6 +12,12 @@ export const SidebarProfile: React.FunctionComponent<User> = ({
 	name = "Guest",
 	img_dir = "",
 }) => {
+	// If the link is clicked, close the drawer
+	function closeDrawer() {
+		const drawer = document.getElementById("my-drawer")!;
+		drawer.click();
+	}
+
 	const router = useRouter();
 	const href = "/profile";
 	return (
@@ -19,6 +25,7 @@ export const SidebarProfile: React.FunctionComponent<User> = ({
 			<li>
 				<Link href={`${name != "Guest" ? "/profile" : ""}`}>
 					<a
+						onClick={closeDrawer}
 						className={` ${
 							router.pathname == href ? "bg-[#2B2C33] text-primary" : ""
 						}`}
