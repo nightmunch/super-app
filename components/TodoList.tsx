@@ -24,7 +24,11 @@ export function TodoList() {
 				<div className="divider my-0"></div>
 				<div className="flex flex-col gap-2">
 					{dummies.map((dummy) => (
-						<Todo content={dummy.content} isComplete={dummy.isComplete} />
+						<Todo
+							key={dummy.content}
+							content={dummy.content}
+							isComplete={dummy.isComplete}
+						/>
 					))}
 				</div>
 				<div className="form-control">
