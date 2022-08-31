@@ -332,9 +332,7 @@ export default function Transactions() {
 									}}
 									value={category}
 								>
-									<option disabled selected>
-										Select Category
-									</option>
+									<option disabled>Select Category</option>
 									{categories.map((cat, index) => (
 										<option key={index} value={cat.category}>
 											{cat.category}
