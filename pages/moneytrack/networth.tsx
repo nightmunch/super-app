@@ -38,6 +38,7 @@ export default function NetWorth() {
 					...{ eth: data },
 				}));
 			},
+			enabled: price.eth == 0,
 		}
 	);
 
