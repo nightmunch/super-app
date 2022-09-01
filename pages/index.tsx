@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { TodoList } from "../components/TodoList";
 
 export default function Home() {
 	return (
@@ -23,17 +22,12 @@ export default function Home() {
 					<Clock />
 				</div>
 			</div>
-			{/* <div className="card bg-neutral shadow-xl text-neutral-content w-full sm:w-[600px] sm:mx-auto">
-				<div className="card-body">
-					<TodoList />
-				</div>
-			</div> */}
 		</>
 	);
 }
 
 function LoopingBar() {
-	let timer: any;
+	let timer: NodeJS.Timeout;
 	const [counterState, setCounter] = useState(0);
 	useEffect(() => {
 		clearInterval(timer);
