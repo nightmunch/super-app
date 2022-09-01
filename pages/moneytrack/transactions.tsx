@@ -6,6 +6,8 @@ import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { trpc } from "../../utils/trpc";
 import { useSession } from "next-auth/react";
 import { Transactions as Trans } from "@prisma/client";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+
 import {
 	months,
 	categories,
@@ -120,6 +122,8 @@ export default function Transactions() {
 		setDate(new Date());
 	};
 
+	const [parent] = useAutoAnimate<HTMLTableSectionElement>();
+
 	return (
 		<>
 			<MoneyTrackLayout>
@@ -165,7 +169,7 @@ export default function Transactions() {
 										<td className="text-center">Action</td>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody ref={parent}>
 									{transactionsQuery.isLoading ? (
 										<tr>
 											<td colSpan={5} className="text-center">

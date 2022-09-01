@@ -8,6 +8,7 @@ import { Alert } from "../../components/Alert";
 import React from "react";
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { formatDate, separator } from "../../helpers/helpers";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function Claim() {
 	const { data: sessionData } = useSession();
@@ -99,6 +100,8 @@ export default function Claim() {
 		} catch {}
 	};
 
+	const [parent] = useAutoAnimate<HTMLTableSectionElement>();
+
 	return (
 		<>
 			<MoneyTrackLayout>
@@ -127,7 +130,7 @@ export default function Claim() {
 											<th className="text-center">Action</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody ref={parent}>
 										{claimsQuery.isLoading ? (
 											<tr>
 												<td colSpan={5} className="text-center">

@@ -10,6 +10,7 @@ import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { separator } from "../../helpers/helpers";
 import { NetWorth as NW } from "@prisma/client";
 import { copyFileSync } from "fs";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 /**
  * TODO:
@@ -198,6 +199,8 @@ export default function NetWorth() {
 		setRemarks("");
 	};
 
+	const [parent] = useAutoAnimate<HTMLTableSectionElement>();
+
 	return (
 		<>
 			<MoneyTrackLayout>
@@ -226,7 +229,7 @@ export default function NetWorth() {
 											<th className="text-center">Action</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody ref={parent}>
 										{netWorthQuery.data?.length === 0 ? (
 											<tr>
 												<td colSpan={5} className="text-center">

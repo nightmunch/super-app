@@ -5,6 +5,7 @@ import { trpc } from "../../utils/trpc";
 import { useState } from "react";
 import { RiEmotionSadLine } from "react-icons/ri";
 import { months, categories, separator } from "../../helpers/helpers";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function MoneyTrack() {
 	const { data: sessionData } = useSession();
@@ -67,11 +68,13 @@ export default function MoneyTrack() {
 		} ${new Date().getFullYear()}`
 	);
 
+	const [parent] = useAutoAnimate<HTMLDivElement>();
+
 	return (
 		<>
 			<MoneyTrackLayout></MoneyTrackLayout>
 			<div className="card bg-neutral shadow-xl text-neutral-content">
-				<div className="card-body gap-5 items-stretch">
+				<div className="card-body gap-5 items-stretch" ref={parent}>
 					<div className="form-control w-1/2 mx-auto">
 						<select
 							className="select select-bordered"

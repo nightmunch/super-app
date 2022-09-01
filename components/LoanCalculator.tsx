@@ -1,6 +1,9 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useEffect, useState } from "react";
 
 export const LoanCalculator: React.FunctionComponent = () => {
+	const [parent] = useAutoAnimate<HTMLDivElement>();
+
 	const [loanAmount, setLoanAmount] = useState("");
 	const [interest, setInterest] = useState("");
 	const [years, setYears] = useState("");
@@ -38,7 +41,7 @@ export const LoanCalculator: React.FunctionComponent = () => {
 	return (
 		<>
 			<h1 className="text-lg font-semibold text-primary">Loan Calculator</h1>
-			<div className="flex flex-col gap-4 pt-3">
+			<div className="flex flex-col gap-4 pt-3" ref={parent}>
 				<div className="form-control">
 					<label className="label">
 						<span className="label-text">Loan Amount (RM)</span>
