@@ -86,3 +86,13 @@ export const claimRouter = createRouter()
               })
         },
     })
+    // delete
+    .mutation('delete-all', {
+        input: z.object({
+            userId: z.string().cuid(),
+        }),
+        async resolve({ ctx, input }) {
+            const { userId } = input;
+            await ctx.prisma.claim.deleteMany({where:{userId}});
+        },
+    })

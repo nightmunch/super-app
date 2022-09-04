@@ -57,6 +57,14 @@ export default function Claim() {
 		},
 	});
 
+	const deleteAll = trpc.useMutation("claim.delete-all", {
+		async onSuccess() {
+			// refetches posts after a post is added
+			await utils.invalidateQueries(["claim.all"]);
+			await utils.invalidateQueries(["claim.sum"]);
+		},
+	});
+
 	const [item, setItem] = useState("");
 	const [amount, setAmount] = useState("");
 	const [date, setDate] = useState<Date>(new Date());
@@ -100,6 +108,19 @@ export default function Claim() {
 		} catch {}
 	};
 
+	const removeAll = async () => {
+		const input = {
+			userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
+		};
+		try {
+			await deleteAll.mutateAsync(input);
+			// Alert
+			setMessage("All entries has succefully claimed!");
+			setType("success");
+		} catch {}
+		console.log("claim all");
+	};
+
 	const [parent] = useAutoAnimate<HTMLTableSectionElement>();
 
 	return (
@@ -113,10 +134,24 @@ export default function Claim() {
 								<h1 className="text-xl font-semibold text-primary">
 									Claim List
 								</h1>
-								<div className="tooltip" data-tip="Add Claim">
-									<label htmlFor="my-modal" className="btn btn-ghost">
-										<FaPlus />
-									</label>
+								<div>
+									<div className="tooltip" data-tip="Claim All">
+										<label
+											htmlFor="modal-removeall"
+											className={`btn ${
+												claimsQuery.data?.length == 0
+													? "btn-disabled"
+													: "btn-success"
+											}`}
+										>
+											Claim All
+										</label>
+									</div>
+									<div className="tooltip" data-tip="Add Claim">
+										<label htmlFor="my-modal" className="btn btn-ghost">
+											<FaPlus />
+										</label>
+									</div>
 								</div>
 							</div>
 							<div className="overflow-x-auto pt-2 ">
@@ -294,6 +329,28 @@ export default function Claim() {
 								}}
 							>
 								Delete
+							</label>
+						</div>
+					</div>
+				</label>
+				<input type="checkbox" id="modal-removeall" className="modal-toggle" />
+				<label htmlFor="modal-removeall" className="modal cursor-pointer">
+					<div className="modal-box">
+						<div className="modal-action m-5 flex-col items-center gap-5">
+							<BiErrorCircle size={100} className="text-error" />
+							<h1 className="text-2xl text-error">Claim All?</h1>
+							<span>Are you sure you want to claim all entries?</span>
+							<span className="text-xs text-gray-600">
+								(All entries will be removed)
+							</span>
+							<label
+								htmlFor="modal-removeall"
+								className="btn btn-error"
+								onClick={() => {
+									removeAll();
+								}}
+							>
+								Claim All
 							</label>
 						</div>
 					</div>
