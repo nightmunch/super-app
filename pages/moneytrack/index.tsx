@@ -26,8 +26,8 @@ export default function MoneyTrack() {
 				userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
 				month: currentMonth,
 			},
-		],
-		{ staleTime: Infinity }
+		]
+		// { staleTime: Infinity }
 	);
 	const totalQuery = trpc.useQuery(
 		[
@@ -36,8 +36,8 @@ export default function MoneyTrack() {
 				userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
 				month: currentMonth,
 			},
-		],
-		{ staleTime: Infinity }
+		]
+		// { staleTime: Infinity }
 	);
 
 	let data = summariesQuery.data
