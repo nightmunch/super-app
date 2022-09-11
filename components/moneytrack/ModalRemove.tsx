@@ -9,9 +9,8 @@ type Props = {
 	buttonTitle: string;
 	id: string | null;
 	userId: string | null;
-	setMessage: Dispatch<SetStateAction<string>>;
-	setType: Dispatch<SetStateAction<string>>;
-	errorMessage: string;
+	alertMessage: string;
+	alertDispatch: Dispatch<any>;
 };
 
 export const ModalRemove = ({
@@ -21,9 +20,8 @@ export const ModalRemove = ({
 	buttonTitle,
 	id,
 	userId,
-	setMessage,
-	setType,
-	errorMessage,
+	alertMessage,
+	alertDispatch,
 }: Props) => {
 	const utils = trpc.useContext();
 
@@ -41,17 +39,11 @@ export const ModalRemove = ({
 		try {
 			await deleteClaim.mutateAsync(input);
 			// Alert
-			setMessage(errorMessage);
-			setType("success");
+			alertDispatch({ type: "message", payload: alertMessage });
+			alertDispatch({ type: "type", payload: "success" });
 		} catch {}
 	};
-
-	var input = {};
-	if (id) {
-		input = { id };
-	} else {
-		input = { userId };
-	}
+	const input = id ? { id } : { userId };
 	return (
 		<>
 			<input type="checkbox" id={htmlfor} className="modal-toggle" />

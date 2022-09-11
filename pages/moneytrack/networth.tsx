@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaTrash, FaPlus } from "react-icons/fa";
 import { BiErrorCircle } from "react-icons/bi";
 import { trpc } from "../../utils/trpc";
@@ -9,8 +9,8 @@ import React from "react";
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { separator } from "../../helpers/helpers";
 import { NetWorth as NW } from "@prisma/client";
-import { copyFileSync } from "fs";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useAlertReducer } from "../../hooks/useAlertReducer";
 
 /**
  * TODO:
@@ -108,8 +108,11 @@ export default function NetWorth() {
 	const [category, setCategory] = useState("");
 	const [remarks, setRemarks] = useState("");
 
-	const [message, setMessage] = useState("");
-	const [type, setType] = useState("");
+	const [alertState, alertDispatch] = useAlertReducer();
+	enum AlertActionKind {
+		SET_MESSAGE = "message",
+		SET_TYPE = "type",
+	}
 
 	const [remove, setRemove] = useState("");
 
@@ -131,8 +134,11 @@ export default function NetWorth() {
 				setCategory("");
 				setRemarks("");
 				// Alert
-				setMessage("Net Worth is succesfully added!");
-				setType("success");
+				alertDispatch({
+					type: AlertActionKind.SET_MESSAGE,
+					payload: "Net Worth is succesfully added!",
+				});
+				alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 			} catch (e) {
 				console.log(e);
 			}
@@ -162,8 +168,11 @@ export default function NetWorth() {
 				setCategory("");
 				setRemarks("");
 				// Alert
-				setMessage("Net Worth is succesfully updated!");
-				setType("success");
+				alertDispatch({
+					type: AlertActionKind.SET_MESSAGE,
+					payload: "Net Worth is succesfully updated!",
+				});
+				alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 			} catch (e) {
 				console.log(e);
 			}
@@ -179,8 +188,11 @@ export default function NetWorth() {
 		try {
 			await deleteNetWorth.mutateAsync(input);
 			// Alert
-			setMessage("Net is succesfully deleted!");
-			setType("error");
+			alertDispatch({
+				type: AlertActionKind.SET_MESSAGE,
+				payload: "Net Worth is succesfully deleted!",
+			});
+			alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "error" });
 		} catch {}
 	};
 
@@ -204,7 +216,7 @@ export default function NetWorth() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert message={message} setMessage={setMessage} type={type} />
+				<Alert state={alertState} dispatch={alertDispatch} />
 				<div className="card bg-neutral shadow-xl text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">

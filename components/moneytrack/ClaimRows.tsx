@@ -1,13 +1,14 @@
+import { Dispatch } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { formatDate, separator } from "../../helpers/helpers";
 import { trpc } from "../../utils/trpc";
 
 type Props = {
 	userId: string;
-	setRemove: (id: string) => void;
+	dispatch: Dispatch<any>;
 };
 
-export const ClaimRows = ({ userId, setRemove }: Props) => {
+export const ClaimRows = ({ userId, dispatch }: Props) => {
 	const claimsQuery = trpc.useQuery(["claim.all", { userId }], {
 		staleTime: Infinity,
 	});
@@ -74,7 +75,8 @@ export const ClaimRows = ({ userId, setRemove }: Props) => {
 									htmlFor="remove-claim"
 									className="btn btn-ghost"
 									onClick={(e) => {
-										setRemove(item.id);
+										dispatch({ type: "remove", payload: item.id });
+										// setRemove(item.id);
 									}}
 								>
 									<FaTrash />

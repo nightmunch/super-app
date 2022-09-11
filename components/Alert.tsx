@@ -1,25 +1,29 @@
 import { Dispatch, SetStateAction } from "react";
 
-type AlertType = {
+// An interface for our state
+interface AlertState {
 	message: string;
-	setMessage: Dispatch<SetStateAction<string>>;
 	type: string;
+}
+
+type AlertType = {
+	dispatch: Dispatch<any>;
+	state: AlertState;
 };
 
 export const Alert: React.FunctionComponent<AlertType> = ({
-	message,
-	setMessage,
-	type,
+	dispatch,
+	state,
 }) => {
-	if (type == "success") {
+	if (state.type == "success") {
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-success shadow-lg transition-opacity ease-linear ${
-					message != "" ? "opacity-1" : "opacity-0"
+					state.message != "" ? "opacity-1" : "opacity-0"
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						setMessage("");
+						dispatch({ type: "message", payload: "" });
 					}, 5000);
 				}}
 			>
@@ -37,19 +41,19 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 							d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
-					<span>{message}</span>
+					<span>{state.message}</span>
 				</div>
 			</div>
 		);
-	} else if (type == "error") {
+	} else if (state.type == "error") {
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-error shadow-lg transition-opacity ease-linear ${
-					message != "" ? "opacity-1" : "opacity-0"
+					state.message != "" ? "opacity-1" : "opacity-0"
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						setMessage("");
+						dispatch({ type: "message", payload: "" });
 					}, 5000);
 				}}
 			>
@@ -67,7 +71,7 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 							d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
-					<span>{message}</span>
+					<span>{state.message}</span>
 				</div>
 			</div>
 		);
@@ -75,11 +79,11 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-success shadow-lg transition-opacity ease-linear ${
-					message != "" ? "opacity-1" : "opacity-0"
+					state.message != "" ? "opacity-1" : "opacity-0"
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						setMessage("");
+						dispatch({ type: "message", payload: "" });
 					}, 5000);
 				}}
 			>
@@ -97,7 +101,7 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 							d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
-					<span>{message}</span>
+					<span>{state.message}</span>
 				</div>
 			</div>
 		);

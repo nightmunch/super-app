@@ -1,32 +1,28 @@
 import { Dispatch, SetStateAction } from "react";
 import { trpc } from "../../utils/trpc";
 
+interface ClaimState {
+	item: string;
+	amount: string;
+	date: Date;
+}
+
 type Props = {
 	htmlfor: string;
 	userId: string;
-	item: string;
-	setItem: Dispatch<SetStateAction<string>>;
-	amount: string;
-	setAmount: Dispatch<SetStateAction<string>>;
-	date: Date;
-	setDate: Dispatch<SetStateAction<Date>>;
-	setMessage: Dispatch<SetStateAction<string>>;
-	setType: Dispatch<SetStateAction<string>>;
-	errorMessage: string;
+	alertMessage: string;
+	dispatch: Dispatch<any>;
+	state: ClaimState;
+	alertDispatch: Dispatch<any>;
 };
 
 export const ModalAdd = ({
 	htmlfor,
 	userId,
-	item,
-	setItem,
-	amount,
-	setAmount,
-	date,
-	setDate,
-	setMessage,
-	setType,
-	errorMessage,
+	alertMessage,
+	dispatch,
+	state,
+	alertDispatch,
 }: Props) => {
 	const utils = trpc.useContext();
 	const createClaim = trpc.useMutation("claim.create", {
@@ -38,20 +34,20 @@ export const ModalAdd = ({
 	});
 	const addClaim = async () => {
 		const input = {
-			item,
-			amount: Number(amount),
-			date,
+			item: state.item,
+			amount: Number(state.amount),
+			date: state.date,
 			userId,
 		};
 		try {
 			await createClaim.mutateAsync(input);
 			// Reset field if success
-			setItem("");
-			setAmount("");
-			setDate(new Date());
+			dispatch({ type: "item", payload: "" });
+			dispatch({ type: "amount", payload: "" });
+			dispatch({ type: "date", payload: new Date() });
 			// Alert
-			setMessage(errorMessage);
-			setType("success");
+			alertDispatch({ type: "message", payload: alertMessage });
+			alertDispatch({ type: "type", payload: "success" });
 		} catch {}
 	};
 	return (
@@ -70,9 +66,9 @@ export const ModalAdd = ({
 								type="text"
 								placeholder="Ex: Mekdi"
 								className="input input-bordered w-full"
-								value={item}
+								value={state.item}
 								onChange={(e) => {
-									setItem(e.target.value);
+									dispatch({ type: "item", payload: e.target.value });
 								}}
 							/>
 						</div>
@@ -84,11 +80,11 @@ export const ModalAdd = ({
 								type="text"
 								placeholder="Ex: 100.50"
 								className="input input-bordered w-full"
-								value={amount}
+								value={state.amount}
 								onChange={(e) => {
 									const re = /^[\d]*\.?[\d]{0,2}$/;
 									if (re.test(e.target.value)) {
-										setAmount(e.target.value);
+										dispatch({ type: "amount", payload: e.target.value });
 									}
 								}}
 							/>
@@ -99,10 +95,10 @@ export const ModalAdd = ({
 							</label>
 							<input
 								type="date"
-								value={date.toISOString().substring(0, 10)}
+								value={state.date.toISOString().substring(0, 10)}
 								className="input input-bordered w-full"
 								onChange={(e) => {
-									setDate(new Date(e.target.value));
+									dispatch({ type: "item", payload: new Date(e.target.value) });
 								}}
 							/>
 						</div>

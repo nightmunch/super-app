@@ -15,13 +15,17 @@ import {
 	formatDate,
 	getTextColor,
 } from "../../helpers/helpers";
+import { useAlertReducer } from "../../hooks/useAlertReducer";
 
 export default function Transactions() {
 	const { data: sessionData } = useSession();
 	const utils = trpc.useContext();
 
-	const [message, setMessage] = useState("");
-	const [type, setType] = useState("");
+	const [alertState, alertDispatch] = useAlertReducer();
+	enum AlertActionKind {
+		SET_MESSAGE = "message",
+		SET_TYPE = "type",
+	}
 
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
@@ -86,8 +90,11 @@ export default function Transactions() {
 				setRemarks("");
 				setDate(new Date());
 				// Alert
-				setMessage("Transaction is succesfully added!");
-				setType("success");
+				alertDispatch({
+					type: AlertActionKind.SET_MESSAGE,
+					payload: "Transaction is succesfully added!",
+				});
+				alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 			} catch {}
 		} else {
 			console.log("No user data");
@@ -101,8 +108,11 @@ export default function Transactions() {
 		try {
 			await deleteTransaction.mutateAsync(input);
 			// alert
-			setMessage("Transaction is succesfully deleted!");
-			setType("error");
+			alertDispatch({
+				type: AlertActionKind.SET_MESSAGE,
+				payload: "Transaction is succesfully deleted!",
+			});
+			alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 		} catch {}
 	};
 
@@ -127,7 +137,7 @@ export default function Transactions() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert message={message} setMessage={setMessage} type={type} />
+				<Alert state={alertState} dispatch={alertDispatch} />
 				<div className="card bg-neutral shadow-xl text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">
