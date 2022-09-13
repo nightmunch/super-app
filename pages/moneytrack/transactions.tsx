@@ -4,7 +4,6 @@ import { FaPlus, FaTrash } from "react-icons/fa";
 import { Alert } from "../../components/Alert";
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { trpc } from "../../utils/trpc";
-import { useSession } from "next-auth/react";
 import { Transactions as Trans } from "@prisma/client";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
@@ -16,9 +15,10 @@ import {
 	getTextColor,
 } from "../../helpers/helpers";
 import { useAlertReducer } from "../../hooks/useAlertReducer";
+import { useGetUser } from "../../hooks/useGetUser";
 
 export default function Transactions() {
-	const { data: sessionData } = useSession();
+	const userId = useGetUser();
 	const utils = trpc.useContext();
 
 	const [alertState, alertDispatch] = useAlertReducer();
@@ -29,21 +29,11 @@ export default function Transactions() {
 
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
-	const getUser = trpc.useQuery(
-		[
-			"user.byEmail",
-			{
-				email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
-			},
-		],
-		{ staleTime: Infinity }
-	);
-
 	const transactionsQuery = trpc.useQuery(
 		[
 			"transaction.list-by-month",
 			{
-				userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s",
+				userId,
 				month: currentMonth,
 			},
 		],
@@ -72,14 +62,14 @@ export default function Transactions() {
 	const [remove, setRemove] = useState("");
 
 	const addTransaction = async () => {
-		if (getUser?.data) {
+		if (userId) {
 			const input = {
-				item: item,
+				item,
 				amount: Number(amount),
-				category: category,
-				remarks: remarks,
-				date: date,
-				userId: getUser.data.id,
+				category,
+				remarks,
+				date,
+				userId,
 			};
 			try {
 				await createTransaction.mutateAsync(input);

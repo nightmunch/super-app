@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaTrash, FaPlus } from "react-icons/fa";
 import { BiErrorCircle } from "react-icons/bi";
 import { trpc } from "../../utils/trpc";
-import { useSession } from "next-auth/react";
 import { Alert } from "../../components/Alert";
 
 import React from "react";
@@ -11,6 +10,7 @@ import { separator } from "../../helpers/helpers";
 import { NetWorth as NW } from "@prisma/client";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useAlertReducer } from "../../hooks/useAlertReducer";
+import { useGetUser } from "../../hooks/useGetUser";
 
 /**
  * TODO:
@@ -20,7 +20,7 @@ import { useAlertReducer } from "../../hooks/useAlertReducer";
  */
 
 export default function NetWorth() {
-	const { data: sessionData } = useSession();
+	const userId = useGetUser();
 
 	const utils = trpc.useContext();
 
@@ -43,31 +43,13 @@ export default function NetWorth() {
 		}
 	);
 
-	const getUser = trpc.useQuery(
-		[
-			"user.byEmail",
-			{
-				email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
-			},
-		],
-		{ staleTime: Infinity }
-	);
+	const netWorthQuery = trpc.useQuery(["networth.all", { userId }], {
+		staleTime: Infinity,
+	});
 
-	const netWorthQuery = trpc.useQuery(
-		[
-			"networth.all",
-			{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
-		],
-		{ staleTime: Infinity }
-	);
-
-	const sumNetWorth = trpc.useQuery(
-		[
-			"networth.sum",
-			{ userId: getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s" },
-		],
-		{ staleTime: Infinity }
-	);
+	const sumNetWorth = trpc.useQuery(["networth.sum", { userId }], {
+		staleTime: Infinity,
+	});
 
 	const calculateSum = () => {
 		var notRM = 0;
@@ -117,14 +99,14 @@ export default function NetWorth() {
 	const [remove, setRemove] = useState("");
 
 	const addNetWorth = async () => {
-		if (getUser?.data) {
+		if (userId) {
 			const input = {
 				item: item,
 				category: category,
 				amount: Number(amount),
 				currency: currency,
 				remarks: remarks,
-				userId: getUser.data.id,
+				userId,
 			};
 			try {
 				await createNetWorth.mutateAsync(input);
@@ -148,16 +130,16 @@ export default function NetWorth() {
 	};
 
 	const editNetWorth = async () => {
-		if (getUser?.data) {
+		if (userId) {
 			const input = {
 				id: id,
 				data: {
-					item: item,
-					category: category,
+					item,
+					category,
 					amount: Number(amount),
-					currency: currency,
-					remarks: remarks,
-					userId: getUser.data.id,
+					currency,
+					remarks,
+					userId,
 				},
 			};
 			try {
