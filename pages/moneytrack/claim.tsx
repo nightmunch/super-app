@@ -1,6 +1,5 @@
 import { FaPlus } from "react-icons/fa";
 import { trpc } from "../../utils/trpc";
-import { useSession } from "next-auth/react";
 import { Alert } from "../../components/Alert";
 
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
@@ -10,21 +9,10 @@ import { ClaimRows } from "../../components/moneytrack/ClaimRows";
 import { ModalAdd } from "../../components/moneytrack/ModalAdd";
 import { useClaimReducer } from "../../hooks/useClaimReducer";
 import { useAlertReducer } from "../../hooks/useAlertReducer";
+import { useGetUser } from "../../hooks/useGetUser";
 
 export default function Claim() {
-	const { data: sessionData } = useSession();
-
-	const getUser = trpc.useQuery(
-		[
-			"user.byEmail",
-			{
-				email: sessionData?.user ? sessionData?.user?.email : "guest@guest.com",
-			},
-		],
-		{ staleTime: Infinity }
-	);
-
-	const userId = getUser.data ? getUser.data.id : "cl5qwgu6k0015zwv8jt19n94s";
+	const userId = useGetUser();
 
 	const claimsQuery = trpc.useQuery(["claim.all", { userId }], {
 		staleTime: Infinity,
