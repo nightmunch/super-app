@@ -22,8 +22,12 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 		height: undefined,
 	});
 
+	const [theme, setTheme] = useState("");
+
 	// Handler to call on window resize
 	function handleResize() {
+		// var style = getComputedStyle();
+		console.log(document.documentElement.getAttribute("data-theme"));
 		// Set window width/height to state
 		setWindowSize({
 			width: window.innerWidth,
@@ -44,6 +48,13 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 			return () => window.removeEventListener("resize", handleResize);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (typeof window !== "undefined") {
+			// Set theme
+			setTheme(document.documentElement.getAttribute("data-theme")!);
+		}
+	});
 
 	return (
 		<>
@@ -69,12 +80,13 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 						plugins: {
 							legend: {
 								labels: {
-									color: "rgb(183,205,218)",
+									color: theme == "shahrin" ? "#b7cdda" : "#343536",
 								},
 							},
 						},
 						responsive: true,
-						cutout: windowSize.width! > 500 ? 120 : 70,
+						// cutout: windowSize.width! > 500 ? 120 : 70,
+						cutout: "80%",
 					}}
 				/>
 			</div>

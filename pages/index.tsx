@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
 	return (
 		<>
-			<div className="hero bg-base-200 py-5">
+			<div className="hero bg-neutral py-5">
 				<div className="hero-content  sm:text-center">
 					<div className="max-w-md">
 						<h2 className="text-4xl sm:text-5xl font-semibold text-primary">

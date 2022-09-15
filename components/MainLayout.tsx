@@ -19,7 +19,7 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 		<div className="drawer">
 			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content">
-				<div className="navbar bg-base-300 gap-2 sticky top-0 z-50">
+				<div className="navbar bg-neutral gap-2 sticky top-0 z-50">
 					<div className="flex-none">
 						<label htmlFor="my-drawer" className="btn btn-square btn-ghost">
 							<FaBars />

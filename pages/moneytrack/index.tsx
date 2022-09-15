@@ -55,7 +55,7 @@ export default function MoneyTrack() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<div className="card bg-neutral shadow-xl text-neutral-content">
+				<div className="card bg-neutral  text-neutral-content">
 					<div className="card-body gap-5 items-stretch" ref={parent}>
 						<div className="form-control w-1/2 mx-auto">
 							<select

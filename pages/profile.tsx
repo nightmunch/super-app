@@ -41,7 +41,7 @@ export default function Profile() {
 	};
 	return (
 		<>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
+			<div className="card bg-neutral  text-neutral-content">
 				<div className="card-body">
 					<div className="form-control">
 						<label className="label">

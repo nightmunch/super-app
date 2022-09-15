@@ -44,7 +44,9 @@ export const LoanCalculator: React.FunctionComponent = () => {
 			<div className="flex flex-col gap-4 pt-3" ref={parent}>
 				<div className="form-control">
 					<label className="label">
-						<span className="label-text">Loan Amount (RM)</span>
+						<span className="label-text text-content-100">
+							Loan Amount (RM)
+						</span>
 					</label>
 					<input
 						type="text"

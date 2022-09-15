@@ -3,7 +3,7 @@ import { FaLinkedin, FaInstagram, FaGithub, FaEnvelope } from "react-icons/fa";
 export default function Shahrin() {
 	return (
 		<>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
+			<div className="card bg-neutral text-neutral-content">
 				<div className="card-body">
 					<div className="flex flex-col xl:w-1/2 md:m-auto sm:flex-row sm:gap-10">
 						<div className="flex">
@@ -29,7 +29,7 @@ export default function Shahrin() {
 					</div>
 				</div>
 			</div>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
+			<div className="card bg-neutral text-neutral-content">
 				<div className="card-body">
 					<h1 className="text-xl font-semibold text-center text-primary">
 						My socials
@@ -50,7 +50,7 @@ export default function Shahrin() {
 					</div>
 				</div>
 			</div>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
+			<div className="card bg-neutral text-neutral-content">
 				<div className="card-body">
 					<h1 className="text-xl font-semibold text-center text-primary">
 						About Me
@@ -65,7 +65,7 @@ export default function Shahrin() {
 					</p>
 				</div>
 			</div>
-			<div className="card bg-neutral shadow-xl text-neutral-content">
+			<div className="card bg-neutral text-neutral-content">
 				<div className="card-body">
 					<h1 className="text-xl font-semibold text-center text-primary">
 						Skills
@@ -73,14 +73,14 @@ export default function Shahrin() {
 					<div className="flex flex-col md:flex-row gap-3 mt-3">
 						<div className="card bg-base-100">
 							<div className="card-body">
-								<h1 className="text-lg font-semibold text-center text-blue-400">
+								<h1 className="text-lg font-semibold text-center text-secondary">
 									Web Development
 								</h1>
 								<p>
 									I love to explore different framework, method and use cases to
 									bring great and optimal functionality to the table.
 								</p>
-								<h2 className="text-md font-semibold text-center text-blue-400 mt-3">
+								<h2 className="text-md font-semibold text-center text-secondary mt-3">
 									Language/Framework
 								</h2>
 								<p className="text-center">
@@ -90,14 +90,14 @@ export default function Shahrin() {
 						</div>
 						<div className="card bg-base-100">
 							<div className="card-body">
-								<h1 className="text-lg font-semibold text-center text-blue-400">
+								<h1 className="text-lg font-semibold text-center text-secondary">
 									Data Science & Artificial Intelligence
 								</h1>
 								<p>
 									I have teach and train multiple student (read: Machine
 									Learning model) to differentiate between apple and orange.
 								</p>
-								<h2 className="text-md font-semibold text-center text-blue-400 mt-3">
+								<h2 className="text-md font-semibold text-center text-secondary mt-3">
 									Language/Framework
 								</h2>
 								<p className="text-center">

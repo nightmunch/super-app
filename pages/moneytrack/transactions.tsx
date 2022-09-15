@@ -128,7 +128,7 @@ export default function Transactions() {
 		<>
 			<MoneyTrackLayout>
 				<Alert state={alertState} dispatch={alertDispatch} />
-				<div className="card bg-neutral shadow-xl text-neutral-content">
+				<div className="card bg-neutral text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">
 							<div className="flex flex-row justify-between items-center px-3">

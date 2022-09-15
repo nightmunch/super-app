@@ -29,9 +29,9 @@ export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 						onClick={closeDrawer}
 						className={` ${
 							router.pathname == href
-								? "bg-[#2B2C33] text-primary"
+								? "bg-neutral text-primary"
 								: href != "/" && router.pathname.includes(href)
-								? "bg-[#2B2C33] text-primary"
+								? "bg-neutral text-primary"
 								: ""
 						}`}
 					>
