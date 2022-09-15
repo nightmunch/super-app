@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useState } from "react";
 import { Alert } from "../components/Alert";
+import { useAlertReducer } from "../hooks/useAlertReducer";
 import { trpc } from "../utils/trpc";
 
 export default function Profile() {
@@ -12,14 +12,23 @@ export default function Profile() {
 	const [message, setMessage] = useState("");
 	const [type, setType] = useState("");
 
+	const [alertState, alertDispatch] = useAlertReducer();
+	enum AlertActionKind {
+		SET_MESSAGE = "message",
+		SET_TYPE = "type",
+	}
+
 	const mutateName = trpc.useMutation("user.changeName", {
 		async onSuccess() {
 			// Refresh session
 			const event = new Event("visibilitychange");
 			document.dispatchEvent(event);
 			// Alert
-			setMessage("Your name has succesfully changed!");
-			setType("success");
+			alertDispatch({
+				type: AlertActionKind.SET_MESSAGE,
+				payload: "Your name has been successfully changed!",
+			});
+			alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 		},
 	});
 
@@ -55,7 +64,7 @@ export default function Profile() {
 					</div>
 				</div>
 			</div>
-			<Alert message={message} setMessage={setMessage} type={type} />
+			<Alert state={alertState} dispatch={alertDispatch} />
 		</>
 	);
 }

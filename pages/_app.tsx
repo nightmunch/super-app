@@ -7,10 +7,16 @@ import { loggerLink } from "@trpc/client/links/loggerLink";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import superjson from "superjson";
 import { AppRouter } from "../server/route/app.router";
+import { useEffect } from "react";
+import { themeChange } from "theme-change";
 
 import { SessionProvider } from "next-auth/react";
 
 function App({ Component, pageProps }: AppProps) {
+	useEffect(() => {
+		themeChange(false);
+		// 👆 false parameter is required for react project
+	}, []);
 	return (
 		<>
 			<Head>

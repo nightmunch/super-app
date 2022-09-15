@@ -31,6 +31,12 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 						</h1>
 					</div>
 					<div className="pr-2">
+						<input
+							type="checkbox"
+							className="toggle"
+							data-toggle-theme="shahrin,aimi"
+							data-act-class="ACTIVECLASS"
+						/>
 						<div>
 							<button
 								className="btn btn-ghost"
