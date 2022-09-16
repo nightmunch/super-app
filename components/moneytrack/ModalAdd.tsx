@@ -98,7 +98,7 @@ export const ModalAdd = ({
 								value={state.date.toISOString().substring(0, 10)}
 								className="input input-bordered w-full"
 								onChange={(e) => {
-									dispatch({ type: "item", payload: new Date(e.target.value) });
+									dispatch({ type: "date", payload: new Date(e.target.value) });
 								}}
 							/>
 						</div>
