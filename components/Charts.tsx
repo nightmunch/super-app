@@ -1,6 +1,8 @@
 import "chart.js/auto";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { Chart } from "react-chartjs-2";
+import { themeAtom } from "./MainLayout";
 
 type Input = {
 	title: string;
@@ -22,7 +24,7 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 		height: undefined,
 	});
 
-	const [theme, setTheme] = useState("");
+	// const [theme, setTheme] = useState("");
 
 	// Handler to call on window resize
 	function handleResize() {
@@ -49,17 +51,19 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (typeof window !== "undefined") {
-			// Set theme
-			setTheme(document.documentElement.getAttribute("data-theme")!);
-		}
-	});
+	// useEffect(() => {
+	// 	if (typeof window !== "undefined") {
+	// 		// Set theme
+	// 		setTheme(document.documentElement.getAttribute("data-theme")!);
+	// 	}
+	// });
+
+	const [theme, setTheme] = useAtom(themeAtom);
 
 	return (
 		<>
 			<h1 className="text-center">{title}</h1>
-			<div className="w-72 sm:w-96 mx-auto">
+			<div className="w-72 sm:w-96 mx-auto text-">
 				<Chart
 					type="doughnut"
 					data={{

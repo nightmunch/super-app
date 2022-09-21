@@ -13,7 +13,13 @@ import {
 } from "react-icons/fa";
 import { useSession, signIn, signOut } from "next-auth/react";
 
+import { atom, useAtom } from "jotai";
+import { RiPaintFill } from "react-icons/ri";
+
+export const themeAtom = atom<string | null>("");
 export const MainLayout: React.FunctionComponent = ({ children }) => {
+	const [theme, setTheme] = useAtom(themeAtom);
+
 	const { data: sessionData } = useSession();
 	return (
 		<div className="drawer">
@@ -31,12 +37,21 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 						</h1>
 					</div>
 					<div className="pr-2">
-						<input
-							type="checkbox"
-							className="toggle"
-							data-toggle-theme="shahrin,aimi"
-							data-act-class="ACTIVECLASS"
-						/>
+						<div className="tooltip tooltip-bottom" data-tip="Change Theme">
+							<button
+								// type="checkbox"
+								className="btn btn-ghost"
+								data-toggle-theme="shahrin,aimi"
+								data-act-class="ACTIVECLASS"
+								onClick={() => {
+									setTheme(
+										document.documentElement.getAttribute("data-theme")!
+									);
+								}}
+							>
+								<RiPaintFill size={20} />
+							</button>
+						</div>
 						<div>
 							<button
 								className="btn btn-ghost"
