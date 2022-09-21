@@ -16,7 +16,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { atom, useAtom } from "jotai";
 import { RiPaintFill } from "react-icons/ri";
 
-export const themeAtom = atom<string | null>("");
+export const themeAtom = atom<string>("");
 export const MainLayout: React.FunctionComponent = ({ children }) => {
 	const [theme, setTheme] = useAtom(themeAtom);
 

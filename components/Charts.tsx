@@ -60,6 +60,11 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 
 	const [theme, setTheme] = useAtom(themeAtom);
 
+	const themeDict = new Map([
+		["shahrin", "#b7cdda"],
+		["aimi", "#343536"],
+	]);
+
 	return (
 		<>
 			<h1 className="text-center">{title}</h1>
@@ -84,7 +89,7 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 						plugins: {
 							legend: {
 								labels: {
-									color: theme == "shahrin" ? "#b7cdda" : "#343536",
+									color: themeDict.get(theme),
 								},
 							},
 						},
