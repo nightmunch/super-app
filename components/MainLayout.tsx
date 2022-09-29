@@ -1,6 +1,7 @@
 import { SidebarLink } from "./SidebarLink";
 import { TbBrandNextjs } from "react-icons/tb";
 import { SidebarProfile } from "./SidebarProfile";
+import { useSwipeable } from "react-swipeable";
 import {
 	FaHome,
 	FaCog,
@@ -18,9 +19,22 @@ import { RiPaintFill } from "react-icons/ri";
 
 export const themeAtom = atom<string>("");
 export const handleDrawerAtom = atom<boolean>(false);
+
+const swipeOpenMenuStyles = {
+	float: "left",
+	position: "fixed",
+	width: "33%",
+	height: "100%",
+} as React.CSSProperties;
+
 export const MainLayout: React.FunctionComponent = ({ children }) => {
 	const [theme, setTheme] = useAtom(themeAtom);
 	const [handleDrawer, setHandleDrawer] = useAtom(handleDrawerAtom);
+
+	const handlers = useSwipeable({
+		trackMouse: true,
+		onSwipedRight: () => setHandleDrawer(true),
+	});
 
 	const { data: sessionData } = useSession();
 	return (
@@ -32,6 +46,7 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 				checked={handleDrawer}
 			/>
 			<div className="drawer-content">
+				<div {...handlers} style={swipeOpenMenuStyles} />
 				<div className="navbar bg-neutral gap-2 sticky top-0 z-50">
 					<div className="flex-none">
 						<label
