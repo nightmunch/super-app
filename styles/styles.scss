@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.ProseMirror {
+    > * + * {
+      margin-top: 0.75em;
+    }
+  
+    ul{
+        padding: 0 1rem;
+        list-style-type: disc;
+    }
+
+    ol {
+        padding: 0 1rem;
+        list-style-type: decimal;
+    }
+
+    h1 {
+        @apply font-semibold;
+        @apply text-primary;
+    }
+  }

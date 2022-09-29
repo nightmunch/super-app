@@ -86,3 +86,12 @@ model NetWorth {
     User     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId   String
 }
+
+// Chef Burp - Recipe
+
+model Recipe {
+    id         String   @id @default(cuid()) @map("_id")
+    ingredient String
+    step       String
+    date       DateTime
+}

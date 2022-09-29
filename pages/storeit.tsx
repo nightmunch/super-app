@@ -1,6 +1,6 @@
 export default function StoreIt() {
 	return (
-		<div className="card bg-neutral  text-neutral-content">
+		<div className="card bg-neutral text-neutral-content">
 			<div className="card-body">
 				<div className="flex flex-col xl:w-1/2 md:m-auto sm:flex-row sm:gap-10 justify-center">
 					<div className="flex">

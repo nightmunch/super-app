@@ -44,6 +44,7 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 				type="checkbox"
 				className="drawer-toggle"
 				checked={handleDrawer}
+				readOnly
 			/>
 			<div className="drawer-content">
 				<div {...handlers} style={swipeOpenMenuStyles} />
