@@ -23,7 +23,7 @@ export const handleDrawerAtom = atom<boolean>(false);
 const swipeOpenMenuStyles = {
 	float: "left",
 	position: "fixed",
-	width: "33%",
+	width: "50%",
 	height: "100%",
 } as React.CSSProperties;
 
