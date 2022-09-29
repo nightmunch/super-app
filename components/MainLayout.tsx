@@ -47,7 +47,7 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 			/>
 			<div className="drawer-content">
 				<div {...handlers} style={swipeOpenMenuStyles} />
-				<div className="navbar bg-neutral gap-2 sticky top-0 z-50">
+				<div className="navbar bg-neutral gap-2 sticky top-0 z-50 shadow-sm">
 					<div className="flex-none">
 						<label
 							htmlFor="my-drawer"

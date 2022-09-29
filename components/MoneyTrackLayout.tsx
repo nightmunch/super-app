@@ -24,7 +24,7 @@ export const MoneyTrackLayout: React.FunctionComponent = ({ children }) => {
 					</div>
 				</div>
 			</div>
-			<div className="tabs tabs-boxed bg-neutral  p-3">
+			<div className="tabs-boxed bg-neutral whitespace-nowrap overflow-x-auto p-3">
 				<Link href="/moneytrack">
 					<a className={`tab ${tab == "moneytrack" ? "tab-active" : ""}`}>
 						Main
