@@ -1,7 +1,9 @@
+import { useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { createElement } from "react";
 import { IconType } from "react-icons/lib";
+import { handleDrawerAtom } from "./MainLayout";
 
 type SidebarLinkProps = {
 	href: string;
@@ -14,11 +16,7 @@ export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 	name,
 	icon,
 }) => {
-	// If the link is clicked, close the drawer
-	function closeDrawer() {
-		const drawer = document.getElementById("my-drawer")!;
-		drawer.click();
-	}
+	const [handleDrawer, setHandleDrawer] = useAtom(handleDrawerAtom);
 	const router = useRouter();
 
 	return (
@@ -26,7 +24,7 @@ export const SidebarLink: React.FunctionComponent<SidebarLinkProps> = ({
 			<li className={`py-1`}>
 				<Link href={href}>
 					<a
-						onClick={closeDrawer}
+						onClick={() => setHandleDrawer(false)}
 						className={` ${
 							router.pathname == href
 								? "bg-neutral text-primary"

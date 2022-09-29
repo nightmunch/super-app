@@ -17,17 +17,28 @@ import { atom, useAtom } from "jotai";
 import { RiPaintFill } from "react-icons/ri";
 
 export const themeAtom = atom<string>("");
+export const handleDrawerAtom = atom<boolean>(false);
 export const MainLayout: React.FunctionComponent = ({ children }) => {
 	const [theme, setTheme] = useAtom(themeAtom);
+	const [handleDrawer, setHandleDrawer] = useAtom(handleDrawerAtom);
 
 	const { data: sessionData } = useSession();
 	return (
 		<div className="drawer">
-			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
+			<input
+				id="my-drawer"
+				type="checkbox"
+				className="drawer-toggle"
+				checked={handleDrawer}
+			/>
 			<div className="drawer-content">
 				<div className="navbar bg-neutral gap-2 sticky top-0 z-50">
 					<div className="flex-none">
-						<label htmlFor="my-drawer" className="btn btn-square btn-ghost">
+						<label
+							htmlFor="my-drawer"
+							className="btn btn-square btn-ghost"
+							onClick={() => setHandleDrawer(true)}
+						>
 							<FaBars />
 						</label>
 					</div>
@@ -95,7 +106,11 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 				</div>
 			</div>
 			<div className="drawer-side">
-				<label htmlFor="my-drawer" className="drawer-overlay"></label>
+				<label
+					htmlFor="my-drawer"
+					className="drawer-overlay"
+					onClick={() => setHandleDrawer(false)}
+				></label>
 				<ul className="menu p-4 overflow-y-auto w-60 bg-base-100 text-base-content">
 					<h1 className="ml-3 text-3xl font-semibold text-primary">
 						Super<span className="text-base-content">App</span>
