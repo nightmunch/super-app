@@ -95,6 +95,12 @@ export const ModalAdd = ({
 			<input type="checkbox" id={htmlfor} className="modal-toggle" />
 			<label htmlFor={htmlfor} className="modal cursor-pointer">
 				<label className="modal-box relative" htmlFor="">
+					<label
+						htmlFor={htmlfor}
+						className="btn btn-sm btn-circle absolute right-5 top-5"
+					>
+						✕
+					</label>
 					<h1 className="text-xl font-semibold text-primary">Add Recipe</h1>
 					<div className="divider"></div>
 					<div className="flex flex-col gap-5">
