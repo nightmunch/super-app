@@ -31,6 +31,25 @@ export const recipeRouter = createRouter()
 			});
 		},
 	})
+	.mutation("create", {
+		input: z.object({
+			title: z.string(),
+			description: z.string(),
+			ingredient: z.string(),
+			step: z.string(),
+		}),
+		async resolve({ ctx, input }) {
+			const { title, description, ingredient, step } = input;
+			return ctx.prisma.recipe.create({
+				data: {
+					title,
+					description,
+					ingredient,
+					step,
+				},
+			});
+		},
+	})
 	.mutation("update", {
 		input: z.object({
 			id: z.string().cuid(),

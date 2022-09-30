@@ -2,15 +2,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
+import { MenuBar } from "../../components/MenuBar";
 
 export default function Recipe() {
 	const router = useRouter();
 	const id = router.query.recipe as string;
 
 	const utils = trpc.useContext();
-	const recipe = trpc.useQuery(["recipe.show", { id }]);
 	const updateRecipe = trpc.useMutation(["recipe.update"], {
 		async onSuccess() {
 			// refetches posts after a post is adjusted
@@ -22,22 +22,29 @@ export default function Recipe() {
 
 	const ingredients = useEditor({
 		extensions: [StarterKit],
-		// intial content
-		content: recipe.data?.ingredient,
 		editable: false,
 	});
 	const steps = useEditor({
 		extensions: [StarterKit],
-		// intial content
-		content: recipe.data?.step,
 		editable: false,
+	});
+
+	const recipe = trpc.useQuery(["recipe.show", { id }], {
+		onSuccess: (data) => {
+			if (ingredients) {
+				ingredients.commands.setContent(data?.ingredient as string);
+			}
+			if (steps) {
+				steps.commands.setContent(data?.step as string);
+			}
+		},
 	});
 
 	return (
 		<>
 			<div className="card bg-neutral text-neutral-content">
 				<div className="card-body">
-					<h1 className="text-xl font-semibold text-primary">
+					<h1 className="text-xl font-semibold text-primary capitalize">
 						{recipe.data?.title}
 					</h1>
 					<p className="text-sm">{recipe.data?.description}</p>
@@ -77,65 +84,3 @@ export default function Recipe() {
 		</>
 	);
 }
-
-const MenuBar = ({ editor }: { editor: any }) => {
-	if (!editor) {
-		return null;
-	}
-
-	return (
-		<>
-			<div className="flex gap-2 overflow-x-auto hide-scroll">
-				<button
-					onClick={() => editor.chain().focus().toggleBold().run()}
-					disabled={!editor.can().chain().focus().toggleBold().run()}
-					className={`btn btn-sm btn-ghost ${
-						editor.isActive("bold") ? "btn-active" : ""
-					}`}
-				>
-					bold
-				</button>
-				<button
-					onClick={() =>
-						editor.chain().focus().toggleHeading({ level: 1 }).run()
-					}
-					className={`btn btn-sm btn-ghost ${
-						editor.isActive("heading", { level: 1 }) ? "btn-active" : ""
-					}`}
-				>
-					h1
-				</button>
-				<button
-					onClick={() => editor.chain().focus().toggleBulletList().run()}
-					className={`btn btn-sm btn-ghost ${
-						editor.isActive("bulletList") ? "btn-active" : ""
-					}`}
-				>
-					bullet list
-				</button>
-				<button
-					onClick={() => editor.chain().focus().toggleOrderedList().run()}
-					className={`btn btn-sm btn-ghost ${
-						editor.isActive("orderedList") ? "btn-active" : ""
-					}`}
-				>
-					ordered list
-				</button>
-				<button
-					onClick={() => editor.chain().focus().undo().run()}
-					disabled={!editor.can().chain().focus().undo().run()}
-					className="btn btn-sm btn-ghost"
-				>
-					undo
-				</button>
-				<button
-					onClick={() => editor.chain().focus().redo().run()}
-					disabled={!editor.can().chain().focus().redo().run()}
-					className="btn btn-sm btn-ghost"
-				>
-					redo
-				</button>
-			</div>
-		</>
-	);
-};

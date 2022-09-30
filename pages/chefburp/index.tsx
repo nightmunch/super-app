@@ -1,12 +1,18 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { ModalAdd } from "../../components/chefburp/ModalAdd";
+import { useAlertReducer } from "../../hooks/useAlertReducer";
+import { useRecipeReducer } from "../../hooks/useRecipeReducer";
 import { trpc } from "../../utils/trpc";
 
 export default function ChefBurp() {
 	const [searchBar, setSearchBar] = useState<string>("");
 	const [search, setSearch] = useState<string>("");
 	const recipeQuery = trpc.useQuery(["recipe.list", { search }]);
+
+	const [recipeState, recipeDispatch] = useRecipeReducer();
+	const [alertState, alertDispatch] = useAlertReducer();
 
 	useEffect(() => {
 		const timeOutId = setTimeout(() => setSearch(searchBar), 500);
@@ -45,9 +51,9 @@ export default function ChefBurp() {
 						onChange={(e) => setSearchBar(e.target.value)}
 					/>
 					<div className="tooltip" data-tip="Add Recipe">
-						<button className="btn btn-ghost">
+						<label htmlFor="add-recipe" className="btn btn-ghost">
 							<FaPlus />
-						</button>
+						</label>
 					</div>
 				</div>
 			</div>
@@ -61,6 +67,13 @@ export default function ChefBurp() {
 					/>
 				))}
 			</div>
+			<ModalAdd
+				htmlfor={"add-recipe"}
+				alertMessage={"Recipe has successfully added!"}
+				state={recipeState}
+				dispatch={recipeDispatch}
+				alertDispatch={alertDispatch}
+			/>
 		</>
 	);
 }
@@ -76,7 +89,9 @@ const RecipeCard = ({ title, description, id }: RecipeCardType) => {
 		<Link href={`/chefburp/${id}`}>
 			<div className="card bg-neutral hover:border-primary hover:border">
 				<div className="card-body">
-					<h1 className="text-lg font-semibold text-primary">{title}</h1>
+					<h1 className="text-lg font-semibold text-primary capitalize">
+						{title}
+					</h1>
 					<p className="text-sm">{description}</p>
 				</div>
 			</div>
