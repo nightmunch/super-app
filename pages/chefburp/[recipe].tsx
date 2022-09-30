@@ -3,34 +3,33 @@ import { useRouter } from "next/router";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
+import { trpc } from "../../utils/trpc";
 
 export default function Recipe() {
 	const router = useRouter();
-	const recipe = router.query.recipe;
-	const description = "ayam yang digoreng";
+	const id = router.query.recipe as string;
+
+	const utils = trpc.useContext();
+	const recipe = trpc.useQuery(["recipe.show", { id }]);
+	const updateRecipe = trpc.useMutation(["recipe.update"], {
+		async onSuccess() {
+			// refetches posts after a post is adjusted
+			await utils.invalidateQueries(["recipe.show"]);
+		},
+	});
 
 	const [editable, setEditable] = useState(false);
 
 	const ingredients = useEditor({
 		extensions: [StarterKit],
 		// intial content
-		content: `<ul>
-                    <li>ingredient 1</li>
-                    <li>ingredient 1</li>
-                    <li>ingredient 1</li>
-                    <li>ingredient 1</li>
-                </ul>`,
+		content: recipe.data?.ingredient,
 		editable: false,
 	});
 	const steps = useEditor({
 		extensions: [StarterKit],
 		// intial content
-		content: `<ol>
-                    <li>step 1</li>
-                    <li>step 1</li>
-                    <li>step 1</li>
-                    <li>step 1</li>
-                </ol>`,
+		content: recipe.data?.step,
 		editable: false,
 	});
 
@@ -38,8 +37,10 @@ export default function Recipe() {
 		<>
 			<div className="card bg-neutral text-neutral-content">
 				<div className="card-body">
-					<h1 className="text-xl font-semibold text-primary">{recipe}</h1>
-					<p className="text-sm">{description}</p>
+					<h1 className="text-xl font-semibold text-primary">
+						{recipe.data?.title}
+					</h1>
+					<p className="text-sm">{recipe.data?.description}</p>
 					<div className="divider my-0"></div>
 					{editable ? <MenuBar editor={ingredients} /> : <></>}
 					<h2 className="text-lg font-semibold text-primary">Ingredients</h2>
@@ -50,12 +51,20 @@ export default function Recipe() {
 					<div className="divider my-0"></div>
 					<button
 						className="btn btn-sm btn-info"
-						onClick={() => {
+						onClick={async () => {
+							if (editable) {
+								await updateRecipe.mutateAsync({
+									id,
+									title: recipe.data?.title as string,
+									description: recipe.data?.description as string,
+									ingredient: ingredients?.getHTML() as string,
+									step: steps?.getHTML() as string,
+								});
+							}
+
 							ingredients?.setEditable(!editable);
 							steps?.setEditable(!editable);
 							setEditable(!editable);
-							// TODO:
-							// [] save to database
 						}}
 					>
 						{editable ? "Done" : "Edit"}

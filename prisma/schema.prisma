@@ -90,8 +90,10 @@ model NetWorth {
 // Chef Burp - Recipe
 
 model Recipe {
-    id         String   @id @default(cuid()) @map("_id")
-    ingredient String
-    step       String
-    date       DateTime
+    id          String   @id @default(cuid()) @map("_id")
+    title       String
+    description String?
+    ingredient  String
+    step        String
+    date        DateTime @default(now())
 }
