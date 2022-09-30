@@ -1,10 +1,15 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { trpc } from "../../utils/trpc";
 import { MenuBar } from "../../components/MenuBar";
+import { ModalRemove } from "../../components/chefburp/ModalRemove";
+import { Alert } from "../../components/Alert";
+import { useAlertReducer } from "../../hooks/useAlertReducer";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { FaTrash } from "react-icons/fa";
 
 export default function Recipe() {
 	const router = useRouter();
@@ -29,6 +34,9 @@ export default function Recipe() {
 		editable: false,
 	});
 
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+
 	const recipe = trpc.useQuery(["recipe.show", { id }], {
 		onSuccess: (data) => {
 			if (ingredients) {
@@ -40,14 +48,39 @@ export default function Recipe() {
 		},
 	});
 
+	const [alertState, alertDispatch] = useAlertReducer();
+	const { data: sessionData } = useSession();
+
 	return (
 		<>
 			<div className="card bg-neutral text-neutral-content">
 				<div className="card-body">
-					<h1 className="text-xl font-semibold text-primary capitalize">
-						{recipe.data?.title}
-					</h1>
-					<p className="text-sm">{recipe.data?.description}</p>
+					{editable ? (
+						<input
+							type="text"
+							className="input"
+							value={title == "" ? (recipe.data?.title as string) : title}
+							onChange={(e) => setTitle(e.target.value)}
+						/>
+					) : (
+						<h1 className="text-xl font-semibold text-primary capitalize">
+							{recipe.data?.title}
+						</h1>
+					)}
+					{editable ? (
+						<input
+							type="text"
+							className="input"
+							value={
+								description == ""
+									? (recipe.data?.description as string)
+									: description
+							}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+					) : (
+						<p className="text-sm">{recipe.data?.description}</p>
+					)}
 					<div className="divider my-0"></div>
 					{editable ? <MenuBar editor={ingredients} /> : <></>}
 					<h2 className="text-lg font-semibold text-primary">Ingredients</h2>
@@ -62,8 +95,11 @@ export default function Recipe() {
 							if (editable) {
 								await updateRecipe.mutateAsync({
 									id,
-									title: recipe.data?.title as string,
-									description: recipe.data?.description as string,
+									title: title == "" ? (recipe.data?.title as string) : title,
+									description:
+										description == ""
+											? (recipe.data?.description as string)
+											: description,
 									ingredient: ingredients?.getHTML() as string,
 									step: steps?.getHTML() as string,
 								});
@@ -77,10 +113,35 @@ export default function Recipe() {
 						{editable ? "Done" : "Edit"}
 					</button>
 					<Link href={"/chefburp"}>
-						<button className="btn btn-sm btn-error mt-2">Back</button>
+						<button className="btn btn-sm btn-warning mt-2">Back</button>
 					</Link>
+					{sessionData?.user?.role == "Admin" ? (
+						<div className="flex">
+							<div className="tooltip" data-tip="Remove Recipe">
+								<label
+									htmlFor="delete-recipe"
+									className="btn btn-square btn-error mt-2"
+								>
+									<FaTrash />
+								</label>
+							</div>
+						</div>
+					) : (
+						<></>
+					)}
 				</div>
 			</div>
+			<ModalRemove
+				htmlfor="delete-recipe"
+				title="Delete this recipe?"
+				description="Are you sure you want to delete this recipe?"
+				buttonTitle="Remove Recipe"
+				id={id}
+				alertMessage={"Recipe is successfully deleted!"}
+				alertDispatch={alertDispatch}
+			/>
+
+			<Alert state={alertState} dispatch={alertDispatch} />
 		</>
 	);
 }

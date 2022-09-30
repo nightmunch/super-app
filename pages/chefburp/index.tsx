@@ -1,6 +1,8 @@
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { Alert } from "../../components/Alert";
 import { ModalAdd } from "../../components/chefburp/ModalAdd";
 import { useAlertReducer } from "../../hooks/useAlertReducer";
 import { useRecipeReducer } from "../../hooks/useRecipeReducer";
@@ -18,6 +20,8 @@ export default function ChefBurp() {
 		const timeOutId = setTimeout(() => setSearch(searchBar), 500);
 		return () => clearTimeout(timeOutId);
 	}, [searchBar]);
+
+	const [parent] = useAutoAnimate<HTMLDivElement>();
 
 	return (
 		<>
@@ -57,7 +61,7 @@ export default function ChefBurp() {
 					</div>
 				</div>
 			</div>
-			<div className="grid gap-3 sm:grid-cols-2">
+			<div className="grid gap-3 sm:grid-cols-2" ref={parent}>
 				{recipeQuery.data?.map((item, index) => (
 					<RecipeCard
 						key={item.id}
@@ -74,6 +78,7 @@ export default function ChefBurp() {
 				dispatch={recipeDispatch}
 				alertDispatch={alertDispatch}
 			/>
+			<Alert state={alertState} dispatch={alertDispatch} />
 		</>
 	);
 }

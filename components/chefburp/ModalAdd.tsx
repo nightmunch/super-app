@@ -86,6 +86,8 @@ export const ModalAdd = ({
 		dispatch({
 			type: RecipeActionKind.CLEAR_ALL,
 		});
+		alertDispatch({ type: "type", payload: "success" });
+		alertDispatch({ type: "message", payload: alertMessage });
 	};
 
 	return (

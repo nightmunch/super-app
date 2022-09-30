@@ -10,7 +10,10 @@ export const recipeRouter = createRouter()
 			const { search } = input;
 			return ctx.prisma.recipe.findMany({
 				where: {
-					...(search != "" ? { title: search } : {}),
+					title: {
+						...(search != "" ? { contains: search } : {}),
+						mode: "insensitive",
+					},
 				},
 				orderBy: {
 					date: "asc",
@@ -68,6 +71,17 @@ export const recipeRouter = createRouter()
 					ingredient,
 					step,
 				},
+			});
+		},
+	})
+	.mutation("delete", {
+		input: z.object({
+			id: z.string().cuid(),
+		}),
+		async resolve({ ctx, input }) {
+			const { id } = input;
+			return ctx.prisma.recipe.delete({
+				where: { id },
 			});
 		},
 	});

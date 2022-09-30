@@ -1,5 +1,5 @@
 import { SidebarLink } from "./SidebarLink";
-import { TbBrandNextjs } from "react-icons/tb";
+import { TbBrandNextjs, TbToolsKitchen2 } from "react-icons/tb";
 import { SidebarProfile } from "./SidebarProfile";
 import { useSwipeable } from "react-swipeable";
 import {
@@ -144,6 +144,11 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 								href="/moneytrack"
 								name="Money Track"
 								icon={FaPiggyBank}
+							/>
+							<SidebarLink
+								href="/chefburp"
+								name="Chef Burp"
+								icon={TbToolsKitchen2}
 							/>
 							{/* <SidebarLink href="/storeit" name="Store It" icon={MdInventory} /> */}
 							<SidebarLink
