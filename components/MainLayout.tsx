@@ -17,7 +17,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { atom, useAtom } from "jotai";
 import { RiPaintFill } from "react-icons/ri";
 
-export const themeAtom = atom<string>("");
+export const themeAtom = atom<string>("shahrin");
 export const handleDrawerAtom = atom<boolean>(false);
 
 const swipeOpenMenuStyles = {

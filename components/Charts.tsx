@@ -24,12 +24,8 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 		height: undefined,
 	});
 
-	// const [theme, setTheme] = useState("");
-
 	// Handler to call on window resize
 	function handleResize() {
-		// var style = getComputedStyle();
-		console.log(document.documentElement.getAttribute("data-theme"));
 		// Set window width/height to state
 		setWindowSize({
 			width: window.innerWidth,
@@ -50,13 +46,6 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 			return () => window.removeEventListener("resize", handleResize);
 		}
 	}, []);
-
-	// useEffect(() => {
-	// 	if (typeof window !== "undefined") {
-	// 		// Set theme
-	// 		setTheme(document.documentElement.getAttribute("data-theme")!);
-	// 	}
-	// });
 
 	const [theme, setTheme] = useAtom(themeAtom);
 
@@ -94,9 +83,23 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 							},
 						},
 						responsive: true,
-						// cutout: windowSize.width! > 500 ? 120 : 70,
 						cutout: "80%",
 					}}
+					plugins={[
+						{
+							id: "increase-legend-spacing",
+							beforeInit(chart) {
+								// Get reference to the original fit function
+								const originalFit = (chart.legend as any).fit;
+								// Override the fit function
+								(chart.legend as any).fit = function fit() {
+									// Call original function and bind scope in order to use `this` correctly inside it
+									originalFit.bind(chart.legend)();
+									this.height += 10;
+								};
+							},
+						},
+					]}
 				/>
 			</div>
 		</>
