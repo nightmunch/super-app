@@ -32,14 +32,14 @@ export const SidebarProfile: React.FunctionComponent<User> = ({
 					>
 						{name == "Guest" ? (
 							<div className="avatar placeholder">
-								<div className="bg-neutral-focus items-center text-neutral-content rounded-full w-9">
+								<div className="bg-neutral-focus items-center text-neutral-content rounded-full w-9 ring ring-primary ring-offset-base-100 ring-offset-2">
 									<span className="text-3xl text-primary">
 										<AiOutlineUser />
 									</span>
 								</div>
 							</div>
 						) : (
-							<div className="h-9 w-9">
+							<div className="h-9 w-9 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
 								<Image
 									src={img_dir}
 									alt="Avatar"
