@@ -115,7 +115,7 @@ export const MainLayout: React.FunctionComponent = ({ children }) => {
 						<h1 className="pt-3">
 							Made With{" "}
 							<a href="https://nextjs.org/">
-								<TbBrandNextjs className="text-white text-2xl inline" />
+								<TbBrandNextjs className="text-2xl inline" />
 							</a>
 						</h1>
 					</div>
