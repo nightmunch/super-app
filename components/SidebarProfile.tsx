@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { AiOutlineUser } from "react-icons/ai";
+import { handleDrawerAtom } from "./MainLayout";
 
 type User = {
 	name: string;
@@ -12,11 +14,7 @@ export const SidebarProfile: React.FunctionComponent<User> = ({
 	name = "Guest",
 	img_dir = "",
 }) => {
-	// If the link is clicked, close the drawer
-	function closeDrawer() {
-		const drawer = document.getElementById("my-drawer")!;
-		drawer.click();
-	}
+	const [handleDrawer, setHandleDrawer] = useAtom(handleDrawerAtom);
 
 	const router = useRouter();
 	const href = "/profile";
@@ -25,9 +23,9 @@ export const SidebarProfile: React.FunctionComponent<User> = ({
 			<li>
 				<Link href={`${name != "Guest" ? "/profile" : "#"}`}>
 					<a
-						onClick={closeDrawer}
+						onClick={() => setHandleDrawer(false)}
 						className={` ${
-							router.pathname == href ? "bg-[#2B2C33] text-primary" : ""
+							router.pathname == href ? "bg-neutral text-primary" : ""
 						}`}
 					>
 						{name == "Guest" ? (
