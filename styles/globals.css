@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-    height: 5px;
-    width: 5px;
-    background: #000;
+    height: 4px;
+    width: 4px;
+    background: theme('colors.base-100');
 }
 
 ::-webkit-scrollbar-thumb {
@@ -15,7 +15,7 @@
 }
 
 ::-webkit-scrollbar-corner {
-    background: #000;
+    background: theme('colors.base-100');
 }
 
 .hide-scroll::-webkit-scrollbar { 
