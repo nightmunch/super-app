@@ -1,34 +1,19 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Alert } from "../components/Alert";
-import { useAlertReducer } from "../hooks/useAlertReducer";
+import toast from "react-hot-toast";
 import { trpc } from "../utils/trpc";
 
 export default function Profile() {
 	const { data: sessionData } = useSession();
 	const [name, setName] = useState(sessionData?.user.name);
 
-	const [isAlert, setIsAlert] = useState(false);
-	const [message, setMessage] = useState("");
-	const [type, setType] = useState("");
-
-	const [alertState, alertDispatch] = useAlertReducer();
-	enum AlertActionKind {
-		SET_MESSAGE = "message",
-		SET_TYPE = "type",
-	}
-
 	const mutateName = trpc.useMutation("user.changeName", {
 		async onSuccess() {
 			// Refresh session
 			const event = new Event("visibilitychange");
 			document.dispatchEvent(event);
-			// Alert
-			alertDispatch({
-				type: AlertActionKind.SET_MESSAGE,
-				payload: "Your name has been successfully changed!",
-			});
-			alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
+
+			toast.success("Your name has been successfully changed!");
 		},
 	});
 
@@ -64,7 +49,6 @@ export default function Profile() {
 					</div>
 				</div>
 			</div>
-			<Alert state={alertState} dispatch={alertDispatch} />
 		</>
 	);
 }

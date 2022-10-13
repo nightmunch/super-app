@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
-import { AlertActionKind } from "../../hooks/useAlertReducer";
 import { trpc } from "../../utils/trpc";
 
 interface ClaimState {
