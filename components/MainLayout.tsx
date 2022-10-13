@@ -28,7 +28,7 @@ const swipeOpenMenuStyles = {
 	height: "100%",
 } as React.CSSProperties;
 
-export const MainLayout: React.FunctionComponent = ({ children }) => {
+export const MainLayout = ({ children }: any) => {
 	const [theme, setTheme] = useAtom(themeAtom);
 	const [handleDrawer, setHandleDrawer] = useAtom(handleDrawerAtom);
 
