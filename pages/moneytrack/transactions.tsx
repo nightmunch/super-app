@@ -14,18 +14,15 @@ import {
 	formatDate,
 	getTextColor,
 } from "../../helpers/helpers";
-import { useAlertReducer } from "../../hooks/useAlertReducer";
+import { useAlertReducer, AlertActionKind } from "../../hooks/useAlertReducer";
 import { useGetUser } from "../../hooks/useGetUser";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Transactions() {
 	const userId = useGetUser();
 	const utils = trpc.useContext();
 
 	const [alertState, alertDispatch] = useAlertReducer();
-	enum AlertActionKind {
-		SET_MESSAGE = "message",
-		SET_TYPE = "type",
-	}
 
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
@@ -81,10 +78,9 @@ export default function Transactions() {
 				setDate(new Date());
 				// Alert
 				alertDispatch({
-					type: AlertActionKind.SET_MESSAGE,
-					payload: "Transaction is succesfully added!",
+					type: AlertActionKind.SUCCESS,
+					message: "Transaction is successfully added!",
 				});
-				alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 			} catch {}
 		} else {
 			console.log("No user data");
@@ -99,10 +95,9 @@ export default function Transactions() {
 			await deleteTransaction.mutateAsync(input);
 			// alert
 			alertDispatch({
-				type: AlertActionKind.SET_MESSAGE,
-				payload: "Transaction is succesfully deleted!",
+				type: AlertActionKind.ERROR,
+				message: "Transaction is successfully added!",
 			});
-			alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 		} catch {}
 	};
 

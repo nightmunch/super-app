@@ -9,15 +9,8 @@ import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { separator } from "../../helpers/helpers";
 import { NetWorth as NW } from "@prisma/client";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useAlertReducer } from "../../hooks/useAlertReducer";
+import { useAlertReducer, AlertActionKind } from "../../hooks/useAlertReducer";
 import { useGetUser } from "../../hooks/useGetUser";
-
-/**
- * TODO:
- * [x] create api to get the current ETH value
- * [x] create array of empty price, after useEffect, fill it with currentPrice.
- * [x] all query fetch once.
- */
 
 export default function NetWorth() {
 	const userId = useGetUser();
@@ -91,10 +84,6 @@ export default function NetWorth() {
 	const [remarks, setRemarks] = useState("");
 
 	const [alertState, alertDispatch] = useAlertReducer();
-	enum AlertActionKind {
-		SET_MESSAGE = "message",
-		SET_TYPE = "type",
-	}
 
 	const [remove, setRemove] = useState("");
 
@@ -117,10 +106,9 @@ export default function NetWorth() {
 				setRemarks("");
 				// Alert
 				alertDispatch({
-					type: AlertActionKind.SET_MESSAGE,
-					payload: "Net Worth is succesfully added!",
+					type: AlertActionKind.SUCCESS,
+					message: "Net Worth is succesfully added!",
 				});
-				alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 			} catch (e) {
 				console.log(e);
 			}
@@ -151,10 +139,9 @@ export default function NetWorth() {
 				setRemarks("");
 				// Alert
 				alertDispatch({
-					type: AlertActionKind.SET_MESSAGE,
-					payload: "Net Worth is succesfully updated!",
+					type: AlertActionKind.SUCCESS,
+					message: "Net Worth is succesfully updated!",
 				});
-				alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "success" });
 			} catch (e) {
 				console.log(e);
 			}
@@ -171,10 +158,9 @@ export default function NetWorth() {
 			await deleteNetWorth.mutateAsync(input);
 			// Alert
 			alertDispatch({
-				type: AlertActionKind.SET_MESSAGE,
-				payload: "Net Worth is succesfully deleted!",
+				type: AlertActionKind.ERROR,
+				message: "Net Worth is succesfully deleted!",
 			});
-			alertDispatch({ type: AlertActionKind.SET_TYPE, payload: "error" });
 		} catch {}
 	};
 

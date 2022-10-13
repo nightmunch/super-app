@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
+import { AlertActionKind } from "../hooks/useAlertReducer";
 
 // An interface for our state
 interface AlertState {
-	message: string;
 	type: string;
+	message: string;
 }
 
 type AlertType = {
@@ -15,7 +16,8 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 	dispatch,
 	state,
 }) => {
-	if (state.type == "success") {
+	const timer = 5000;
+	if (state.type == AlertActionKind.SUCCESS) {
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-success shadow-lg transition-opacity ease-linear ${
@@ -23,8 +25,8 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						dispatch({ type: "message", payload: "" });
-					}, 5000);
+						dispatch({ type: AlertActionKind.DEFAULT });
+					}, timer);
 				}}
 			>
 				<div>
@@ -45,7 +47,7 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 				</div>
 			</div>
 		);
-	} else if (state.type == "error") {
+	} else if (state.type == AlertActionKind.ERROR) {
 		return (
 			<div
 				className={`fixed top-20 right-20 z-50 w-1/2 alert alert-error shadow-lg transition-opacity ease-linear ${
@@ -53,8 +55,8 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						dispatch({ type: "message", payload: "" });
-					}, 5000);
+						dispatch({ type: AlertActionKind.DEFAULT });
+					}, timer);
 				}}
 			>
 				<div>
@@ -83,8 +85,8 @@ export const Alert: React.FunctionComponent<AlertType> = ({
 				}`}
 				onTransitionEnd={() => {
 					setTimeout(() => {
-						dispatch({ type: "message", payload: "" });
-					}, 5000);
+						dispatch({ type: AlertActionKind.DEFAULT });
+					}, timer);
 				}}
 			>
 				<div>

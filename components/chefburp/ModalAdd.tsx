@@ -3,6 +3,7 @@ import { trpc } from "../../utils/trpc";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { MenuBar } from "../MenuBar";
+import { AlertActionKind } from "../../hooks/useAlertReducer";
 
 enum RecipeActionKind {
 	SET_TITLE = "title",
@@ -86,8 +87,10 @@ export const ModalAdd = ({
 		dispatch({
 			type: RecipeActionKind.CLEAR_ALL,
 		});
-		alertDispatch({ type: "type", payload: "success" });
-		alertDispatch({ type: "message", payload: alertMessage });
+		alertDispatch({
+			type: AlertActionKind.SUCCESS,
+			message: alertMessage,
+		});
 	};
 
 	return (

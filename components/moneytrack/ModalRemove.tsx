@@ -1,6 +1,7 @@
 import { BiErrorCircle } from "react-icons/bi";
 import { trpc } from "../../utils/trpc";
 import { Dispatch, SetStateAction } from "react";
+import { AlertActionKind } from "../../hooks/useAlertReducer";
 
 type Props = {
 	htmlfor: string;
@@ -39,8 +40,10 @@ export const ModalRemove = ({
 		try {
 			await deleteClaim.mutateAsync(input);
 			// Alert
-			alertDispatch({ type: "message", payload: alertMessage });
-			alertDispatch({ type: "type", payload: "success" });
+			alertDispatch({
+				type: AlertActionKind.ERROR,
+				message: alertMessage,
+			});
 		} catch {}
 	};
 	const input = id ? { id } : { userId };

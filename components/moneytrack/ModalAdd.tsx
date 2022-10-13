@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { AlertActionKind } from "../../hooks/useAlertReducer";
 import { trpc } from "../../utils/trpc";
 
 interface ClaimState {
@@ -46,8 +47,10 @@ export const ModalAdd = ({
 			dispatch({ type: "amount", payload: "" });
 			dispatch({ type: "date", payload: new Date() });
 			// Alert
-			alertDispatch({ type: "message", payload: alertMessage });
-			alertDispatch({ type: "type", payload: "success" });
+			alertDispatch({
+				type: AlertActionKind.SUCCESS,
+				message: alertMessage,
+			});
 		} catch {}
 	};
 	return (

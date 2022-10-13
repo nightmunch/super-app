@@ -1,32 +1,43 @@
 import { useReducer } from "react";
 
-export function useAlertReducer() {
-	enum AlertActionKind {
-		SET_MESSAGE = "message",
-		SET_TYPE = "type",
-	}
+export enum AlertActionKind {
+	DEFAULT = "",
+	SUCCESS = "success",
+	ERROR = "error",
+}
 
+export function useAlertReducer() {
 	// An interface for our actions
 	interface AlertAction {
 		type: AlertActionKind;
-		payload: string;
+		message: string;
 	}
 
 	// An interface for our state
 	interface AlertState {
+		type: AlertActionKind;
 		message: string;
-		type: string;
 	}
 
 	// initial state of the database
 	const initialState = {
+		type: AlertActionKind.DEFAULT,
 		message: "",
-		type: "",
 	};
 
 	function reducer(state: AlertState, action: AlertAction) {
-		const { type, payload } = action;
-		return { ...state, [type]: payload };
+		const { type, message } = action;
+		if (type == AlertActionKind.DEFAULT) {
+			return {
+				type,
+				message: "",
+			};
+		} else {
+			return {
+				type,
+				message,
+			};
+		}
 	}
 
 	return useReducer(reducer, initialState);
