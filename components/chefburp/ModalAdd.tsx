@@ -3,7 +3,7 @@ import { trpc } from "../../utils/trpc";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { MenuBar } from "../MenuBar";
-import { AlertActionKind } from "../../hooks/useAlertReducer";
+import toast from "react-hot-toast";
 
 enum RecipeActionKind {
 	SET_TITLE = "title",
@@ -25,16 +25,9 @@ type Props = {
 	alertMessage: string;
 	dispatch: Dispatch<any>;
 	state: RecipeState;
-	alertDispatch: Dispatch<any>;
 };
 
-export const ModalAdd = ({
-	htmlfor,
-	alertMessage,
-	dispatch,
-	state,
-	alertDispatch,
-}: Props) => {
+export const ModalAdd = ({ htmlfor, alertMessage, dispatch, state }: Props) => {
 	const utils = trpc.useContext();
 	const createRecipe = trpc.useMutation(["recipe.create"], {
 		async onSuccess() {
@@ -87,10 +80,8 @@ export const ModalAdd = ({
 		dispatch({
 			type: RecipeActionKind.CLEAR_ALL,
 		});
-		alertDispatch({
-			type: AlertActionKind.SUCCESS,
-			message: alertMessage,
-		});
+
+		toast.success(alertMessage);
 	};
 
 	return (

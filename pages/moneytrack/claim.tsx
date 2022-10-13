@@ -1,6 +1,5 @@
 import { FaPlus } from "react-icons/fa";
 import { trpc } from "../../utils/trpc";
-import { Alert } from "../../components/Alert";
 
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -8,7 +7,6 @@ import { ModalRemove } from "../../components/moneytrack/ModalRemove";
 import { ClaimRows } from "../../components/moneytrack/ClaimRows";
 import { ModalAdd } from "../../components/moneytrack/ModalAdd";
 import { useClaimReducer } from "../../hooks/useClaimReducer";
-import { useAlertReducer } from "../../hooks/useAlertReducer";
 import { useGetUser } from "../../hooks/useGetUser";
 
 export default function Claim() {
@@ -21,12 +19,10 @@ export default function Claim() {
 	const [parent] = useAutoAnimate<HTMLTableSectionElement>();
 
 	const [state, dispatch] = useClaimReducer();
-	const [alertState, alertDispatch] = useAlertReducer();
 
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert state={alertState} dispatch={alertDispatch} />
 				<div className="card bg-neutral  text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">
@@ -79,7 +75,6 @@ export default function Claim() {
 					alertMessage={"Claim has successfully added!"}
 					state={state}
 					dispatch={dispatch}
-					alertDispatch={alertDispatch}
 				/>
 				<ModalRemove
 					htmlfor="remove-claim"
@@ -89,7 +84,6 @@ export default function Claim() {
 					id={state.remove}
 					userId={userId}
 					alertMessage={"Claim is successfully deleted!"}
-					alertDispatch={alertDispatch}
 				/>
 				<ModalRemove
 					htmlfor="remove-all"
@@ -99,7 +93,6 @@ export default function Claim() {
 					id={null}
 					userId={userId}
 					alertMessage={"All item has successfully claimed"}
-					alertDispatch={alertDispatch}
 				/>
 			</MoneyTrackLayout>
 		</>

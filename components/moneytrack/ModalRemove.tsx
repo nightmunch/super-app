@@ -2,6 +2,7 @@ import { BiErrorCircle } from "react-icons/bi";
 import { trpc } from "../../utils/trpc";
 import { Dispatch, SetStateAction } from "react";
 import { AlertActionKind } from "../../hooks/useAlertReducer";
+import toast from "react-hot-toast";
 
 type Props = {
 	htmlfor: string;
@@ -11,7 +12,6 @@ type Props = {
 	id: string | null;
 	userId: string | null;
 	alertMessage: string;
-	alertDispatch: Dispatch<any>;
 };
 
 export const ModalRemove = ({
@@ -22,7 +22,6 @@ export const ModalRemove = ({
 	id,
 	userId,
 	alertMessage,
-	alertDispatch,
 }: Props) => {
 	const utils = trpc.useContext();
 
@@ -39,11 +38,8 @@ export const ModalRemove = ({
 	const removeObject = async ({ input }: { input: any }) => {
 		try {
 			await deleteClaim.mutateAsync(input);
-			// Alert
-			alertDispatch({
-				type: AlertActionKind.ERROR,
-				message: alertMessage,
-			});
+
+			toast.error(alertMessage);
 		} catch {}
 	};
 	const input = id ? { id } : { userId };

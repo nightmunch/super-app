@@ -1,8 +1,7 @@
 import { BiErrorCircle } from "react-icons/bi";
 import { trpc } from "../../utils/trpc";
-import { Dispatch } from "react";
 import Router from "next/router";
-import { AlertActionKind } from "../../hooks/useAlertReducer";
+import toast from "react-hot-toast";
 
 type Props = {
 	htmlfor: string;
@@ -11,7 +10,6 @@ type Props = {
 	buttonTitle: string;
 	id: string;
 	alertMessage: string;
-	alertDispatch: Dispatch<any>;
 };
 
 export const ModalRemove = ({
@@ -21,15 +19,10 @@ export const ModalRemove = ({
 	buttonTitle,
 	id,
 	alertMessage,
-	alertDispatch,
 }: Props) => {
 	const deleteRecipe = trpc.useMutation(["recipe.delete"], {
 		async onSuccess() {
-			// Alert
-			alertDispatch({
-				type: AlertActionKind.SUCCESS,
-				message: alertMessage,
-			});
+			toast.success(alertMessage);
 			// Back
 			setTimeout(() => {
 				Router.push("/chefburp");

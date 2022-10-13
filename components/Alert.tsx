@@ -1,4 +1,5 @@
 import { Dispatch } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { AlertActionKind } from "../hooks/useAlertReducer";
 
 // An interface for our state
@@ -7,16 +8,14 @@ interface AlertState {
 	message: string;
 }
 
-type AlertType = {
-	dispatch: Dispatch<any>;
+type Props = {
 	state: AlertState;
+	dispatch: Dispatch<any>;
 };
 
-export const Alert: React.FunctionComponent<AlertType> = ({
-	dispatch,
-	state,
-}) => {
+export const Alert = ({ dispatch, state }: Props) => {
 	const timer = 5000;
+	// return <Toaster />;
 	if (state.type == AlertActionKind.SUCCESS) {
 		return (
 			<div

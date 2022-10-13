@@ -2,9 +2,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { Alert } from "../../components/Alert";
 import { ModalAdd } from "../../components/chefburp/ModalAdd";
-import { useAlertReducer } from "../../hooks/useAlertReducer";
 import { useRecipeReducer } from "../../hooks/useRecipeReducer";
 import { trpc } from "../../utils/trpc";
 
@@ -14,7 +12,6 @@ export default function ChefBurp() {
 	const recipeQuery = trpc.useQuery(["recipe.list", { search }]);
 
 	const [recipeState, recipeDispatch] = useRecipeReducer();
-	const [alertState, alertDispatch] = useAlertReducer();
 
 	useEffect(() => {
 		const timeOutId = setTimeout(() => setSearch(searchBar), 500);
@@ -76,9 +73,7 @@ export default function ChefBurp() {
 				alertMessage={"Recipe has successfully added!"}
 				state={recipeState}
 				dispatch={recipeDispatch}
-				alertDispatch={alertDispatch}
 			/>
-			<Alert state={alertState} dispatch={alertDispatch} />
 		</>
 	);
 }

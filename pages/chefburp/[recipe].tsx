@@ -5,8 +5,6 @@ import { useState } from "react";
 import { trpc } from "../../utils/trpc";
 import { MenuBar } from "../../components/MenuBar";
 import { ModalRemove } from "../../components/chefburp/ModalRemove";
-import { Alert } from "../../components/Alert";
-import { useAlertReducer } from "../../hooks/useAlertReducer";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
@@ -48,7 +46,6 @@ export default function Recipe() {
 		},
 	});
 
-	const [alertState, alertDispatch] = useAlertReducer();
 	const { data: sessionData } = useSession();
 
 	return (
@@ -164,9 +161,7 @@ export default function Recipe() {
 				buttonTitle="Remove Recipe"
 				id={id}
 				alertMessage={"Recipe is successfully deleted!"}
-				alertDispatch={alertDispatch}
 			/>
-			<Alert state={alertState} dispatch={alertDispatch} />
 		</>
 	);
 }

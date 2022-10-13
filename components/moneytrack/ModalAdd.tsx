@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import toast from "react-hot-toast";
 import { AlertActionKind } from "../../hooks/useAlertReducer";
 import { trpc } from "../../utils/trpc";
 
@@ -14,7 +15,6 @@ type Props = {
 	alertMessage: string;
 	dispatch: Dispatch<any>;
 	state: ClaimState;
-	alertDispatch: Dispatch<any>;
 };
 
 export const ModalAdd = ({
@@ -23,7 +23,6 @@ export const ModalAdd = ({
 	alertMessage,
 	dispatch,
 	state,
-	alertDispatch,
 }: Props) => {
 	const utils = trpc.useContext();
 	const createClaim = trpc.useMutation("claim.create", {
@@ -46,13 +45,11 @@ export const ModalAdd = ({
 			dispatch({ type: "item", payload: "" });
 			dispatch({ type: "amount", payload: "" });
 			dispatch({ type: "date", payload: new Date() });
-			// Alert
-			alertDispatch({
-				type: AlertActionKind.SUCCESS,
-				message: alertMessage,
-			});
+
+			toast.success(alertMessage);
 		} catch {}
 	};
+	console.log("test1");
 	return (
 		<>
 			<input type="checkbox" id={htmlfor} className="modal-toggle" />

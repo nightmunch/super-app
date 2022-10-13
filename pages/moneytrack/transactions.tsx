@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { BiErrorCircle } from "react-icons/bi";
 import { FaPlus, FaTrash } from "react-icons/fa";
-import { Alert } from "../../components/Alert";
 import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { trpc } from "../../utils/trpc";
 import { Transactions as Trans } from "@prisma/client";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-
+import { useGetUser } from "../../hooks/useGetUser";
+import toast from "react-hot-toast";
 import {
 	months,
 	categories,
@@ -14,15 +14,10 @@ import {
 	formatDate,
 	getTextColor,
 } from "../../helpers/helpers";
-import { useAlertReducer, AlertActionKind } from "../../hooks/useAlertReducer";
-import { useGetUser } from "../../hooks/useGetUser";
-import toast, { Toaster } from "react-hot-toast";
 
 export default function Transactions() {
 	const userId = useGetUser();
 	const utils = trpc.useContext();
-
-	const [alertState, alertDispatch] = useAlertReducer();
 
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
@@ -76,11 +71,8 @@ export default function Transactions() {
 				setCategory("");
 				setRemarks("");
 				setDate(new Date());
-				// Alert
-				alertDispatch({
-					type: AlertActionKind.SUCCESS,
-					message: "Transaction is successfully added!",
-				});
+
+				toast.success("Transaction is successfully added!");
 			} catch {}
 		} else {
 			console.log("No user data");
@@ -93,11 +85,8 @@ export default function Transactions() {
 		};
 		try {
 			await deleteTransaction.mutateAsync(input);
-			// alert
-			alertDispatch({
-				type: AlertActionKind.ERROR,
-				message: "Transaction is successfully added!",
-			});
+
+			toast.error("Transaction is successfully deleted!");
 		} catch {}
 	};
 
@@ -122,7 +111,6 @@ export default function Transactions() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert state={alertState} dispatch={alertDispatch} />
 				<div className="card bg-neutral text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">

@@ -9,8 +9,8 @@ import { MoneyTrackLayout } from "../../components/MoneyTrackLayout";
 import { separator } from "../../helpers/helpers";
 import { NetWorth as NW } from "@prisma/client";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useAlertReducer, AlertActionKind } from "../../hooks/useAlertReducer";
 import { useGetUser } from "../../hooks/useGetUser";
+import toast from "react-hot-toast";
 
 export default function NetWorth() {
 	const userId = useGetUser();
@@ -18,7 +18,7 @@ export default function NetWorth() {
 	const utils = trpc.useContext();
 
 	const [price, setPrice] = useState({ eth: 0 });
-	const getCryptoPrice = trpc.useQuery(
+	trpc.useQuery(
 		[
 			"networth.cryptoprice",
 			{
@@ -83,8 +83,6 @@ export default function NetWorth() {
 	const [category, setCategory] = useState("");
 	const [remarks, setRemarks] = useState("");
 
-	const [alertState, alertDispatch] = useAlertReducer();
-
 	const [remove, setRemove] = useState("");
 
 	const addNetWorth = async () => {
@@ -104,11 +102,8 @@ export default function NetWorth() {
 				setAmount("");
 				setCategory("");
 				setRemarks("");
-				// Alert
-				alertDispatch({
-					type: AlertActionKind.SUCCESS,
-					message: "Net Worth is succesfully added!",
-				});
+
+				toast.success("Net Worth is succesfully added!");
 			} catch (e) {
 				console.log(e);
 			}
@@ -137,11 +132,8 @@ export default function NetWorth() {
 				setAmount("");
 				setCategory("");
 				setRemarks("");
-				// Alert
-				alertDispatch({
-					type: AlertActionKind.SUCCESS,
-					message: "Net Worth is succesfully updated!",
-				});
+
+				toast.success("Net Worth is succesfully updated!");
 			} catch (e) {
 				console.log(e);
 			}
@@ -156,11 +148,8 @@ export default function NetWorth() {
 		};
 		try {
 			await deleteNetWorth.mutateAsync(input);
-			// Alert
-			alertDispatch({
-				type: AlertActionKind.ERROR,
-				message: "Net Worth is succesfully deleted!",
-			});
+
+			toast.error("Net Worth is succesfully deleted!");
 		} catch {}
 	};
 
@@ -184,7 +173,6 @@ export default function NetWorth() {
 	return (
 		<>
 			<MoneyTrackLayout>
-				<Alert state={alertState} dispatch={alertDispatch} />
 				<div className="card bg-neutral  text-neutral-content">
 					<div className="card-body">
 						<div className="flex flex-col gap-2">
