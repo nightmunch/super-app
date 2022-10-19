@@ -1,63 +1,24 @@
 import "chart.js/auto";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
 import { Chart } from "react-chartjs-2";
 import { shadeColor } from "../helpers/helpers";
 import { themeAtom } from "./MainLayout";
 
-type Input = {
+interface Input {
 	title: string;
 	data: {
 		category: string;
 		color: string;
 		amount: number | null;
 	}[];
-};
+}
 
-type WindowSize = {
-	width: number | undefined;
-	height: number | undefined;
-};
-
-export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
-	const [windowSize, setWindowSize] = useState<WindowSize>({
-		width: undefined,
-		height: undefined,
-	});
-
-	// Handler to call on window resize
-	function handleResize() {
-		// Set window width/height to state
-		setWindowSize({
-			width: window.innerWidth,
-			height: window.innerHeight,
-		});
-	}
-
-	useEffect(() => {
-		// only execute all the code below in client side
-		if (typeof window !== "undefined") {
-			// Add event listener
-			window.addEventListener("resize", handleResize);
-
-			// Call handler right away so state gets updated with initial window size
-			handleResize();
-
-			// Remove event listener on cleanup
-			return () => window.removeEventListener("resize", handleResize);
-		}
-	}, []);
-
+export const Doughnut = ({ title, data }: Input) => {
 	const [theme, setTheme] = useAtom(themeAtom);
 
 	const themeDict = new Map([
 		["shahrin", "#b7cdda"],
 		["aimi", "#343536"],
-	]);
-
-	const backgroundDict = new Map([
-		["shahrin", "#13151B"],
-		["aimi", "#FBFBF9"],
 	]);
 
 	return (
@@ -72,7 +33,7 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 							{
 								data: data.map((data) => data.amount),
 								backgroundColor: data.map((data) => data.color),
-								borderColor: data.map((data) => shadeColor(data.color, -50)),
+								borderColor: data.map((data) => shadeColor(data.color, -60)),
 							},
 						],
 					}}
@@ -81,7 +42,7 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 							arc: {
 								borderWidth: 2,
 								borderRadius: 10,
-								// borderColor: backgroundDict.get(theme),
+								hoverOffset: 10,
 							},
 						},
 						plugins: {
