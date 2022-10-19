@@ -72,6 +72,7 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 							{
 								data: data.map((data) => data.amount),
 								backgroundColor: data.map((data) => data.color),
+								borderColor: data.map((data) => shadeColor(data.color, -50)),
 							},
 						],
 					}}
@@ -80,7 +81,7 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 							arc: {
 								borderWidth: 2,
 								borderRadius: 10,
-								borderColor: backgroundDict.get(theme),
+								// borderColor: backgroundDict.get(theme),
 							},
 						},
 						plugins: {
