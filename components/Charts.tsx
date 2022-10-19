@@ -2,6 +2,7 @@ import "chart.js/auto";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { Chart } from "react-chartjs-2";
+import { shadeColor } from "../helpers/helpers";
 import { themeAtom } from "./MainLayout";
 
 type Input = {
@@ -54,6 +55,11 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 		["aimi", "#343536"],
 	]);
 
+	const backgroundDict = new Map([
+		["shahrin", "#13151B"],
+		["aimi", "#FBFBF9"],
+	]);
+
 	return (
 		<>
 			<h1 className="text-center">{title}</h1>
@@ -72,7 +78,9 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 					options={{
 						elements: {
 							arc: {
-								borderWidth: 0,
+								borderWidth: 2,
+								borderRadius: 10,
+								borderColor: backgroundDict.get(theme),
 							},
 						},
 						plugins: {
@@ -83,7 +91,7 @@ export const Doughnut: React.FunctionComponent<Input> = ({ title, data }) => {
 							},
 						},
 						responsive: true,
-						cutout: "80%",
+						cutout: "50%",
 					}}
 					plugins={[
 						{
