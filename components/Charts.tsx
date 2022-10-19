@@ -52,6 +52,11 @@ export const Doughnut = ({ title, data }: Input) => {
 								},
 							},
 						},
+						layout: {
+							padding: {
+								bottom: 10,
+							},
+						},
 						responsive: true,
 						cutout: "50%",
 					}}
