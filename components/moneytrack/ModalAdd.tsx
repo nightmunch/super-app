@@ -48,7 +48,6 @@ export const ModalAdd = ({
 			toast.success(alertMessage);
 		} catch {}
 	};
-	console.log("test1");
 	return (
 		<>
 			<input type="checkbox" id={htmlfor} className="modal-toggle" />
