@@ -1,11 +1,17 @@
+import { Claim } from "@prisma/client";
 import { Dispatch } from "react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import { formatDate, separator } from "../../helpers/helpers";
+import {
+	ClaimAction,
+	ClaimActionKind,
+	ClaimState,
+} from "../../hooks/useClaimReducer";
 import { trpc } from "../../utils/trpc";
 
 type Props = {
 	userId: string;
-	dispatch: Dispatch<any>;
+	dispatch: Dispatch<ClaimAction>;
 };
 
 export const ClaimRows = ({ userId, dispatch }: Props) => {
@@ -16,6 +22,16 @@ export const ClaimRows = ({ userId, dispatch }: Props) => {
 	const sumQuery = trpc.useQuery(["claim.sum", { userId }], {
 		staleTime: Infinity,
 	});
+
+	const displayUpdate = (item: Claim) => {
+		dispatch({ type: ClaimActionKind.SET_ID, payload: item.id });
+		dispatch({ type: ClaimActionKind.SET_ITEM, payload: item.item });
+		dispatch({
+			type: ClaimActionKind.SET_AMOUNT,
+			payload: item.amount.toFixed(2),
+		});
+		dispatch({ type: ClaimActionKind.SET_DATE, payload: item.date });
+	};
 
 	return (
 		<>
@@ -66,7 +82,16 @@ export const ClaimRows = ({ userId, dispatch }: Props) => {
 				claimsQuery.data?.map((item, index) => (
 					<tr key={item.id}>
 						<th>{index + 1}</th>
-						<td>{item.item}</td>
+						<td>
+							<label
+								htmlFor="display-claim"
+								onClick={(e) => {
+									displayUpdate(item);
+								}}
+							>
+								{item.item}
+							</label>
+						</td>
 						<td>RM {separator(item.amount.toFixed(2))}</td>
 						<td>{formatDate(item.date)}</td>
 						<td className="text-center">
@@ -75,7 +100,10 @@ export const ClaimRows = ({ userId, dispatch }: Props) => {
 									htmlFor="remove-claim"
 									className="btn btn-ghost"
 									onClick={(e) => {
-										dispatch({ type: "remove", payload: item.id });
+										dispatch({
+											type: ClaimActionKind.SET_REMOVE,
+											payload: item.id,
+										});
 										// setRemove(item.id);
 									}}
 								>

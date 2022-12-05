@@ -8,6 +8,7 @@ import { ClaimRows } from "../../components/moneytrack/ClaimRows";
 import { ModalAdd } from "../../components/moneytrack/ModalAdd";
 import { useClaimReducer } from "../../hooks/useClaimReducer";
 import { useGetUser } from "../../hooks/useGetUser";
+import { ModalUpdate } from "../../components/moneytrack/ModalUpdate";
 
 export default function Claim() {
 	const userId = useGetUser();
@@ -93,6 +94,11 @@ export default function Claim() {
 					id={null}
 					userId={userId}
 					alertMessage={"All item has successfully claimed"}
+				/>
+				<ModalUpdate
+					htmlfor="display-claim"
+					state={state}
+					dispatch={dispatch}
 				/>
 			</MoneyTrackLayout>
 		</>
